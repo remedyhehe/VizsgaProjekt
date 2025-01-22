@@ -28,16 +28,16 @@
                                 class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                                 aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
                             <a href="#"
-                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                                     class="fa-solid fa-list-check"></i> Tasks</a>
                             <a href="#"
-                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                                     class="fa-solid fa-calendar"></i> Calendar</a>
                             <a href="#"
-                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                                     class="fa-solid fa-sliders"></i> Settings</a>
-                            <a href="./projects.php"
-                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                            <a href="../index.php"
+                                class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                                     class="fa-solid fa-right-from-bracket"></i> Quit</a>
                         </div>
                     </div>
@@ -58,16 +58,16 @@
                 <a href="./index.php" class="block rounded-md bg-gray-900 px-3 py-2 font-medium text-white"
                     aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
                 <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                         class="fa-solid fa-list-check"></i> Tasks</a>
                 <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                         class="fa-solid fa-calendar"></i> Calendar</a>
                 <a href="./projects.php"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                         class="fa-solid fa-sliders"></i> Settings</a>
-                <a href="./projects.php"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
+                <a href="../index.php"
+                    class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-orange-500 transition-all"><i
                         class="fa-solid fa-right-from-bracket"></i> Quit</a>
             </div>
         </div>
