@@ -12,7 +12,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
   <!-- Navbar kezdete -->
-    <nav class="bg-gray-800 text-white p-5">
+    <nav class="bg-gray-800 text-white p-2">
         <div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center">
@@ -46,4 +46,5 @@
             <a href="./proects.php" class="block rounded-md px-3 py-2 text-base font-medium text-white hover:bg-gray-700 hover:text-white">Böngészés</a>
           </div>
         </div>
-      </nav>
+    </nav>
+    <!-- Navbar vége -->
