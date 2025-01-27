@@ -172,19 +172,31 @@
     </style>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
+        const viewportWidth = window.innerWidth;
+        console.log(`A viewport szélessége: ${viewportWidth}px`);
+
         document.addEventListener('DOMContentLoaded', () => {
+            let slidesPerView = 3; // Alapértelmezett szám, hogy hány kártya jelenjen meg
+
+            if(viewportWidth < 790){
+                slidesPerView = 1; // Ha kisebb, mint 790px, akkor 1 kártya
+            }
+
             const swiper = new Swiper('.swiper', {
                 loop: true,
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
-                slidesPerView: 3, // Hány kártya legyen - Ide kell majd egy php lekérés, ami lekéri hány prémium projekt van aktuálisan.
-                // Ha kevesebbmint 3 kiemelt projekt van, csak egyet mutasson.
+                slidesPerView: slidesPerView, // Dinamikusan beállítva
                 spaceBetween: 30, // Távolság a kártyák közt
             });
         });
     </script>
+
+
+
+
 
     <!-- Hogyan működik -->
     <section class="bg-gray-100 py-16">
