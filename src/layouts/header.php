@@ -33,7 +33,7 @@
             <a href="./index.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                 aria-current="page"><i class="fa-solid fa-house"></i> Főoldal</a>
             <a href="./project_start.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
-                aria-current="page"></i> Projekt indítása</a>
+                aria-current="page"><i class="fa-solid fa-play"></i> Projekt indítása</a>
             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
                     class="fa-solid fa-plus"></i> Saját Projektek</a>
             <a href="./projects.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
