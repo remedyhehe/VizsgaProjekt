@@ -12,7 +12,7 @@
                 meg
                 nagyszerű dolgokat.</p>
             <div class="flex justify-center space-x-4">
-                <a href="#"
+                <a href="./project_start.php"
                     class="px-6 py-3 bg-orange-500 text-white font-medium rounded-lg shadow-md hover:bg-orange-700"><i
                         class="fa-solid fa-folder-plus"></i> Projekt létrehozása</a>
                 <a href="./projects.php"
@@ -75,6 +75,7 @@
 
 
     <!-- Kiemelt Projektek -->
+
     <section class="py-16">
         <div class="container mx-auto px-6">
             <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Kiemelt Projektek <i
@@ -120,6 +121,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Hogyan működik -->
     <section class="bg-gray-100 py-16">

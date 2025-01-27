@@ -7,6 +7,6 @@
       </footer>
 
 <!-- Footer vége -->
-
+<script src="./script.js"></script>
 </body>
 </html>
