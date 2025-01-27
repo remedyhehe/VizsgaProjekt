@@ -10,98 +10,178 @@
     <script src="https://kit.fontawesome.com/28b979de8c.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="min-h-screen flex flex-col">
-    <!-- Navbar kezdete -->
-    <nav class="bg-gray-800 text-white p-2 sticky top-0 z-50">
-        <div class="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img class="h-12 mr-2" src="../img/maci.png" alt="">
-                    <h1 class="font-bold text-xl">Collabears</h1>
-                </div>
+<body class="">
+    <!-- Számítós nézet -->
+    <nav class="bg-gray-800 text-white sticky top-0 z-50 px-5 py-4 flex justify-between items-center">
+        <!-- Bal oldali logo -->
+        <a class="text-3xl font-bold leading-none" href="#">
+            <img class="h-12" src="../img/maci.png" alt="">
+        </a>
 
-                <!-- Hamburger Icon -->
-                <div class="flex sm:hidden">
-                    <button id="menuToggle" class="text-white focus:outline-none">
-                        <i class="fa-solid fa-bars fa-lg"></i>
-                    </button>
-                </div>
+        <!-- Hamburger menu szine -->
+        <div class="lg:hidden">
+            <button class="navbar-burger flex items-center text-white p-3">
+                <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <title>Mobile menu</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                </svg>
+            </button>
+        </div>
+        <!-- Tartalom -->
+        <div
+            class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ">
+            <a href="./index.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                aria-current="page"><i class="fa-solid fa-house"></i> Főoldal</a>
+            <a href="./project_start.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
+                aria-current="page"></i> Projekt indítása</a>
+            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
+                    class="fa-solid fa-plus"></i> Saját Projektek</a>
+            <a href="./projects.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
+                    class="fa-solid fa-globe"></i> Böngészés</a>
+        </div>
 
-                <!-- Menu Links (Desktop) -->
-                <div class="hidden sm:flex space-x-4">
-                    <a href="./index.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                        aria-current="page"><i class="fa-solid fa-house"></i> Főoldal</a>
-                    <a href="./project_start.php"
-                        class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                            class="fa-solid fa-play"></i> Projekt indítása</a>
-                    <a href="#"
-                        class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                            class="fa-solid fa-plus"></i> Saját Projektek</a>
-                    <a href="./projects.php"
-                        class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                            class="fa-solid fa-globe"></i> Böngészés</a>
-                </div>
-
-                <!-- User Dropdown -->
-                <div class="relative">
-                    <button id="userIcon" class="w-10 h-10 rounded-full cursor-pointer">
-                        <i class="fa-solid fa-circle-user fa-2xl"></i>
-                    </button>
-                    <div id="userDropdown"
-                        class="hidden absolute right-0 mt-2 w-64 bg-white text-black rounded-lg shadow-lg p-4 z-10">
-                        <form action="#" method="POST" class="space-y-4">
-                            <h2 class="text-gray-800 font-semibold text-lg">Bejelentkezés</h2>
-                            <div>
-                                <label for="email" class="block text-sm">Email</label>
-                                <input type="email" id="email" name="email"
-                                    class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
-                                    required>
-                            </div>
-                            <div>
-                                <label for="password" class="block text-sm">Jelszó</label>
-                                <input type="password" id="password" name="password"
-                                    class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
-                                    required>
-                            </div>
-                            <button type="submit" class="w-full bg-gray-800 text-white py-2 rounded-md">Bejelentkezés</button>
-                        </form>
-                        <div class="mt-4 text-center">
-                            <p class="text-sm text-gray-600">
-                                Nincs még fiókod?
-                                <a href="./register.php" class="text-blue-500 hover:underline">Regisztrálj</a>
-                            </p>
-                        </div>
+        <!-- Bejelentkezés -->
+        <div class="hidden lg:inline-block lg:ml-auto text-white">
+            <button id="userIcon" class="w-10 h-10 rounded-full cursor-pointer">
+                <i class="fa-solid fa-circle-user fa-2xl"></i>
+            </button>
+            <div id="userDropdown"
+                class="hidden absolute right-5 mt-2 w-64 bg-white text-black rounded-lg shadow-lg p-4 z-10">
+                <form action="#" method="POST" class="space-y-4">
+                    <h2 class="text-gray-800 font-semibold text-lg">Bejelentkezés</h2>
+                    <div>
+                        <label for="email" class="block text-sm">Email</label>
+                        <input type="email" id="email" name="email"
+                            class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
+                            required>
                     </div>
+                    <div>
+                        <label for="password" class="block text-sm">Jelszó</label>
+                        <input type="password" id="password" name="password"
+                            class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
+                            required>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-md">Bejelentkezés</button>
+                </form>
+                <div class="mt-4 text-center">
+                    <p class="text-sm text-gray-600">
+                        Nincs még fiókod?
+                        <a href="./register.php" class="text-orange-500 hover:underline">Regisztrálj!</a>
+                    </p>
                 </div>
-            </div>
-
-            <!-- Mobile Menu -->
-            <div id="mobileMenu" class="hidden sm:hidden mt-2">
-                <a href="./index.php" class="block rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                    aria-current="page"><i class="fa-solid fa-house"></i> Főoldal</a>
-                <a href="./project_start.php"
-                    class="block rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                        class="fa-solid fa-play"></i> Projekt indítása</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                        class="fa-solid fa-plus"></i> Saját Projektek</a>
-                <a href="./projects.php"
-                    class="block rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                        class="fa-solid fa-globe"></i> Böngészés</a>
             </div>
         </div>
     </nav>
-    <!-- Navbar vége -->
+    <!-- Teló nézet -->
+    <div class="navbar-menu sitcky top-0 z-50 hidden">
+        <div class="navbar-backdrop fixed top-0 inset-0 bg-gray-800 opacity-50"></div>
+        <nav
+            class="fixed top-0 z-50 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-4 px-5 bg-gray-800 overflow-y-auto">
+            <div class="flex items-center mb-8">
+                <a class="mr-auto text-3xl font-bold leading-none" href="#">
+                    <img class="h-12" src="../img/maci.png" alt="">
 
-    <!-- JavaScript -->
+                </a>
+                <button class="navbar-close">
+                    <svg class="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Teló nézet navbarlista -->
+            <div>
+                <h2 class="text-white font-semibold text-lg">Oldalak</h2>
+
+                <ul>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                            href="./index.php"><i class="fa-solid fa-house"></i> Főoldal</a>
+                    </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                            href="./project_start.php"><i class="fa-solid fa-play"></i> Projekt indítása</a>
+                    </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                            href="#"><i class="fa-solid fa-plus"></i> Saját Projektek</a>
+                    </li>
+                    <li class="mb-1">
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                            href="./projects.php"><i class="fa-solid fa-globe"></i> Böngészés</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Login -->
+            <div class="mt-auto">
+                <form action="#" method="POST" class="space-y-4">
+                    <h2 class="text-white font-semibold text-lg pt-5">Bejelentkezés</h2>
+                    <div>
+                        <label for="email" class="block text-sm text-gray-400 pl-4 pb-2">Email</label>
+                        <input type="email" id="email" name="email"
+                            class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
+                            required>
+                    </div>
+                    <div>
+                        <label for="password" class="block text-sm text-gray-400 pl-4 pb-2">Jelszó</label>
+                        <input type="password" id="password" name="password"
+                            class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
+                            required>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-md">Bejelentkezés</button>
+                </form>
+                <p class="text-sm text-gray-200 py-2 text-center">
+                    Nincs még fiókod?
+                    <a href="./register.php" class="text-orange-500 hover:underline">Regisztrálj!</a>
+                </p>
+                <p class="my-4 text-xs text-center text-gray-400">
+                    <span>CollaBears © 2025</span>
+                </p>
+            </div>
+        </nav>
+    </div>
+
     <script>
-        // Hamburger menu toggle
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
+        // Burger menus
+        document.addEventListener('DOMContentLoaded', function () {
+            // open
+            const burger = document.querySelectorAll('.navbar-burger');
+            const menu = document.querySelectorAll('.navbar-menu');
 
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            if (burger.length && menu.length) {
+                for (var i = 0; i < burger.length; i++) {
+                    burger[i].addEventListener('click', function () {
+                        for (var j = 0; j < menu.length; j++) {
+                            menu[j].classList.toggle('hidden');
+                        }
+                    });
+                }
+            }
+
+            // close
+            const close = document.querySelectorAll('.navbar-close');
+            const backdrop = document.querySelectorAll('.navbar-backdrop');
+
+            if (close.length) {
+                for (var i = 0; i < close.length; i++) {
+                    close[i].addEventListener('click', function () {
+                        for (var j = 0; j < menu.length; j++) {
+                            menu[j].classList.toggle('hidden');
+                        }
+                    });
+                }
+            }
+
+            if (backdrop.length) {
+                for (var i = 0; i < backdrop.length; i++) {
+                    backdrop[i].addEventListener('click', function () {
+                        for (var j = 0; j < menu.length; j++) {
+                            menu[j].classList.toggle('hidden');
+                        }
+                    });
+                }
+            }
         });
 
         // User dropdown toggle
@@ -119,6 +199,3 @@
             }
         });
     </script>
-</body>
-
-</html>
