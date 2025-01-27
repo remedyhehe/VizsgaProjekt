@@ -3,13 +3,13 @@
 <div class="bg-gray-100 py-5">
   <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-12">
     <div class="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 sm:flex sm:justify-around sm:gap-0">
-      <a href="#" class="px-3 py-2 hover:text-orange-500">Játékok</a>
-      <a href="#" class="px-3 py-2 hover:text-orange-500">Programok</a>
-      <a href="#" class="px-3 py-2 hover:text-orange-500">Zene</a>
+      <a href="#" class="px-3 py-2 hover:text-orange-500">Games</a>
+      <a href="#" class="px-3 py-2 hover:text-orange-500">Programs</a>
+      <a href="#" class="px-3 py-2 hover:text-orange-500">Music</a>
       <a href="#" class="px-3 py-2 hover:text-orange-500">Technológia</a>
-      <a href="#" class="px-3 py-2 hover:text-orange-500">Film</a>
-      <a href="#" class="px-3 py-2 hover:text-orange-500">Divat</a>
-      <a href="#" class="px-3 py-2 text-orange-500">Összes</a>
+      <a href="#" class="px-3 py-2 hover:text-orange-500">Movies</a>
+      <a href="#" class="px-3 py-2 hover:text-orange-500">Fashion</a>
+      <a href="#" class="px-3 py-2 text-orange-500">All</a>
     </div>
   </div>
 </div>

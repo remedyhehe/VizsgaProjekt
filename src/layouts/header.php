@@ -31,13 +31,13 @@
         <div
             class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ">
             <a href="./index.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                aria-current="page"><i class="fa-solid fa-house"></i> Főoldal</a>
+                aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
             <a href="./project_start.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
-                aria-current="page"><i class="fa-solid fa-play"></i> Projekt indítása</a>
+                aria-current="page"><i class="fa-solid fa-play"></i> Start Project</a>
             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                    class="fa-solid fa-plus"></i> Saját Projektek</a>
+                    class="fa-solid fa-plus"></i> Your Projects</a>
             <a href="./projects.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                    class="fa-solid fa-globe"></i> Böngészés</a>
+                    class="fa-solid fa-globe"></i> Browse</a>
         </div>
 
         <!-- Bejelentkezés -->
@@ -48,7 +48,7 @@
             <div id="userDropdown"
                 class="hidden absolute right-5 mt-2 w-64 bg-white text-black rounded-lg shadow-lg p-4 z-10">
                 <form action="#" method="POST" class="space-y-4">
-                    <h2 class="text-gray-800 font-semibold text-lg">Bejelentkezés</h2>
+                    <h2 class="text-gray-800 font-semibold text-lg">Login</h2>
                     <div>
                         <label for="email" class="block text-sm">Email</label>
                         <input type="email" id="email" name="email"
@@ -56,17 +56,17 @@
                             required>
                     </div>
                     <div>
-                        <label for="password" class="block text-sm">Jelszó</label>
+                        <label for="password" class="block text-sm">Password</label>
                         <input type="password" id="password" name="password"
                             class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
                             required>
                     </div>
-                    <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-md">Bejelentkezés</button>
+                    <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-md">Login</button>
                 </form>
                 <div class="mt-4 text-center">
                     <p class="text-sm text-gray-600">
-                        Nincs még fiókod?
-                        <a href="./register.php" class="text-orange-500 hover:underline">Regisztrálj!</a>
+                        You don't have account yet?
+                        <a href="./register.php" class="text-orange-500 hover:underline">Regist!</a>
                     </p>
                 </div>
             </div>
@@ -92,31 +92,31 @@
             </div>
             <!-- Teló nézet navbarlista -->
             <div>
-                <h2 class="text-white font-semibold text-lg">Oldalak</h2>
+                <h2 class="text-white font-semibold text-lg">Pages</h2>
 
                 <ul>
                     <li class="mb-1">
                         <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                            href="./index.php"><i class="fa-solid fa-house"></i> Főoldal</a>
+                            href="./index.php"><i class="fa-solid fa-house"></i> Home</a>
                     </li>
                     <li class="mb-1">
                         <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                            href="./project_start.php"><i class="fa-solid fa-play"></i> Projekt indítása</a>
+                            href="./project_start.php"><i class="fa-solid fa-play"></i> Start Project</a>
                     </li>
                     <li class="mb-1">
                         <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                            href="#"><i class="fa-solid fa-plus"></i> Saját Projektek</a>
+                            href="#"><i class="fa-solid fa-plus"></i>Your Projects</a>
                     </li>
                     <li class="mb-1">
                         <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                            href="./projects.php"><i class="fa-solid fa-globe"></i> Böngészés</a>
+                            href="./projects.php"><i class="fa-solid fa-globe"></i> Browse</a>
                     </li>
                 </ul>
             </div>
             <!-- Login -->
             <div class="mt-auto">
                 <form action="#" method="POST" class="space-y-4">
-                    <h2 class="text-white font-semibold text-lg pt-5">Bejelentkezés</h2>
+                    <h2 class="text-white font-semibold text-lg pt-5">Login</h2>
                     <div>
                         <label for="email" class="block text-sm text-gray-400 pl-4 pb-2">Email</label>
                         <input type="email" id="email" name="email"
@@ -124,16 +124,16 @@
                             required>
                     </div>
                     <div>
-                        <label for="password" class="block text-sm text-gray-400 pl-4 pb-2">Jelszó</label>
+                        <label for="password" class="block text-sm text-gray-400 pl-4 pb-2">Password</label>
                         <input type="password" id="password" name="password"
                             class="w-full rounded-md p-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm"
                             required>
                     </div>
-                    <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-md">Bejelentkezés</button>
+                    <button type="submit" class="w-full bg-orange-500 text-white py-2 rounded-md">Login</button>
                 </form>
                 <p class="text-sm text-gray-200 py-2 text-center">
-                    Nincs még fiókod?
-                    <a href="./register.php" class="text-orange-500 hover:underline">Regisztrálj!</a>
+                    You don't have account yet?
+                    <a href="./register.php" class="text-orange-500 hover:underline">Regist!</a>
                 </p>
                 <p class="my-4 text-xs text-center text-gray-400">
                     <span>CollaBears © 2025</span>

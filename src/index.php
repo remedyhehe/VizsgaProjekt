@@ -7,17 +7,14 @@
         <div class="absolute inset-0 bg-[url('../img/proj.jpeg')] bg-cover bg-center blur-[1px]"></div>
         <div class="absolute inset-0 bg-black/30"></div>
         <div class="relative container mx-auto px-6 text-center">
-            <h1 class="text-4xl font-bold mb-4">Találd meg a tökéletes csapatodat!</h1>
-            <p class="text-lg mb-6">Indítsd el a saját projektedet, vagy csatlakozz másokhoz, hogy együtt valósítsatok
-                meg
-                nagyszerű dolgokat.</p>
+            <h1 class="text-4xl font-bold mb-4">Find your perfect team!</h1>
+            <p class="text-lg mb-6">Start your own project or join others to do great things together.</p>
             <div class="flex justify-center space-x-4">
                 <a href="./project_start.php"
                     class="px-6 py-3 bg-orange-500 text-white font-medium rounded-lg shadow-md hover:bg-orange-700"><i
-                        class="fa-solid fa-folder-plus"></i> Projekt létrehozása</a>
+                        class="fa-solid fa-folder-plus"></i> Start Project</a>
                 <a href="./projects.php"
-                    class="px-6 py-3 bg-gray-800  text-white font-medium rounded-lg  hover:bg-gray-900 hover:text-white">Böngészés
-                    projektek között</a>
+                    class="px-6 py-3 bg-gray-800  text-white font-medium rounded-lg  hover:bg-gray-900 hover:text-white">Browse between projects</a>
             </div>
         </div>
     </section>
@@ -28,44 +25,36 @@
             <div class="grid grid-cols-1 md:grid-cols-3 text-center gap-8 mb-12">
                 <div>
                     <h3 class="text-4xl font-bold text-orange-500">0</h3>
-                    <p class="text-gray-600"><i class="fa-solid fa-play"></i> Elindított projektek</p>
+                    <p class="text-gray-600"><i class="fa-solid fa-play"></i> Started Projects</p>
                 </div>
                 <div>
                     <h3 class="text-4xl font-bold text-orange-500">0</h3>
-                    <p class="text-gray-600"><i class="fa-solid fa-users"></i> Csatlakozott tagok</p>
+                    <p class="text-gray-600"><i class="fa-solid fa-users"></i> Joined Members</p>
                 </div>
                 <div>
                     <h3 class="text-4xl font-bold text-orange-500">0</h3>
-                    <p class="text-gray-600"><i class="fa-solid fa-check"></i> Aktív projektek</p>
+                    <p class="text-gray-600"><i class="fa-solid fa-check"></i> Active Projects</p>
                 </div>
             </div>
 
             <!-- Miért érdemes használni? -->
             <div class="text-center">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Miért érdemes használni az oldalunkat?</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Why you should use our site?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="group bg-gray-100 p-6 rounded-lg shadow-md">
                         <h3 class="text-lg font-semibold mb-3 text-orange-500 group-hover:stroke-white "><i
-                                class="fa-solid fa-bolt"></i> Gyors toborzás</h3>
-                        <p class="text-gray-600 group-hover:text-orange-500">Találd meg gyorsan és egyszerűen a
-                            megfelelő
-                            csapattagokat a projekthez.</p>
+                                class="fa-solid fa-bolt"></i> Fast recruitment</h3>
+                        <p class="text-gray-600 group-hover:text-orange-500">Find the right team members for your project quickly and easily.</p>
                     </div>
                     <div class="group bg-gray-100 p-6 rounded-lg shadow-md">
                         <h3 class="text-lg font-semibold mb-3 text-orange-500"><i
-                                class="fa-solid fa-magnifying-glass"></i> Egyszerű
-                            keresés</h3>
-                        <p class="text-gray-600 group-hover:text-orange-500">Szűrj projektek és készségek alapján, hogy
-                            könnyen
-                            megtaláld, amit keresel.</p>
+                                class="fa-solid fa-magnifying-glass"></i> Easy searching</h3>
+                        <p class="text-gray-600 group-hover:text-orange-500">Filter by projects and skills to easily find what you're looking for.</p>
                     </div>
                     <div class="group bg-gray-100 p-6 rounded-lg shadow-md">
                         <h3 class="text-lg font-semibold mb-3 text-orange-500"><i class="fa-solid fa-earth-europe"></i>
-                            Széles
-                            közösség</h3>
-                        <p class="text-gray-600 group-hover:text-orange-500">Csatlakozz egy aktív és inspiráló
-                            közösséghez, ahol
-                            mindenki együtt dolgozik a sikerért.</p>
+                        Wide community</h3>
+                        <p class="text-gray-600 group-hover:text-orange-500">Join an active and inspiring community where everyone works together to succeed.</p>
                     </div>
                 </div>
             </div>
@@ -78,7 +67,7 @@
     <section class="py-10">
         <div class="container px-20">
             <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">
-                Kiemelt Projektek <i class="fa-solid fa-star"></i>
+                Top Projects <i class="fa-solid fa-star"></i>
             </h2>
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
@@ -90,7 +79,7 @@
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
                             <i class="fa-regular fa-heart fa-xl py-5"></i>
                             <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
-                                Részletek
+                                More
                             </button>
                             <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
                         </div>
@@ -103,7 +92,7 @@
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
                             <i class="fa-regular fa-heart fa-xl py-5"></i>
                             <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
-                                Részletek
+                                More
                             </button>
                             <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
                         </div>
@@ -129,7 +118,7 @@
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
                             <i class="fa-regular fa-heart fa-xl py-5"></i>
                             <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
-                                Részletek
+                                More
                             </button>
                             <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
                         </div>
@@ -142,7 +131,7 @@
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
                             <i class="fa-regular fa-heart fa-xl py-5"></i>
                             <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
-                                Részletek
+                                More
                             </button>
                             <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
                         </div>
@@ -155,7 +144,7 @@
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
                             <i class="fa-regular fa-heart fa-xl py-5"></i>
                             <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
-                                Részletek
+                                More
                             </button>
                             <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
                         </div>
@@ -218,19 +207,19 @@
     <!-- Hogyan működik -->
     <section class="bg-gray-100 py-16">
         <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Hogyan működik?</h2>
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">How it works?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
                 <div>
                     <div class="text-orange-500 text-4xl mb-4">1</div>
-                    <p class="text-gray-600">Hozz létre egy projektet vagy böngéssz a meglévők között.</p>
+                    <p class="text-gray-600">Create a project or browse existing ones.</p>
                 </div>
                 <div>
                     <div class="text-orange-500 text-4xl mb-4">2</div>
-                    <p class="text-gray-600">Adj hozzá szerepeket és készségeket.</p>
+                    <p class="text-gray-600">Add roles and skills.</p>
                 </div>
                 <div>
                     <div class="text-orange-500 text-4xl mb-4">3</div>
-                    <p class="text-gray-600">Találd meg a csapattagokat, vagy csatlakozz egy projekthez.</p>
+                    <p class="text-gray-600">Find team members or join a project.</p>
                 </div>
             </div>
         </div>
@@ -239,23 +228,21 @@
     <!-- Felhasználói Vélemények -->
     <section class="py-16">
         <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Felhasználói vélemények <i
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">User reviews<i
                     class="fa-solid fa-comment"></i></h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="bg-white rounded-lg shadow-lg p-6">
-                    <p class="text-gray-600 italic">"A platformnak köszönhetően találtam meg a tökéletes csapatot az
-                        alkalmazásfejlesztéshez!"</p>
+                    <p class="text-gray-600 italic">"Thanks to the platform, I found the perfect team for app development!"</p>
                     <p class="text-gray-800 mt-4 font-bold">- Gergő</p>
                 </div>
                 <!-- Felhasználói Vélemények -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
-                    <p class="text-gray-600 italic">"Egyszerű és gyors módja a projektindításnak, fantasztikus
-                        közösség."</p>
+                    <p class="text-gray-600 italic">"Easy and quick way to get started, fantastic community."</p>
                     <p class="text-gray-800 mt-4 font-bold">- Peti</p>
                 </div>
                 <!-- Felhasználói Vélemények -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
-                    <p class="text-gray-600 italic">"Régóta kerestem egy ilyen platformot. Köszönöm!"</p>
+                    <p class="text-gray-600 italic">"I have been looking for a platform like this for a long time. Thank you!"</p>
                     <p class="text-gray-800 mt-4 font-bold">- Zoli</p>
                 </div>
             </div>
@@ -265,7 +252,7 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-6">
         <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2025 Collabears. Minden jog fenntartva.</p>
+            <p>&copy; 2025 Collabears. All rights reserved.</p>
         </div>
     </footer>
 </div>
