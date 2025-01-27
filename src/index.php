@@ -75,12 +75,12 @@
 
 
     <!-- Kiemelt Projektek -->
-    <section class="py-16">
-        <div class="container mx-auto px-6">
+    <section class="py-10">
+        <div class="container px-20">
             <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">
                 Kiemelt Projektek <i class="fa-solid fa-star"></i>
             </h2>
-            <div class="swiper">
+            <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <!-- Project Kártya -->
                     <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
@@ -98,6 +98,19 @@
                     <!-- Project Kártya -->
                     <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
                         <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
+                        <h2 class="text-lg font-bold mb-2">Project 2</h2>
+                        <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
+                            <i class="fa-regular fa-heart fa-xl py-5"></i>
+                            <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
+                                Részletek
+                            </button>
+                            <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
+                        </div>
+                    </div>
+                    <!-- Project Kártya -->
+                    <div class="swiper-slide border rounded-lg shadow-lg mb-10 p-3 text-center">
+                        <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
                         <h2 class="text-lg font-bold mb-2">Project 3</h2>
                         <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
@@ -109,7 +122,7 @@
                         </div>
                     </div>
                     <!-- Project Kártya -->
-                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                    <div class="swiper-slide border rounded-lg shadow-lg mb-10 p-3 text-center">
                         <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
                         <h2 class="text-lg font-bold mb-2">Project 4</h2>
                         <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -122,9 +135,9 @@
                         </div>
                     </div>
                     <!-- Project Kártya -->
-                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                    <div class="swiper-slide border rounded-lg shadow-lg mb-10 p-3 text-center">
                         <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
-                        <h2 class="text-lg font-bold mb-2">Project 4</h2>
+                        <h2 class="text-lg font-bold mb-2">Project 5</h2>
                         <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
                             <i class="fa-regular fa-heart fa-xl py-5"></i>
@@ -135,9 +148,9 @@
                         </div>
                     </div>
                     <!-- Project Kártya -->
-                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                    <div class="swiper-slide border rounded-lg shadow-lg mb-10 p-3 text-center">
                         <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
-                        <h2 class="text-lg font-bold mb-2">Project AA4</h2>
+                        <h2 class="text-lg font-bold mb-2">Project 6</h2>
                         <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
                         <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
                             <i class="fa-regular fa-heart fa-xl py-5"></i>
@@ -149,9 +162,9 @@
                     </div>
                 </div>
                 <!-- Navigáció -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination"></div>
             </div>
+            
         </div>
     </section>
 
@@ -169,6 +182,11 @@
             align-items: center;
             flex-direction: column;
         }
+        .swiper-pagination-bullet-active{
+            background-color:orange !important;
+        }
+
+        
     </style>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
@@ -182,15 +200,14 @@
                 slidesPerView = 1; // Ha kisebb, mint 790px, akkor 1 kártya
             }
 
-            const swiper = new Swiper('.swiper', {
-                loop: true,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                slidesPerView: slidesPerView, // Dinamikusan beállítva
-                spaceBetween: 30, // Távolság a kártyák közt
-            });
+            var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+    });
         });
     </script>
 
