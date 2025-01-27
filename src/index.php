@@ -75,53 +75,116 @@
 
 
     <!-- Kiemelt Projektek -->
-
     <section class="py-16">
         <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">Kiemelt Projektek <i
-                    class="fa-solid fa-star"></i>
+            <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">
+                Kiemelt Projektek <i class="fa-solid fa-star"></i>
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Project Kártya -->
-                <div class="border rounded-lg shadow-lg p-3 text-center">
-                    <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
-                    <h2 class="text-lg font-bold mb-2">Project 1</h2>
-                    <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
-                        <i class="fa-regular fa-heart fa-xl py-5"></i>
-                        <button
-                            class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">Részletek</button>
-                        <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <!-- Project Kártya -->
+                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                        <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
+                        <h2 class="text-lg font-bold mb-2">Project 1</h2>
+                        <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
+                            <i class="fa-regular fa-heart fa-xl py-5"></i>
+                            <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
+                                Részletek
+                            </button>
+                            <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
+                        </div>
+                    </div>
+                    <!-- Project Kártya -->
+                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                        <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
+                        <h2 class="text-lg font-bold mb-2">Project 3</h2>
+                        <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
+                            <i class="fa-regular fa-heart fa-xl py-5"></i>
+                            <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
+                                Részletek
+                            </button>
+                            <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
+                        </div>
+                    </div>
+                    <!-- Project Kártya -->
+                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                        <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
+                        <h2 class="text-lg font-bold mb-2">Project 4</h2>
+                        <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
+                            <i class="fa-regular fa-heart fa-xl py-5"></i>
+                            <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
+                                Részletek
+                            </button>
+                            <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
+                        </div>
+                    </div>
+                    <!-- Project Kártya -->
+                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                        <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
+                        <h2 class="text-lg font-bold mb-2">Project 4</h2>
+                        <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
+                            <i class="fa-regular fa-heart fa-xl py-5"></i>
+                            <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
+                                Részletek
+                            </button>
+                            <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
+                        </div>
+                    </div>
+                    <!-- Project Kártya -->
+                    <div class="swiper-slide border rounded-lg shadow-lg p-3 text-center">
+                        <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
+                        <h2 class="text-lg font-bold mb-2">Project AA4</h2>
+                        <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                        <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
+                            <i class="fa-regular fa-heart fa-xl py-5"></i>
+                            <button class="bg-orange-500 p-3 rounded text-white hover:bg-gray-700 font-semibold">
+                                Részletek
+                            </button>
+                            <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
+                        </div>
                     </div>
                 </div>
-                <!-- Project Kártya -->
-                <div class="border rounded-lg shadow-lg p-3 text-center">
-                    <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
-                    <h2 class="text-lg font-bold mb-2">Project 3</h2>
-                    <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
-                        <i class="fa-regular fa-heart fa-xl py-5"></i>
-                        <button
-                            class="bg-orange-500  p-3 rounded text-white hover:bg-gray-700 font-semibold">Részletek</button>
-                        <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
-                    </div>
-                </div>
-                <!-- Project Kártya -->
-                <div class="border rounded-lg shadow-lg p-3 text-center">
-                    <img src="../img/kep2.png" alt="Card Image" class="w-full h-32 object-cover mb-4 rounded-md">
-                    <h2 class="text-lg font-bold mb-2">Project 4</h2>
-                    <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    <div class="flex gap-6 mt-10 p-3 text-sm justify-center">
-                        <i class="fa-regular fa-heart fa-xl py-5"></i>
-                        <button
-                            class="bg-orange-500  p-3 rounded text-white hover:bg-gray-700 font-semibold">Részletek</button>
-                        <i class="fa-regular fa-star fa-xl py-5 right-0"></i>
-                    </div>
-                </div>
+                <!-- Navigáció -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
             </div>
         </div>
     </section>
 
+    <!-- SwiperJS (az oldal neve ahonnan van a cucc, lényegében ez leegyszerűsíti a dolgunk.-->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        .swiper {
+            width: 100%;
+            height: auto;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const swiper = new Swiper('.swiper', {
+                loop: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                slidesPerView: 3, // Hány kártya legyen - Ide kell majd egy php lekérés, ami lekéri hány prémium projekt van aktuálisan.
+                // Ha kevesebbmint 3 kiemelt projekt van, csak egyet mutasson.
+                spaceBetween: 30, // Távolság a kártyák közt
+            });
+        });
+    </script>
 
     <!-- Hogyan működik -->
     <section class="bg-gray-100 py-16">
