@@ -32,7 +32,7 @@
             class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6 ">
             <a href="./projecthome.php" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:text-orange-500"
                 aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="./tasks.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500"
+            <a href="./project_tasks.php" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500"
                 aria-current="page"><i class="fa-solid fa-list-check"></i> Tasks</a>
             <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 hover:text-orange-500"><i
                     class="fa-solid fa-calendar"></i> Calendar</a>
