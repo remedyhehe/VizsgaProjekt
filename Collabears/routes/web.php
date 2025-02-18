@@ -11,13 +11,15 @@ Route::get('/projects', function () {
     return view('projects');
 });
 
-Route::get('/project_start', function () {
-    return view('project_start');
+Route::get('/myprojects', function () {
+    return view('myprojects');
 });
 Route::get('/layouts', function () {
     return view('layouts.project_header');
 });
-
+Route::get('/newproject', function () {
+    return view('newproject');
+});
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

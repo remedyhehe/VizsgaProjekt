@@ -15,9 +15,9 @@
             <h1 class="text-4xl font-bold mb-4">Find your perfect team!</h1>
             <p class="text-lg mb-6">Start your own project or join others to do great things together.</p>
             <div class="flex justify-center space-x-4">
-                <a href="project_start"
+                <a href="myprojects"
                     class="px-6 py-3 bg-orange-500 text-white font-medium rounded-lg shadow-md hover:bg-orange-700"><i
-                        class="fa-solid fa-folder-plus"></i> Start Project</a>
+                        class="fa-solid fa-folder-plus"></i> My Projects</a>
                 <a href="projects"
                     class="px-6 py-3 bg-gray-800  text-white font-medium rounded-lg  hover:bg-gray-900 hover:text-white">Browse between projects</a>
             </div>

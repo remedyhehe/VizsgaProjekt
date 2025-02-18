@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/28b979de8c.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <link rel="stylesheet" href="{{ asset(path: 'css/style.css') }}">
 </head>
 
@@ -34,12 +35,12 @@
             class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6 ">
             <a href="/" class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                 aria-current="page"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="/project_start" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
-                aria-current="page"><i class="fa-solid fa-play"></i> Start Project</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
-                    class="fa-solid fa-plus"></i> Your Projects</a>
+            <a href="/myprojects" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
+                    class="fa-solid fa-plus"></i> My Projects</a>
             <a href="/projects" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"><i
                     class="fa-solid fa-globe"></i> Browse</a>
+                    <a href="/settings" class="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
+                    aria-current="page"><i class="fa-solid fa-gear"></i> Settings</a>
         </div>
 
         <!-- Bejelentkezés -->
@@ -84,20 +85,20 @@
 
                 <ul>
                     <li class="mb-1">
-                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-orange-500 rounded"
                             href="/"><i class="fa-solid fa-house"></i> Home</a>
                     </li>
                     <li class="mb-1">
-                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                            href="./project_start.php"><i class="fa-solid fa-play"></i> Start Project</a>
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-orange-500 rounded"
+                            href="./myprojects"><i class="fa-solid fa-plus"></i> My Projects</a>
                     </li>
                     <li class="mb-1">
-                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                            href="#"><i class="fa-solid fa-plus"></i>Your Projects</a>
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-orange-500 rounded"
+                            href="./projects"><i class="fa-solid fa-globe"></i> Browse</a>
                     </li>
                     <li class="mb-1">
-                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-blue-600 rounded"
-                            href="./projects.php"><i class="fa-solid fa-globe"></i> Browse</a>
+                        <a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-blue-50 hover:text-orange-500 rounded"
+                            href="./settings"><i class="fa-solid fa-gear"></i> Settings</a>
                     </li>
                 </ul>
             </div>
@@ -121,7 +122,7 @@
                 </form>
                 <p class="text-sm text-gray-200 py-2 text-center">
                     You don't have account yet?
-                    <a href="../auth/register.blade.php" class="text-orange-500 hover:underline">Regist!</a>
+                    <a href="/register" class="text-orange-500 hover:underline">Sign up!</a>
                 </p>
                 <p class="my-4 text-xs text-center text-gray-400">
                     <span>CollaBears © 2025</span>
