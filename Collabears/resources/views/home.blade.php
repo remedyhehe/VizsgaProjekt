@@ -70,7 +70,7 @@
 
     <!-- Kiemelt Projektek -->
     <section class="py-10">
-        <div class="container px-20">
+        <div class="container mx-auto ">
             <h2 class="text-2xl font-bold text-gray-800 text-center mb-8">
                 Top Projects <i class="fa-solid fa-star"></i>
             </h2>
@@ -195,7 +195,7 @@
             }
 
             var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
+      slidesPerView: slidesPerView,
       spaceBetween: 30,
       pagination: {
         el: ".swiper-pagination",
