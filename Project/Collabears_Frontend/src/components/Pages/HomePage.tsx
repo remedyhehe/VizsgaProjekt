@@ -4,7 +4,7 @@ import ProjectCard from "../ProjectCard";
 
 const HomePage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
-
+  const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const fetchProjects = async () => {
     const res = await fetch("http://localhost:8000/api/projects");
     const result = await res.json();
@@ -13,6 +13,7 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchProjects();
+    loadFavorites();
   }, []);
 
   const [slidesPerView, setSlidesPerView] = useState(3);
@@ -58,6 +59,18 @@ const HomePage = () => {
       elements.forEach((el) => observer.unobserve(el));
     };
   }, []);
+  const loadFavorites = () => {
+    const savedFavorites = JSON.parse(
+      localStorage.getItem("favorites") || "{}"
+    );
+    setFavorites(savedFavorites);
+  };
+
+  const toggleFavorite = (projectId: number) => {
+    const newFavorites = { ...favorites, [projectId]: !favorites[projectId] };
+    setFavorites(newFavorites);
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+  };
 
   return (
     <div className="bg-gray-300 min-h-screen">
@@ -137,7 +150,7 @@ const HomePage = () => {
                 <h3 className="text-lg font-semibold mb-3 text-orange-500">
                   <i className="fa-solid fa-earth-europe"></i> Wide community
                 </h3>
-                <p className="text-gray-600 group-hover:text-emerald-500">
+                <p className="text-gray-600 group-hover:text-orange-500">
                   Join an active and inspiring community where everyone works
                   together to succeed.
                 </p>
@@ -154,7 +167,12 @@ const HomePage = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-10">
             {projects.slice(0, 3).map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                isFavorite={favorites[project.id] || false}
+                onToggleFavorite={() => toggleFavorite(project.id)}
+              />
             ))}
           </div>
         </div>
@@ -189,7 +207,7 @@ const HomePage = () => {
       <section className="py-16">
         <div className="container mx-auto px-6 fade-in-element">
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-8">
-            User reviews<i className="fa-solid fa-comment"></i>
+            User reviews <i className="fa-solid fa-comment"></i>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white rounded-lg shadow-lg p-6">

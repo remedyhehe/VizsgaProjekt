@@ -4,6 +4,12 @@ import MyProjectCard from "../MyProjectCard";
 
 const MyProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
+  const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
+
+  useEffect(() => {
+    fetchProjects();
+    loadFavorites();
+  }, []);
 
   const fetchProjects = async () => {
     const res = await fetch("http://localhost:8000/api/projects");
@@ -14,6 +20,18 @@ const MyProjects = () => {
   useEffect(() => {
     fetchProjects();
   }, []);
+  const loadFavorites = () => {
+    const savedFavorites = JSON.parse(
+      localStorage.getItem("favorites") || "{}"
+    );
+    setFavorites(savedFavorites);
+  };
+
+  const toggleFavorite = (projectId: number) => {
+    const newFavorites = { ...favorites, [projectId]: !favorites[projectId] };
+    setFavorites(newFavorites);
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+  };
 
   return (
     <>

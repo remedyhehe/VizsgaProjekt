@@ -65,7 +65,7 @@ const Navbar = () => {
         >
           <a
             href="/"
-            className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+            className="rounded-m px-3 py-2 text-sm font-medium text-white"
             aria-current="page"
           >
             <i className="fa-solid fa-house"></i> Home
