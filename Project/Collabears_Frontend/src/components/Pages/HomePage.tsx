@@ -165,7 +165,7 @@ const HomePage = () => {
           <h2 className="text-2xl font-bold text-gray-800 text-center mb-8 fade-in-element">
             Top Projects <i className="fa-solid fa-star"></i>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-10 fade-in-element">
             {projects.slice(0, 3).map((project) => (
               <ProjectCard
                 key={project.id}
