@@ -8,6 +8,7 @@ import { MdMovieCreation } from "react-icons/md";
 import { FaShirt } from "react-icons/fa6";
 import { IoGameController } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
+import Navbar from "../Layouts/Navbar";
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -43,6 +44,7 @@ const Projects = () => {
 
   return (
     <>
+      <Navbar />
       <nav className="flex m-4 justify-center" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
           <li className="inline-flex items-center">

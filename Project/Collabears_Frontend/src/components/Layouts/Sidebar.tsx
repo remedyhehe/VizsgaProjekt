@@ -3,14 +3,24 @@ import { FaFolder, FaRegFolder } from "react-icons/fa6";
 import {
   IoDocumentsOutline,
   IoPeopleOutline,
-  IoPeopleSharp,
+  IoSettingsOutline,
 } from "react-icons/io5";
 import { PiChats } from "react-icons/pi";
+import { AiOutlineHome } from "react-icons/ai";
 
 const Sidebar = () => {
   return (
     <div className="w-32 bg-gray-800 text-white h-full fixed left-0 flex flex-col items-center p-5">
+      <img className="h-16 mb-10" src="/images/maci.PNG" alt="Logo" />
       <ul className="space-y-10 flex flex-col">
+        <li>
+          <a
+            href="/myprojects"
+            className="flex items-center hover:text-orange-500 text-2xl"
+          >
+            <AiOutlineHome />
+          </a>
+        </li>
         <li>
           <a
             href="#"
@@ -48,7 +58,7 @@ const Sidebar = () => {
             href="#"
             className="flex items-center hover:text-orange-500 text-2xl"
           >
-            <IoDocumentsOutline />
+            <IoSettingsOutline />
           </a>
         </li>
       </ul>

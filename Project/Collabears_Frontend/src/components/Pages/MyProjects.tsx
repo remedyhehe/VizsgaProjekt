@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Project } from "../../utils/util";
 import MyProjectCard from "../MyProjectCard";
+import Navbar from "../Layouts/Navbar";
 
 const MyProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -35,6 +36,7 @@ const MyProjects = () => {
 
   return (
     <>
+      <Navbar />
       <nav className="flex m-4 justify-center" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
           <li className="inline-flex items-center">

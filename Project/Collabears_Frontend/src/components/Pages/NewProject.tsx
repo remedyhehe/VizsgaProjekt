@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Navbar from "../Layouts/Navbar";
 
 const NewProject = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -52,6 +53,7 @@ const NewProject = () => {
 
   return (
     <>
+      <Navbar />
       <nav className="flex m-4 justify-center" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
           <li className="inline-flex items-center">

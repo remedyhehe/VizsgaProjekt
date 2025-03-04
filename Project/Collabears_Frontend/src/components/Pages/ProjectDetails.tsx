@@ -42,7 +42,7 @@ const ProjectDetails = () => {
         <div className="flex-1 overflow-auto ml-32">
           {/* Navbar */}
           <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
-            <h1 className="text-2xl font-bold text-white p-10 flex">
+            <h1 className="text-2xl font-bold text-white ml-10 pt-5 flex">
               {project.name}
             </h1>
             <div className="max-w-screen-xl flex flex-row items-center p-5 ml-5">
