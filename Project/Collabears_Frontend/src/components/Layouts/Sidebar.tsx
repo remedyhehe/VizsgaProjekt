@@ -7,6 +7,8 @@ import {
 } from "react-icons/io5";
 import { PiChats } from "react-icons/pi";
 import { AiOutlineHome } from "react-icons/ai";
+import { GiExitDoor } from "react-icons/gi";
+import { FaDoorOpen } from "react-icons/fa";
 
 const Sidebar = () => {
   return (
@@ -15,7 +17,7 @@ const Sidebar = () => {
       <ul className="space-y-10 flex flex-col">
         <li>
           <a
-            href="/myprojects"
+            href="/"
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <AiOutlineHome />
@@ -59,6 +61,14 @@ const Sidebar = () => {
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <IoSettingsOutline />
+          </a>
+        </li>
+        <li>
+          <a
+            href="/myprojects"
+            className="flex items-center text-red-600 text-2xl"
+          >
+            <FaDoorOpen />
           </a>
         </li>
       </ul>
