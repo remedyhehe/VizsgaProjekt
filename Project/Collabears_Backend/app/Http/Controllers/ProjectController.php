@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use Illuminate\Http\JsonResponse;
+
 
 class ProjectController extends Controller
 {
@@ -62,10 +64,23 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Project $project)
-    {
-        //
+    public function show($id)
+{
+    $project = Project::find($id);
+
+    if (!$project) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Project not found',
+            'data' => null
+        ], 404);
     }
+
+    return response()->json([
+        'status' => true,
+        'data' => $project
+    ]);
+}
 
     /**
      * Show the form for editing the specified resource.

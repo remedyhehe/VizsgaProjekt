@@ -1,0 +1,59 @@
+import { CgMenuGridR } from "react-icons/cg";
+import { FaFolder, FaRegFolder } from "react-icons/fa6";
+import {
+  IoDocumentsOutline,
+  IoPeopleOutline,
+  IoPeopleSharp,
+} from "react-icons/io5";
+import { PiChats } from "react-icons/pi";
+
+const Sidebar = () => {
+  return (
+    <div className="w-32 bg-gray-800 text-white h-full fixed left-0 flex flex-col items-center p-5">
+      <ul className="space-y-10 flex flex-col">
+        <li>
+          <a
+            href="#"
+            className="flex items-center hover:text-orange-500 text-2xl"
+          >
+            <CgMenuGridR />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            className="flex items-center hover:text-orange-500 text-2xl"
+          >
+            <FaRegFolder />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            className="flex items-center hover:text-orange-500 text-2xl"
+          >
+            <IoPeopleOutline />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            className="flex items-center hover:text-orange-500 text-2xl"
+          >
+            <PiChats />
+          </a>
+        </li>
+        <li>
+          <a
+            href="#"
+            className="flex items-center hover:text-orange-500 text-2xl"
+          >
+            <IoDocumentsOutline />
+          </a>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+export default Sidebar;

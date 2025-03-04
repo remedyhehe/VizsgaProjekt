@@ -1,64 +1,43 @@
 import { useEffect, useState } from "react";
 import { Project } from "../../utils/util";
 import ProjectCard from "../ProjectCard";
+import { motion } from "framer-motion";
 
 const HomePage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
-  const fetchProjects = async () => {
-    const res = await fetch("http://localhost:8000/api/projects");
-    const result = await res.json();
-    setProjects(result.data);
-  };
+  const [slidesPerView, setSlidesPerView] = useState(3);
+  const [index, setIndex] = useState(0);
+
+  const texts = [
+    "Find your perfect team!",
+    "Collaborate and innovate!",
+    "Start or join amazing projects!",
+  ];
 
   useEffect(() => {
     fetchProjects();
     loadFavorites();
   }, []);
 
-  const [slidesPerView, setSlidesPerView] = useState(3);
-
   useEffect(() => {
-    const handleResize = () => {
-      const viewportWidth = window.innerWidth;
-      if (viewportWidth < 790) {
-        setSlidesPerView(1); // If the screen is smaller than 790px, show 1 card
-      } else {
-        setSlidesPerView(3); // Default to 3 cards
-      }
-    };
-
-    handleResize(); // Initial call
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % texts.length);
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
 
-  // Intersection Observer Hook
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("fade-in");
-          }
-        });
-      },
-      {
-        threshold: 0.3, // Trigger when 30% of the element is visible
-      }
-    );
+  const fetchProjects = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/projects");
+      if (!res.ok) throw new Error("Failed to fetch");
+      const result = await res.json();
+      setProjects(result.data);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
 
-    // Select all elements to observe
-    const elements = document.querySelectorAll(".fade-in-element");
-    elements.forEach((el) => observer.observe(el));
-
-    return () => {
-      // Cleanup the observer
-      elements.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
   const loadFavorites = () => {
     const savedFavorites = JSON.parse(
       localStorage.getItem("favorites") || "{}"
@@ -72,13 +51,48 @@ const HomePage = () => {
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesPerView(window.innerWidth < 790 ? 1 : 3);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("fade-in");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    const elements = document.querySelectorAll(".fade-in-element");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => elements.forEach((el) => observer.unobserve(el));
+  }, [projects]);
   return (
     <div className="bg-gray-300 min-h-screen">
       <section className="relative bg-cover bg-center text-white py-20">
         <div className="absolute inset-0 bg-[url(/images/proj.jpeg)] bg-cover bg-center blur-[5px]"></div>
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="relative container mx-auto px-6 text-center fade-in-element">
-          <h1 className="text-4xl font-bold mb-4">Find your perfect team!</h1>
+          <motion.h1
+            key={texts[index]}
+            className="text-4xl font-bold mb-4"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5 }}
+          >
+            {texts[index]}
+          </motion.h1>
           <p className="text-lg mb-6">
             Start your own project or join others to do great things together.
           </p>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Project } from "../utils/util"; // vagy a megfelelő elérési útvonal
 
 interface MyProjectCardProps {
@@ -14,7 +15,9 @@ const MyProjectCard: React.FC<MyProjectCardProps> = ({ project }) => {
           type="button"
           className="transition duration-500 ease-in-out  transform hover:-translate-y-1 hover:scale-110 text-black bg-emerald-400 hover:bg-emerald-500 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none dark:focus:ring-blue-800"
         >
-          View <i className="fa-solid fa-eye"></i>
+          <Link to={`/project/${project.id}`}>
+            View <i className="fa-solid fa-eye"></i>
+          </Link>
         </button>
         <button
           type="button"
