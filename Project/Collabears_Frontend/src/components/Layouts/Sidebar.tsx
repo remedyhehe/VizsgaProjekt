@@ -1,19 +1,17 @@
 import { CgMenuGridR } from "react-icons/cg";
-import { FaFolder, FaRegFolder } from "react-icons/fa6";
-import {
-  IoDocumentsOutline,
-  IoPeopleOutline,
-  IoSettingsOutline,
-} from "react-icons/io5";
+import { FaRegFolder } from "react-icons/fa6";
+import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import { PiChats } from "react-icons/pi";
 import { AiOutlineHome } from "react-icons/ai";
-import { GiExitDoor } from "react-icons/gi";
 import { FaDoorOpen } from "react-icons/fa";
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 const Sidebar = () => {
   return (
     <div className="w-32 bg-gray-800 text-white h-full fixed left-0 flex flex-col items-center p-5">
-      <img className="h-16 mb-10" src="/images/maci.PNG" alt="Logo" />
+      <a href="/">
+        <img className="h-16 mb-10" src="/images/maci.PNG" alt="Logo" />
+      </a>
       <ul className="space-y-10 flex flex-col">
         <li>
           <a
@@ -61,6 +59,14 @@ const Sidebar = () => {
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <IoSettingsOutline />
+          </a>
+        </li>
+        <li>
+          <a
+            href=""
+            className="flex items-center hover:text-orange-500 text-2xl"
+          >
+            <IoMdNotificationsOutline />
           </a>
         </li>
         <li>

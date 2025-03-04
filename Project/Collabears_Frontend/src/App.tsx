@@ -26,7 +26,6 @@ function App() {
           <Route path="/project/:id" element={<ProjectDetails />} />
         </Routes>
       </main>
-      <Footer />
     </div>
   );
 }

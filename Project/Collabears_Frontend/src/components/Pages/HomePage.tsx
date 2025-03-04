@@ -83,7 +83,8 @@ const HomePage = () => {
       <Navbar />
       <div className="bg-gray-300 min-h-screen">
         <section className="relative bg-cover bg-center text-white py-20">
-          <div className="absolute inset-0 bg-[url(/images/proj.jpeg)] bg-cover bg-center blur-[5px]"></div>
+          <div className="absolute inset-0 bg-[url(/images/proj.jpeg)] bg-cover bg-center blur-[5px] rounded-lg"></div>
+
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="relative container mx-auto px-6 text-center fade-in-element">
             <motion.h1

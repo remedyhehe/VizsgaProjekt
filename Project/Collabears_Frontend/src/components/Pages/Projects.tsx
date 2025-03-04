@@ -90,7 +90,7 @@ const Projects = () => {
       </nav>
       <div className="bg-gray-100 py-5">
         <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-12">
-          <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 sm:flex sm:gap-0">
+          <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 sm:flex sm:gap-0 justify-center">
             <a href="#" className="px-3 py-2 text-orange-500">
               All
             </a>
