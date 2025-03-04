@@ -1,3 +1,5 @@
+/** @format */
+
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Layouts/Navbar";
@@ -7,6 +9,8 @@ import MyProjects from "./components/Pages/MyProjects";
 import NewProject from "./components/Pages/NewProject";
 import Projects from "./components/Pages/Projects";
 import ProjectDetails from "./components/Pages/ProjectDetails";
+import RegisterPage from "./components/Pages/RegisterPage";
+import LoginPage from "./components/Pages/LoginPage";
 
 function App() {
   return (
@@ -17,6 +21,8 @@ function App() {
           <Route path="/myprojects" element={<MyProjects />} />
           <Route path="/newproject" element={<NewProject />} />
           <Route path="/projects" element={<Projects />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/project/:id" element={<ProjectDetails />} />
         </Routes>
       </main>
