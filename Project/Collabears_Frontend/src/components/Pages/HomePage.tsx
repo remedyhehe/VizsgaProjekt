@@ -3,6 +3,7 @@ import { Project } from "../../utils/util";
 import ProjectCard from "../ProjectCard";
 import { motion } from "framer-motion";
 import Navbar from "../Layouts/Navbar";
+import Footer from "../Layouts/Footer";
 
 const HomePage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -252,6 +253,7 @@ const HomePage = () => {
           </div>
         </section>
       </div>
+      <Footer />
     </>
   );
 };
