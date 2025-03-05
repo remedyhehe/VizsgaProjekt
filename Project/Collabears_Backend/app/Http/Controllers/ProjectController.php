@@ -93,16 +93,57 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(UpdateProjectRequest $request, $id)
     {
-        //
-    }
+        $project = Project::find($id);
 
+        if (!$project) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Project not found',
+            ], 404);
+        }
+
+        try {
+            $project->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'category' => $request->category,
+                'member_number' => $request->member_number,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Project updated successfully',
+                'data' => $project
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something went wrong!',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+        if($project == null){
+            return response()->json([
+                'status' => false,
+                'message' => "Project not found."
+            ]);
+        }
+
+        $project->delete();
+        return response()->json([
+            'status' => true,
+            'message' => "Project deleted successfully."
+        ]);
     }
 }

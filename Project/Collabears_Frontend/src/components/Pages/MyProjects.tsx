@@ -108,6 +108,8 @@ const MyProjects = () => {
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {projects.slice(5, 10).map((project) => (
                 <MyProjectCard
+                  projects={projects} // Ezt hozzá kell adni!
+                  setProjects={setProjects} // Ezt is!
                   key={project.id}
                   project={project}
                   onEdit={openEditModal}
@@ -172,7 +174,6 @@ const MyProjects = () => {
           </div>
         )}
       </div>
-      <Footer />
     </>
   );
 };
