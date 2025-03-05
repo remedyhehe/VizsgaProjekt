@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\User;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\JsonResponse;
@@ -31,6 +32,41 @@ class ProjectController extends Controller
     {
         //
     }
+    // ProjectController.php
+public function getDashboardData()
+{
+    $projectsCount = Project::count(); // a projektek számát adja vissza
+    $membersCount = User::count(); // a tagok számát adja vissza
+
+    return response()->json([
+        'projects_count' => $projectsCount,
+        'members_count' => $membersCount,
+    ]);
+}
+public function toggleFavorite($id)
+{
+    $project = Project::find($id);
+
+    if ($project) {
+        // Toggle the 'is_favorite' status
+        $project->is_favorite = !$project->is_favorite;
+        $project->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Favorite status updated',
+            'is_favorite' => $project->is_favorite
+        ]);
+    }
+
+    return response()->json([
+        'status' => false,
+        'message' => 'Project not found'
+    ], 404);
+}
+
+
+
 
     /**
      * Store a newly created resource in storage.

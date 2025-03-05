@@ -189,12 +189,12 @@ const NewProject = () => {
                 className="w-full border border-gray-300 p-4 rounded-xl"
               >
                 <option>Choose a category</option>
-                <option value="games">Games</option>
-                <option value="programs">Programs</option>
-                <option value="music">Music</option>
-                <option value="technology">Technology</option>
-                <option value="movies">Movies</option>
-                <option value="fashion">Fashion</option>
+                <option value="Games">Games</option>
+                <option value="Programing">Programing</option>
+                <option value="Music">Music</option>
+                <option value="Technology">Technology</option>
+                <option value="Movies">Movies</option>
+                <option value="Fashion">Fashion</option>
               </select>
               <button
                 type="button"

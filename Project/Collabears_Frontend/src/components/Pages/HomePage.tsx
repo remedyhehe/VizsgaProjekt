@@ -79,6 +79,38 @@ const HomePage = () => {
 
     return () => elements.forEach((el) => observer.unobserve(el));
   }, [projects]);
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+  const [projectsCount, setProjectsCount] = useState<number>(0);
+  const [membersCount, setMembersCount] = useState<number>(0);
+
+  const fetchDashboardData = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/dashboard");
+      if (!res.ok) throw new Error("Failed to fetch");
+      const result = await res.json();
+      setProjectsCount(result.projects_count);
+      setMembersCount(result.members_count);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    }
+  };
+
+  const countUpEffect = (target: number) => {
+    let current = 0;
+    const step = Math.ceil(target / 50); // number of steps for the animation
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(interval);
+      }
+      return current;
+    }, 30); // adjust the interval timing
+  };
+
   return (
     <>
       <Navbar />
@@ -120,23 +152,31 @@ const HomePage = () => {
 
         <section className="bg-white py-16">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 text-center gap-8 mb-12 fade-in-element">
+            <div className="grid grid-cols-1 md:grid-cols-2 text-center gap-10 mb-12 fade-in-element">
               <div>
-                <h3 className="text-4xl font-bold text-orange-500">0</h3>
+                <motion.h3
+                  className="text-4xl font-bold text-orange-500"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1 }}
+                >
+                  {projectsCount}
+                </motion.h3>
                 <p className="text-gray-600">
                   <i className="fa-solid fa-play"></i> Started Projects
                 </p>
               </div>
               <div>
-                <h3 className="text-4xl font-bold text-orange-500">0</h3>
+                <motion.h3
+                  className="text-4xl font-bold text-orange-500"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1 }}
+                >
+                  {membersCount}
+                </motion.h3>
                 <p className="text-gray-600">
                   <i className="fa-solid fa-users"></i> Joined Members
-                </p>
-              </div>
-              <div>
-                <h3 className="text-4xl font-bold text-orange-500">0</h3>
-                <p className="text-gray-600">
-                  <i className="fa-solid fa-check"></i> Active Projects
                 </p>
               </div>
             </div>

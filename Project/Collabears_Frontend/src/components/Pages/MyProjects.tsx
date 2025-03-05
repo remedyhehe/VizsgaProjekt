@@ -106,7 +106,7 @@ const MyProjects = () => {
         <div className="flex-grow bg-white py-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.slice(5, 10).map((project) => (
+              {projects.slice(10, 100).map((project) => (
                 <MyProjectCard
                   projects={projects} // Ezt hozzá kell adni!
                   setProjects={setProjects} // Ezt is!

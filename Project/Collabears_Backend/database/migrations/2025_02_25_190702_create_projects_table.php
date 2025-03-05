@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('member_number')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
+            $table->boolean('is_favorite')->default(false);
             $table->timestamps();
         });
     }
@@ -28,6 +29,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropColumn('is_favorite'); // Remove the column if rolled back
+        });
     }
 };
