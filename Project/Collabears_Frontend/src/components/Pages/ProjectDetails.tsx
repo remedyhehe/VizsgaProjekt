@@ -3,13 +3,35 @@ import { FaDotCircle, FaList, FaShare, FaSort } from "react-icons/fa";
 import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoAddOutline, IoFilterSharp } from "react-icons/io5";
 import Sidebar from "../Layouts/Sidebar";
-import { useEffect, useState } from "react";
+import { DragEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CiViewTimeline } from "react-icons/ci";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState(null);
   const { id } = useParams();
+
+  const [tasks, setTasks] = useState({
+    "task-1": { id: "task-1", content: "Task 1" },
+    "task-2": { id: "task-2", content: "Task 2" },
+    "task-3": { id: "task-3", content: "Task 3" },
+    "task-4": { id: "task-4", content: "Task 4" },
+    "task-5": { id: "task-5", content: "Task 5" },
+    "task-6": { id: "task-6", content: "Task 6" },
+  });
+
+  const [columns, setColumns] = useState<{ [key: string]: { id: string; title: string; taskIds: string[] } }>({
+    "column-1": {
+      id: "column-1",
+      title: "Column 1",
+      taskIds: ["task-1"],
+    },
+    "column-2": {
+      id: "column-2",
+      title: "Column 2",
+      taskIds: ["task-2", "task-3", "task-4", "task-5", "task-6"],
+    },
+  });
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -32,6 +54,42 @@ const ProjectDetails = () => {
   if (!project)
     return <h1 className="flex justify-center text-2xl p-5">Loading...</h1>;
 
+  const handleDragStart = (event: DragEvent<HTMLLIElement>, taskId: string) => {
+    event.dataTransfer.setData("text/plain", taskId);
+  };
+
+  const handleDragOver = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event: DragEvent<HTMLLIElement>, columnId: string) => {
+    const taskId = event.dataTransfer.getData("text/plain");
+
+    const startColumn = Object.values(columns).find((column) =>
+      column.taskIds.includes(taskId)
+    );
+
+    if (startColumn && startColumn.id !== columnId) {
+      const newStartTaskIds = Array.from(startColumn.taskIds);
+      newStartTaskIds.splice(newStartTaskIds.indexOf(taskId), 1);
+
+      const newEndTaskIds = Array.from(columns[columnId].taskIds);
+      newEndTaskIds.push(taskId);
+
+      setColumns((prevColumns) => ({
+        ...prevColumns,
+        [startColumn.id]: {
+          ...startColumn,
+          taskIds: newStartTaskIds,
+        },
+        [columnId]: {
+          ...prevColumns[columnId],
+          taskIds: newEndTaskIds,
+        },
+      }));
+    }
+  };
+
   return (
     <>
       <div className="flex h-full">
@@ -39,7 +97,6 @@ const ProjectDetails = () => {
         <Sidebar />
 
         {/* Main Content */}
-
         <div className="flex-1 overflow-auto ml-32">
           {/* Navbar */}
           <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
@@ -115,7 +172,7 @@ const ProjectDetails = () => {
               {project.name}
             </h1>
             <div className="max-w-screen-xl flex flex-row items-center p-5 ml-5">
-              <div className="w-full  md:w-auto" id="navbar-default">
+              <div className="w-full md:w-auto" id="navbar-default">
                 <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 text-md">
                   <li>
                     <a
@@ -186,152 +243,41 @@ const ProjectDetails = () => {
           </nav>
 
           {/* Card below navbar */}
-          <div className="p-5 bg-gray-900 flex justify-center">
-            <div className="flex flex-col gap-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div className="flex">
-                  <a
-                    href="#"
-                    className="flex gap-5 p-4 w-full items-center text-red-600 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                  >
-                    <FaDotCircle /> <p>In Queue</p>
-                  </a>
-                </div>
-                <div className="flex">
-                  <a
-                    href="#"
-                    className="flex gap-5 p-4 w-full items-center text-yellow-600 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                  >
-                    <FaDotCircle /> <p>On Progress</p>
-                  </a>
-                </div>
-                <div className="flex">
-                  <a
-                    href="#"
-                    className="flex gap-5 p-4 w-full items-center text-blue-600 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                  >
-                    <FaDotCircle /> <p>Testing</p>
-                  </a>
-                </div>
-                <div className="flex">
-                  <a
-                    href="#"
-                    className="flex gap-5 p-4 w-full items-center text-green-600 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                  >
-                    <FaDotCircle /> <p>Completed</p>
-                  </a>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols- md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-                <a
-                  href="#"
-                  className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                >
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Noteworthy technology acquisitions 2021
-                  </h5>
-                  <p className="font-normal text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
-                  </p>
-                </a>
-              </div>
+          <div className="p-5 bg-gray-900 flex justify-start">
+
+            <div className="taskview flex flex-col gap-4">
+
+              {/* Oszlopok */}
+              <ol className="taskcols bg-slate-500 p-3 mt-2 min-w-fit flex">
+                  {Object.values(columns).map((column) => (
+                    <li
+                      key={column.id}
+                      className="taskcol bg-emerald-500 p-2 rounded shadow mx-4 w-72 min-h-20"
+                      onDragOver={handleDragOver}
+                      onDrop={(event) => handleDrop(event, column.id)}
+                    >
+                      <div className="columnheader flex justify-between p-2 pb-4">
+                        <h2 className="font-semibold">{column.title}</h2>
+                        <i className="fa-solid fa-ellipsis inline-block text-gray-500 cursor-pointer" />
+                      </div>
+
+                      {/* Feladatok az oszlopokban */}
+                      <div className="task-list">
+                        {column.taskIds.map((taskId) => (
+                          <div
+                            key={taskId}
+                            className="taskbox bg-slate-100 shadow-md my-2 p-3 rounded cursor-pointer"
+                            draggable
+                            onDragStart={(event) => handleDragStart(event, taskId)}
+                          >
+                            {tasks[taskId].content}
+                          </div>
+                        ))}
+                      </div>
+                    </li>
+                  ))}
+              </ol>
+
             </div>
           </div>
         </div>
