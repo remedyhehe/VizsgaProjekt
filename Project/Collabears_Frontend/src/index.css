@@ -10,4 +10,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+/* Testreszabott progress bar szín */
+.Toastify__progress-bar {
+  background-color: #34c24a !important; /* Zöld progress bar */
+}
+
   

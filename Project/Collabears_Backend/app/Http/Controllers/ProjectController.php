@@ -131,19 +131,25 @@ class ProjectController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-    {
-        $project = Project::find($id);
-        if($project == null){
-            return response()->json([
-                'status' => false,
-                'message' => "Project not found."
-            ]);
-        }
-
-        $project->delete();
+{
+    $project = Project::find($id);
+    
+    // Check if the project exists
+    if ($project === null) {
         return response()->json([
-            'status' => true,
-            'message' => "Project deleted successfully."
-        ]);
+            'status' => false,
+            'message' => "Project not found."
+        ], 404); // 404 Not Found HTTP code
     }
+
+    // Delete the project
+    $project->delete();
+    
+    // Return success response
+    return response()->json([
+        'status' => true,
+        'message' => "Project deleted successfully."
+    ], 200); // 200 OK HTTP code
+}
+
 }

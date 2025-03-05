@@ -11,6 +11,7 @@ import Projects from "./components/Pages/Projects";
 import ProjectDetails from "./components/Pages/ProjectDetails";
 import RegisterPage from "./components/Pages/RegisterPage";
 import LoginPage from "./components/Pages/LoginPage";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/project/:id" element={<ProjectDetails />} />
         </Routes>
+        <ToastContainer />
       </main>
     </div>
   );
