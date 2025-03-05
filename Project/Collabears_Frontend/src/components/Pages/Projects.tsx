@@ -150,7 +150,7 @@ const Projects = () => {
       <div className="flex-grow bg-white py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {projects.slice(0, 3).map((project) => (
+            {projects.slice(0, 5).map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}
