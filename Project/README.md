@@ -3,7 +3,8 @@
 ## Frontend beállítás
 
 1. Futtasd az `npm install` parancsot a szükséges csomagok telepítéséhez.
-2. Futtasd az `npm run dev` parancsot a fejlesztői szerver indításához.
+2. npm install react-toastify
+3. Futtasd az `npm run dev` parancsot a fejlesztői szerver indításához.
 
 ## Backend beállítás
 

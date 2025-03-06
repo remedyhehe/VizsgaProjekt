@@ -6,30 +6,33 @@ import Sidebar from "../Layouts/Sidebar";
 import { DragEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CiViewTimeline } from "react-icons/ci";
+import { ITask, IColumn } from "../../utils/util";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState(null);
   const { id } = useParams();
 
-  const [tasks, setTasks] = useState({
-    "task-1": { id: "task-1", content: "Task 1" },
-    "task-2": { id: "task-2", content: "Task 2" },
-    "task-3": { id: "task-3", content: "Task 3" },
-    "task-4": { id: "task-4", content: "Task 4" },
-    "task-5": { id: "task-5", content: "Task 5" },
-    "task-6": { id: "task-6", content: "Task 6" },
+  const [tasks, setTasks] = useState<{ [key: number]: ITask }>({
+    1: { name: "Task 12", description: "Description for Task 1", column_id: 1 },
+    2: { name: "Task 12", description: "Description for Task 2", column_id: 2 },
+    3: { name: "Task 3", description: "Description for Task 3", column_id: 2 },
+    4: { name: "Task 4", description: "Description for Task 4", column_id: 2 },
+    5: { name: "Task 5", description: "Description for Task 5", column_id: 2 },
+    6: { name: "Task 6", description: "Description for Task 6", column_id: 2 },
   });
 
-  const [columns, setColumns] = useState<{ [key: string]: { id: string; title: string; taskIds: string[] } }>({
-    "column-1": {
-      id: "column-1",
-      title: "Column 1",
-      taskIds: ["task-1"],
+  const [columns, setColumns] = useState<{ [key: number]: IColumn & { taskIds: number[] } }>({
+    1: {
+      id: 1,
+      name: "Column 1",
+      project_id: 1,
+      taskIds: [1],
     },
-    "column-2": {
-      id: "column-2",
-      title: "Column 2",
-      taskIds: ["task-2", "task-3", "task-4", "task-5", "task-6"],
+    2: {
+      id: 2,
+      name: "Column 2",
+      project_id: 1,
+      taskIds: [2, 3, 4, 5, 6],
     },
   });
 
@@ -54,16 +57,16 @@ const ProjectDetails = () => {
   if (!project)
     return <h1 className="flex justify-center text-2xl p-5">Loading...</h1>;
 
-  const handleDragStart = (event: DragEvent<HTMLLIElement>, taskId: string) => {
-    event.dataTransfer.setData("text/plain", taskId);
+  const handleDragStart = (event: DragEvent<HTMLDivElement>, taskId: number) => {
+    event.dataTransfer.setData("text/plain", taskId.toString());
   };
 
-  const handleDragOver = (event: { preventDefault: () => void; }) => {
+  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
 
-  const handleDrop = (event: DragEvent<HTMLLIElement>, columnId: string) => {
-    const taskId = event.dataTransfer.getData("text/plain");
+  const handleDrop = (event: DragEvent<HTMLDivElement>, columnId: number) => {
+    const taskId = parseInt(event.dataTransfer.getData("text/plain"), 10);
 
     const startColumn = Object.values(columns).find((column) =>
       column.taskIds.includes(taskId)
@@ -85,6 +88,14 @@ const ProjectDetails = () => {
         [columnId]: {
           ...prevColumns[columnId],
           taskIds: newEndTaskIds,
+        },
+      }));
+
+      setTasks((prevTasks) => ({
+        ...prevTasks,
+        [taskId]: {
+          ...prevTasks[taskId],
+          column_id: columnId,
         },
       }));
     }
@@ -248,29 +259,31 @@ const ProjectDetails = () => {
             <div className="taskview flex flex-col gap-4">
 
               {/* Oszlopok */}
-              <ol className="taskcols bg-slate-500 p-3 mt-2 min-w-fit flex">
+              <ol className="taskcols p-3 mt-2 min-w-fit flex">
                   {Object.values(columns).map((column) => (
                     <li
                       key={column.id}
-                      className="taskcol bg-emerald-500 p-2 rounded shadow mx-4 w-72 min-h-20"
+                      className="taskcol bg-slate-800 p-2 rounded-lg shadow-sm mx-2 w-72 min-h-20 border border-slate-700"
                       onDragOver={handleDragOver}
                       onDrop={(event) => handleDrop(event, column.id)}
                     >
                       <div className="columnheader flex justify-between p-2 pb-4">
-                        <h2 className="font-semibold">{column.title}</h2>
-                        <i className="fa-solid fa-ellipsis inline-block text-gray-500 cursor-pointer" />
+                        <h2 className="text-font-semibold text-slate-100">{column.name}</h2>
+                        <i className="fa-solid fa-ellipsis inline-block text-slate-500 cursor-pointer" />
                       </div>
 
                       {/* Feladatok az oszlopokban */}
                       <div className="task-list">
                         {column.taskIds.map((taskId) => (
-                          <div
-                            key={taskId}
-                            className="taskbox bg-slate-100 shadow-md my-2 p-3 rounded cursor-pointer"
-                            draggable
-                            onDragStart={(event) => handleDragStart(event, taskId)}
-                          >
-                            {tasks[taskId].content}
+                          <div key={taskId} className="taskbox bg-slate-700 shadow-md my-2 p-3 rounded cursor-pointer border border-slate-600" draggable onDragStart={(event) => handleDragStart(event, taskId)}>
+                            <div className="flex justify-between flex-row">
+
+                            <p className="flex text-lg font-medium text-slate-100">{tasks[taskId].name}</p>
+                            <i className="flex fa-solid fa-ellipsis inline-block text-slate-500 cursor-pointer" />
+                            </div>
+                            
+                            <p className="text-slate-400 text-sm">{tasks[taskId].description}</p>
+                            
                           </div>
                         ))}
                       </div>
