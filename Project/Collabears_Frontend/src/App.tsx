@@ -12,6 +12,7 @@ import ProjectDetails from "./components/Pages/ProjectDetails";
 import RegisterPage from "./components/Pages/RegisterPage";
 import LoginPage from "./components/Pages/LoginPage";
 import { ToastContainer } from "react-toastify";
+import PremiumPage from "./components/Pages/PremiumPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/premium" element={<PremiumPage />} />
           <Route path="/project/:id" element={<ProjectDetails />} />
         </Routes>
         <ToastContainer />

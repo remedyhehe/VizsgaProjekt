@@ -75,7 +75,12 @@ const RegisterPage: React.FC = () => {
   return (
     <>
       <div className="">
-        <div className="shadow-lg rounded-lg p-6 w-full max-w-md mx-auto mt-25 bg-slate-100 min-h-72">
+          <div className="p-6 w-full max-w-md mx-auto mt-25 text-center">
+            <a href="/" className="hover:text-orange-500">
+              Click here to back to the Main Page
+            </a>
+          </div>
+        <div className="shadow-lg rounded-lg p-6 w-full max-w-md mx-auto mt-2 bg-slate-100 min-h-72">
           {/* Ikonok és vonalak */}
           <div className="flex items-center justify-between mb-10">
             <div className="flex-1 h-0.5 bg-transparent"></div>
@@ -206,9 +211,15 @@ const RegisterPage: React.FC = () => {
         </div>
         {step === 1 && (
           <div className="shadow-lg rounded-lg p-6 w-full max-w-md mx-auto mt-5 bg-slate-100 min-h-20 text-center">
-            <a href="/" className="hover:text-orange-500">
-              Click here to back to the Main Page
-            </a>
+            <p className="text-gray-600 mb-4">Or continue with</p>
+            <div className="flex space-x-3">
+              <button className="flex items-center justify-center gap-2 w-1/2 py-2 px-4 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition">
+                <i className="fa-brands fa-google"></i> Google
+              </button>
+              <button className="flex items-center justify-center gap-2 w-1/2 py-2 px-4 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition">
+                <i className="fa-brands fa-github"></i> GitHub
+              </button>
+            </div>
           </div>
         )}
       </div>
