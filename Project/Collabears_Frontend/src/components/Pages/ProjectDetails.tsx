@@ -21,7 +21,9 @@ const ProjectDetails = () => {
     6: { name: "Task 6", description: "Description for Task 6", column_id: 2 },
   });
 
-  const [columns, setColumns] = useState<{ [key: number]: IColumn & { taskIds: number[] } }>({
+  const [columns, setColumns] = useState<{
+    [key: number]: IColumn & { taskIds: number[] };
+  }>({
     1: {
       id: 1,
       name: "Column 1",
@@ -57,7 +59,10 @@ const ProjectDetails = () => {
   if (!project)
     return <h1 className="flex justify-center text-2xl p-5">Loading...</h1>;
 
-  const handleDragStart = (event: DragEvent<HTMLDivElement>, taskId: number) => {
+  const handleDragStart = (
+    event: DragEvent<HTMLDivElement>,
+    taskId: number
+  ) => {
     event.dataTransfer.setData("text/plain", taskId.toString());
   };
 
@@ -255,42 +260,50 @@ const ProjectDetails = () => {
 
           {/* Card below navbar */}
           <div className="p-5 bg-gray-900 flex justify-start">
-
             <div className="taskview flex flex-col gap-4">
-
               {/* Oszlopok */}
               <ol className="taskcols p-3 mt-2 min-w-fit flex">
-                  {Object.values(columns).map((column) => (
-                    <li
-                      key={column.id}
-                      className="taskcol bg-slate-800 p-2 rounded-lg shadow-sm mx-2 w-72 min-h-20 border border-slate-700"
-                      onDragOver={handleDragOver}
-                      onDrop={(event) => handleDrop(event, column.id)}
-                    >
-                      <div className="columnheader flex justify-between p-2 pb-4">
-                        <h2 className="text-font-semibold text-slate-100">{column.name}</h2>
-                        <i className="fa-solid fa-ellipsis inline-block text-slate-500 cursor-pointer" />
-                      </div>
+                {Object.values(columns).map((column) => (
+                  <li
+                    key={column.id}
+                    className="taskcol bg-slate-800 p-2 rounded-lg shadow-sm mx-2 w-72 min-h-20 border border-slate-700"
+                    onDragOver={handleDragOver}
+                    onDrop={(event) => handleDrop(event, column.id)}
+                  >
+                    <div className="columnheader flex justify-between p-2 pb-4">
+                      <h2 className="text-font-semibold text-slate-100">
+                        {column.name}
+                      </h2>
+                      <i className="fa-solid fa-ellipsis inline-block text-slate-500 cursor-pointer" />
+                    </div>
 
-                      {/* Feladatok az oszlopokban */}
-                      <div className="task-list">
-                        {column.taskIds.map((taskId) => (
-                          <div key={taskId} className="taskbox bg-slate-700 shadow-md my-2 p-3 rounded cursor-pointer border border-slate-600" draggable onDragStart={(event) => handleDragStart(event, taskId)}>
-                            <div className="flex justify-between flex-row">
-
-                            <p className="flex text-lg font-medium text-slate-100">{tasks[taskId].name}</p>
+                    {/* Feladatok az oszlopokban */}
+                    <div className="task-list">
+                      {column.taskIds.map((taskId) => (
+                        <div
+                          key={taskId}
+                          className="taskbox bg-slate-700 shadow-md my-2 p-3 rounded cursor-pointer border border-slate-600"
+                          draggable
+                          onDragStart={(event) =>
+                            handleDragStart(event, taskId)
+                          }
+                        >
+                          <div className="flex justify-between flex-row">
+                            <p className="flex text-lg font-medium text-slate-100">
+                              {tasks[taskId].name}
+                            </p>
                             <i className="flex fa-solid fa-ellipsis inline-block text-slate-500 cursor-pointer" />
-                            </div>
-                            
-                            <p className="text-slate-400 text-sm">{tasks[taskId].description}</p>
-                            
                           </div>
-                        ))}
-                      </div>
-                    </li>
-                  ))}
-              </ol>
 
+                          <p className="text-slate-400 text-sm">
+                            {tasks[taskId].description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
         </div>

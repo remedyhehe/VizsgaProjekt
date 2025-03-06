@@ -5,8 +5,10 @@ import { PiChats } from "react-icons/pi";
 import { AiOutlineHome } from "react-icons/ai";
 import { FaDoorOpen } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { useParams } from "react-router-dom";
 
 const Sidebar = () => {
+  const { id } = useParams();
   return (
     <div className="w-32 bg-gray-800 text-white h-full fixed left-0 flex flex-col items-center p-5">
       <a href="/">
@@ -23,7 +25,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a
-            href="#"
+            href={`/projectDetails/${id || ""}`}
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <CgMenuGridR />
@@ -31,7 +33,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a
-            href="#"
+            href={`/projectFiles/${id || ""}`}
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <FaRegFolder />
@@ -39,7 +41,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a
-            href="#"
+            href={`/projectMembers/${id || ""}`}
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <IoPeopleOutline />
@@ -47,7 +49,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a
-            href="#"
+            href={`/projectChat/${id || ""}`}
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <PiChats />
@@ -55,7 +57,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a
-            href="#"
+            href={`/projectSettings/${id || ""}`}
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <IoSettingsOutline />
@@ -63,7 +65,7 @@ const Sidebar = () => {
         </li>
         <li>
           <a
-            href=""
+            href={`/projectNotification/${id || ""}`}
             className="flex items-center hover:text-orange-500 text-2xl"
           >
             <IoMdNotificationsOutline />

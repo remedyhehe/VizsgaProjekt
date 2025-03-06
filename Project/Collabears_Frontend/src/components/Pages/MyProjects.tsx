@@ -92,89 +92,31 @@ const MyProjects = () => {
           </li>
         </ol>
       </nav>
-      <div className="bg-white">
-        <div className="flex flex-col p-5 items-center justify-center bg-white">
+      <div className="bg-white p-5">
+        <div className="flex items-center justify-between mx-40">
+          <h1 className="text-2xl font-bold">My Projects</h1>
           <a href="/newproject">
             <button className="rounded-md bg-slate-800 py-2 px-4 text-white">
               New Project
             </button>
           </a>
         </div>
+      </div>
 
-        <div className="flex flex-col p-5 items-center justify-center gap-10 bg-white">
-          <h1 className="text-2xl font-bold">My Projects</h1>
-        </div>
-
-        <div className="flex-grow bg-white py-8">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {projects.slice(10, 100).map((project) => (
-                <MyProjectCard
-                  projects={projects} // Ezt hozzá kell adni!
-                  setProjects={setProjects} // Ezt is!
-                  key={project.id}
-                  project={project}
-                  onEdit={openEditModal}
-                />
-              ))}
-            </div>
+      <div className="flex-grow bg-white py-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.slice(10, 100).map((project) => (
+              <MyProjectCard
+                projects={projects} // Ezt hozzá kell adni!
+                setProjects={setProjects} // Ezt is!
+                key={project.id}
+                project={project}
+                onEdit={openEditModal}
+              />
+            ))}
           </div>
         </div>
-
-        {isModalOpen && selectedProject && (
-          <div className="fixed inset-0 flex items-center justify-center bg-opacity-50">
-            <div className="bg-gray-900 p-5 rounded-lg shadow-lg w-full max-w-2xl">
-              <div className="flex  justify-between items-center pb-4 border-b">
-                <h3 className="text-lg font-semibold text-white">
-                  Edit Project
-                </h3>
-                <button
-                  onClick={closeModal}
-                  className="text-gray-400 hover:text-white"
-                >
-                  ✕
-                </button>
-              </div>
-              <form>
-                <div className="flex flex-col gap-4 mb-4 sm:grid-cols-2 text-white">
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full p-2 border rounded-lg"
-                      defaultValue={selectedProject.name}
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-2 text-sm font-medium text-white">
-                      Description
-                    </label>
-                    <textarea
-                      className="w-full p-2 border rounded-lg"
-                      defaultValue={selectedProject.description}
-                    ></textarea>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <button
-                    type="submit"
-                    className="bg-emerald-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Done
-                  </button>
-                  <button
-                    onClick={closeModal}
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

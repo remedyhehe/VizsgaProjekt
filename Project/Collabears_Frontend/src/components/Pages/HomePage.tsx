@@ -175,6 +175,7 @@ const HomePage = () => {
               >
                 <i className="fa-solid fa-folder-plus"></i> My Projects
               </a>
+
               <a
                 href="projects"
                 className="px-6 py-3 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-900"
@@ -189,13 +190,13 @@ const HomePage = () => {
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 text-center gap-10 mb-12 fade-in-element">
               <div>
-              <Counter targetNumber={projectsCount} />
+                <Counter targetNumber={projectsCount} />
                 <p className="text-gray-600">
                   <i className="fa-solid fa-play"></i> Started Projects
                 </p>
               </div>
               <div>
-              <Counter targetNumber={membersCount} />
+                <Counter targetNumber={membersCount} />
                 <p className="text-gray-600">
                   <i className="fa-solid fa-users"></i> Joined Members
                 </p>
@@ -320,5 +321,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
