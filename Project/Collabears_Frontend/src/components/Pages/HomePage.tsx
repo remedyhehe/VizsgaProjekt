@@ -5,11 +5,48 @@ import { motion } from "framer-motion";
 import Navbar from "../Layouts/Navbar";
 import Footer from "../Layouts/Footer";
 
+const Counter = ({ targetNumber }: { targetNumber: number }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const duration = 1500; // 1.5 másodperc animációs idő
+    const interval = 20; // Frissítés 20ms-enként
+    const steps = duration / interval;
+    const increment = targetNumber / steps;
+
+    const counter = setInterval(() => {
+      start += increment;
+      if (start >= targetNumber) {
+        setCount(targetNumber);
+        clearInterval(counter);
+      } else {
+        setCount(Math.ceil(start));
+      }
+    }, interval);
+
+    return () => clearInterval(counter);
+  }, [targetNumber]);
+
+  return (
+    <motion.h3
+      className="text-4xl font-bold text-orange-500"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      {count}
+    </motion.h3>
+  );
+};
+
 const HomePage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const [slidesPerView, setSlidesPerView] = useState(3);
   const [index, setIndex] = useState(0);
+  const [projectsCount, setProjectsCount] = useState<number>(0);
+  const [membersCount, setMembersCount] = useState<number>(0);
 
   const texts = [
     "Find your perfect team!",
@@ -83,8 +120,6 @@ const HomePage = () => {
   useEffect(() => {
     fetchDashboardData();
   }, []);
-  const [projectsCount, setProjectsCount] = useState<number>(0);
-  const [membersCount, setMembersCount] = useState<number>(0);
 
   const fetchDashboardData = async () => {
     try {
@@ -154,27 +189,13 @@ const HomePage = () => {
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-2 text-center gap-10 mb-12 fade-in-element">
               <div>
-                <motion.h3
-                  className="text-4xl font-bold text-orange-500"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                >
-                  {projectsCount}
-                </motion.h3>
+              <Counter targetNumber={projectsCount} />
                 <p className="text-gray-600">
                   <i className="fa-solid fa-play"></i> Started Projects
                 </p>
               </div>
               <div>
-                <motion.h3
-                  className="text-4xl font-bold text-orange-500"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                >
-                  {membersCount}
-                </motion.h3>
+              <Counter targetNumber={membersCount} />
                 <p className="text-gray-600">
                   <i className="fa-solid fa-users"></i> Joined Members
                 </p>
@@ -299,3 +320,5 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+

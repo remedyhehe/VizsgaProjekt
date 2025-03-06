@@ -74,13 +74,19 @@ const RegisterPage: React.FC = () => {
 
   return (
     <>
-      <div className="">
-          <div className="p-6 w-full max-w-md mx-auto mt-25 text-center">
-            <a href="/" className="hover:text-orange-500">
+      <div className="flex h-screen">
+        {/* Bal */}
+        <div className="w-0 md:w-1/2 bg-cover bg-[auto_300px] bg-center blur-[right 2px] bg-[url(/images/registerpic1.jpg)] text-white">
+        <h2 className="text-4xl font-bold text-center mt-40 mx-20">Create your account for free!</h2>
+        </div>
+        {/* Jobb */}
+        <div className="w-full md:w-1/2">
+          <div className="p-6 w-full text-right">
+            <a href="/" className="hover:text-orange-500 font-semibold hover:underline hover:underline-offset-8">
               Click here to back to the Main Page
             </a>
           </div>
-        <div className="shadow-lg rounded-lg p-6 w-full max-w-md mx-auto mt-2 bg-slate-100 min-h-72">
+        <div className="shadow-lg rounded-lg p-6 w-full max-w-md mx-auto mt-40 bg-slate-100 min-h-72">
           {/* Ikonok és vonalak */}
           <div className="flex items-center justify-between mb-10">
             <div className="flex-1 h-0.5 bg-transparent"></div>
@@ -113,14 +119,14 @@ const RegisterPage: React.FC = () => {
             {step === 1 && (
               <div className="mb-20">
                 <label className="block text-gray-700 font-medium m-2">
-                  Username
+                How can we name you?
                 </label>
                 <input
                   type="text"
                   name="name"
                   value={form.name}
                   onChange={handleChange}
-                  placeholder="Type here..."
+                  placeholder="My username is..."
                   className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -130,19 +136,19 @@ const RegisterPage: React.FC = () => {
             {step === 2 && (
               <div className="mb-20">
                 <label className="block text-gray-700 font-medium m-2">
-                  Email
+                  What is your Email?
                 </label>
                 <input
                   type="email"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
-                  placeholder="Type here..."
+                  placeholder="My email address is..."
                   className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
                 <div className="flex justify-between items-center m-2">
-                  <label className="text-gray-700 font-medium">Password</label>
+                  <label className="text-gray-700 font-medium">What will your password be?</label>
                   <a
                     href="#"
                     className="text-orange-500 text-md hover:underline"
@@ -155,19 +161,19 @@ const RegisterPage: React.FC = () => {
                   name="password"
                   value={form.password}
                   onChange={handleChange}
-                  placeholder="Type here..."
+                  placeholder="My password is..."
                   className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
                 <label className="block text-gray-700 font-medium m-2">
-                  Password Confirm
+                  Enter your password again
                 </label>
                 <input
                   type="password"
                   name="password_confirmation"
                   value={form.password_confirmation}
                   onChange={handleChange}
-                  placeholder="Type here..."
+                  placeholder="My password again..."
                   className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -211,17 +217,18 @@ const RegisterPage: React.FC = () => {
         </div>
         {step === 1 && (
           <div className="shadow-lg rounded-lg p-6 w-full max-w-md mx-auto mt-5 bg-slate-100 min-h-20 text-center">
-            <p className="text-gray-600 mb-4">Or continue with</p>
+            <p className="text-gray-600 mb-4 font-semibold">Or continue with</p>
             <div className="flex space-x-3">
-              <button className="flex items-center justify-center gap-2 w-1/2 py-2 px-4 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition">
+              <button className="flex items-center font-semibold justify-center gap-2 w-1/2 py-2 px-4 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition">
                 <i className="fa-brands fa-google"></i> Google
               </button>
-              <button className="flex items-center justify-center gap-2 w-1/2 py-2 px-4 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition">
+              <button className="flex items-center font-semibold justify-center gap-2 w-1/2 py-2 px-4 border border-gray-300 rounded-md bg-white text-gray-700 hover:bg-gray-200 transition">
                 <i className="fa-brands fa-github"></i> GitHub
               </button>
             </div>
           </div>
         )}
+      </div>
       </div>
     </>
   );
