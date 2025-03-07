@@ -16,6 +16,7 @@ import NotificationPage from "./components/Pages/NotificationPage";
 import ChatPage from "./components/Pages/ChatPage";
 import MembersPage from "./components/Pages/MembersPage";
 import FilesPage from "./components/Pages/FilesPage";
+import YourAccountPage from "./components/Pages/AccountSettings/YourAccountPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/account" element={<YourAccountPage />} />
           <Route path="/premium" element={<PremiumPage />} />
           <Route path="/projectDetails/:id" element={<ProjectDetails />} />
           <Route path="/projectSettings/:id" element={<SettingsPage />} />

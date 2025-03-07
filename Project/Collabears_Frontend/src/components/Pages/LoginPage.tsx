@@ -37,6 +37,7 @@ const LoginPage: React.FC = () => {
         setMessage("✅ Sikeres bejelentkezés!");
         setToken(data.token);
         localStorage.setItem("auth_token", data.token);
+        localStorage.setItem("user_name", data.user.name); // Felhasználónév mentése
       } else {
         setMessage(data.message || "⚠️ Hibás email vagy jelszó!");
       }
