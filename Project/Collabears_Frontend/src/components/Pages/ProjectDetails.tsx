@@ -1,12 +1,12 @@
 import { CgBoard } from "react-icons/cg";
-import { FaDotCircle, FaList, FaShare, FaSort } from "react-icons/fa";
+import { FaList, FaShare, FaSort } from "react-icons/fa";
 import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoAddOutline, IoFilterSharp } from "react-icons/io5";
-import Sidebar from "../Layouts/Sidebar";
 import { DragEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CiViewTimeline } from "react-icons/ci";
 import { ITask, IColumn } from "../../utils/util";
+import Sidebar from "../Layouts/Sidebar";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState(null);

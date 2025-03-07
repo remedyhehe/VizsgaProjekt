@@ -1,16 +1,11 @@
-/** @format */
-
 import { useEffect, useState } from "react";
 import { Project } from "../../utils/util";
-import MyProjectCard from "../MyProjectCard";
+import MyProjectCard from "../Cards/MyProjectCard";
 import Navbar from "../Layouts/Navbar";
-import Footer from "../Layouts/Footer";
 
 const MyProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     fetchProjects();
@@ -34,16 +29,6 @@ const MyProjects = () => {
     const newFavorites = { ...favorites, [projectId]: !favorites[projectId] };
     setFavorites(newFavorites);
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
-  };
-
-  const openEditModal = (project: Project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProject(null);
   };
 
   return (
@@ -108,11 +93,16 @@ const MyProjects = () => {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.slice(10, 100).map((project) => (
               <MyProjectCard
-                projects={projects} // Ezt hozzá kell adni!
-                setProjects={setProjects} // Ezt is!
+                projects={projects}
+                setProjects={setProjects}
                 key={project.id}
                 project={project}
-                onEdit={openEditModal}
+                onEdit={(updatedProject) => {
+                  const updatedProjects = projects.map((p) =>
+                    p.id === updatedProject.id ? updatedProject : p
+                  );
+                  setProjects(updatedProjects);
+                }}
               />
             ))}
           </div>

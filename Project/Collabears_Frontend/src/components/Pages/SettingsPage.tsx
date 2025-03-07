@@ -1,9 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
 
+interface Project {
+  name: string;
+  description?: string;
+  category?: string;
+  member_number?: number;
+  start_date?: string;
+  end_date?: string;
+}
+
 const SettingsPage = () => {
-  const [project, setProject] = useState(null);
+  const [project, setProject] = useState<Project | null>(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -162,7 +171,7 @@ const SettingsPage = () => {
                     id="description"
                     value={project.description || ""}
                     readOnly
-                    rows="4"
+                    rows={4}
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-white"
                   ></textarea>
                 </div>

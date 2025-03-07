@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Project } from "../../utils/util";
-import ProjectCard from "../ProjectCard";
+import ProjectCard from ".././Cards/ProjectCard";
 import { motion } from "framer-motion";
 import Navbar from "../Layouts/Navbar";
 import Footer from "../Layouts/Footer";

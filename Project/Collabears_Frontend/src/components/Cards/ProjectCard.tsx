@@ -1,4 +1,4 @@
-import { Project } from "../utils/util";
+import { Project } from "..//../utils/util";
 import { PiCursorClickBold } from "react-icons/pi";
 
 interface ProjectCardProps {

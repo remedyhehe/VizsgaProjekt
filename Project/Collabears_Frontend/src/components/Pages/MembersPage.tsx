@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
 
 const MembersPage = () => {
-  const [project, setProject] = useState(null);
+  interface Project {
+    name: string;
+    // Add other properties as needed
+  }
+
+  const [project, setProject] = useState<Project | null>(null);
   const { id } = useParams();
 
   useEffect(() => {

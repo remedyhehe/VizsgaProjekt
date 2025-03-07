@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
-
 const NotificationPage = () => {
-  const [project, setProject] = useState(null);
+  interface Project {
+    name: string;
+    // Add other properties of the project as needed
+  }
+
+  const [project, setProject] = useState<Project | null>(null);
   const { id } = useParams();
 
   useEffect(() => {
