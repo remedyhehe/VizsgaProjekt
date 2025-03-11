@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Project } from "..//../utils/util";
 import { PiCursorClickBold } from "react-icons/pi";
 
@@ -35,7 +36,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
       <div className="flex gap-6 mt-10 p-3 text-sm justify-center">
         <button className="bg-emerald-500 p-3 rounded text-black hover:bg-gray-100 font-semibold flex">
-          Click More <PiCursorClickBold />
+          <Link to={`/browseProject/${project.id}`}>More</Link>
         </button>
       </div>
     </div>
