@@ -4,7 +4,7 @@ import Sidebar from "../Layouts/Sidebar";
 
 interface Project {
   name: string;
-  // Add other properties of the project if needed
+  files: { name: string; type: string; size: string }[];
 }
 
 const FilesPage = () => {
@@ -133,10 +133,33 @@ const FilesPage = () => {
               </ol>
             </nav>
           </nav>
-          <div className="bg-gray-900">
-            <h1 className="text-2xl font-bold text-white ml-10 pt-5 flex">
-              {project.name}
-            </h1>
+
+          {/* Projekt neve */}
+          <div className="bg-gray-900 p-5">
+            <h1 className="text-2xl font-bold text-white">{project.name}</h1>
+          </div>
+
+          {/* Fájlok megjelenítése */}
+          <div className="p-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              Project Files
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {project.files?.map((file, index) => (
+                <div
+                  key={index}
+                  className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition cursor-pointer"
+                >
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-medium text-gray-800">
+                      {file.name}
+                    </h2>
+                    <span className="text-sm text-gray-500">{file.type}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">{file.size}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

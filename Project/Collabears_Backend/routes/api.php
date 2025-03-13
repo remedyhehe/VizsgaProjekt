@@ -19,3 +19,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 // web.php
 Route::get('dashboard', [ProjectController::class, 'getDashboardData']);
+Route::put('/projects/{id}', [ProjectController::class, 'update'])->middleware('auth:sanctum');
+
