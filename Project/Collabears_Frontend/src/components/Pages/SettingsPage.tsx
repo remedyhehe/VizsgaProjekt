@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 interface Project {
   name: string;
@@ -12,9 +14,37 @@ interface Project {
 }
 
 const SettingsPage = () => {
-  const [project, setProject] = useState<Project | null>(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setValue,
+  } = useForm<Project>();
+  const [project, setProject] = useState<Project>();
+  const [input, setInput] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
+  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInput(e.target.value);
+  }
+  const formSubmit: SubmitHandler<Project> = async (formData) => {
+    const data = { ...formData, description: input };
+    try {
+      const response = await fetch("http://localhost:8000/api/projects/" + id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      toast("Project updated successfully");
+      navigate("/myprojects");
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle network or other errors
+    }
+  };
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -23,6 +53,7 @@ const SettingsPage = () => {
         const result = await res.json();
         if (result.status) {
           setProject(result.data);
+          reset(result.data);
         } else {
           console.error("Error fetching project:", result.message);
         }
@@ -49,9 +80,6 @@ const SettingsPage = () => {
       console.error("Delete error:", error);
     }
   };
-
-  if (!project)
-    return <h1 className="flex justify-center text-2xl p-5">Loading...</h1>;
 
   return (
     <>
@@ -125,28 +153,6 @@ const SettingsPage = () => {
                       />
                     </svg>
                     <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
-                      {project.name}
-                    </span>
-                  </div>
-                </li>
-                <li aria-current="page">
-                  <div className="flex items-center">
-                    <svg
-                      className="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 6 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="m1 9 4-4-4-4"
-                      />
-                    </svg>
-                    <span className="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400">
                       Settings
                     </span>
                   </div>
@@ -156,12 +162,15 @@ const SettingsPage = () => {
           </nav>
           <div className="bg-gray-900">
             <h1 className="text-2xl font-bold text-white ml-10 pt-5 flex">
-              {project.name}
+              Project Settings
             </h1>
 
             {/* Project Form */}
             <div className="mt-8 mx-10 flex justify-center">
-              <form className="bg-gray-800 p-6 rounded-lg shadow-md w-1/2 mb-10">
+              <form
+                onSubmit={handleSubmit(formSubmit)}
+                className="bg-gray-800 p-6 rounded-lg shadow-md w-1/2 mb-10"
+              >
                 <div className="mb-4">
                   <label
                     htmlFor="name"
@@ -170,10 +179,9 @@ const SettingsPage = () => {
                     Project Name
                   </label>
                   <input
+                    {...register("name", { required: true })}
                     type="text"
                     id="name"
-                    value={project.name}
-                    readOnly
                     className="mt-1 p-2 block w-full border text-white border-gray-300 rounded-md"
                   />
                 </div>
@@ -185,9 +193,8 @@ const SettingsPage = () => {
                     Description
                   </label>
                   <textarea
+                    {...register("description", { required: true })}
                     id="description"
-                    value={project.description || ""}
-                    readOnly
                     rows={4}
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-white"
                   ></textarea>
@@ -200,10 +207,9 @@ const SettingsPage = () => {
                     Category
                   </label>
                   <input
+                    {...register("category", { required: true })}
                     type="text"
                     id="category"
-                    value={project.category || ""}
-                    readOnly
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-white"
                   />
                 </div>
@@ -215,10 +221,9 @@ const SettingsPage = () => {
                     Member Number
                   </label>
                   <input
+                    {...register("member_number", { required: true })}
                     type="number"
                     id="member_number"
-                    value={project.member_number || ""}
-                    readOnly
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-white"
                   />
                 </div>
@@ -230,10 +235,9 @@ const SettingsPage = () => {
                     Start Date
                   </label>
                   <input
+                    {...register("start_date", { required: true })}
                     type="date"
                     id="start_date"
-                    value={project.start_date || ""}
-                    readOnly
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-white"
                   />
                 </div>
@@ -245,15 +249,14 @@ const SettingsPage = () => {
                     End Date
                   </label>
                   <input
+                    {...register("end_date", { required: true })}
                     type="date"
                     id="end_date"
-                    value={project.end_date || ""}
-                    readOnly
                     className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-white"
                   />
                 </div>
                 <button
-                  type="button"
+                  type="submit"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
                 >
                   Save changes

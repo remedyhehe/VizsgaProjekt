@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Project } from "../../utils/util";
 import MyProjectCard from "../Cards/MyProjectCard";
 import Navbar from "../Layouts/Navbar";
+import Footer from "../Layouts/Footer";
 
 const MyProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -124,6 +125,7 @@ const MyProjects = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

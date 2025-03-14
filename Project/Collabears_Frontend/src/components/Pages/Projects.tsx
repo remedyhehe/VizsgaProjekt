@@ -9,6 +9,7 @@ import { FaShirt } from "react-icons/fa6";
 import { IoGameController } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
 import Navbar from "../Layouts/Navbar";
+import Footer from "../Layouts/Footer";
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -192,6 +193,7 @@ const Projects = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

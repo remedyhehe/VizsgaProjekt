@@ -18,6 +18,7 @@ import MembersPage from "./components/Pages/MembersPage";
 import FilesPage from "./components/Pages/FilesPage";
 import YourAccountPage from "./components/Pages/AccountSettings/YourAccountPage";
 import BrowseProjectMore from "./components/Pages/BrowseProjectMore";
+import LegalPages from "./components/Pages/LegalPages";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/premium" element={<PremiumPage />} />
           <Route path="/projectDetails/:id" element={<ProjectDetails />} />
           <Route path="/projectSettings/:id" element={<SettingsPage />} />
+          <Route path="/legals" element={<LegalPages />} />
           <Route path="/browseProject/:id" element={<BrowseProjectMore />} />
           <Route
             path="/projectNotification/:id"
