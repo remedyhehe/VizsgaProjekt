@@ -13,9 +13,33 @@ interface MyProjectCardProps {
 const MyProjectCard = ({ project }: MyProjectCardProps) => {
   return (
     <div className="bg-gray-800 text-white rounded-xl shadow-lg p-5 w-100 mx-auto transform transition-all duration-300 hover:scale-105">
-      <h2 className="text-xl font-semibold mb-3 text-emerald-400">
-        {project.name}
-      </h2>
+      <div className="flex flex-row justify-between ">
+        <h2 className="text-xl font-semibold mb-3 text-emerald-400">
+          {project.name}
+        </h2>
+        <div className="flex -space-x-4 rtl:space-x-reverse">
+          <img
+            className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+            src="../images/avatar.png"
+            alt=""
+          />
+          <img
+            className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+            src="../images/avatar.png"
+            alt=""
+          />
+          <img
+            className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+            src="../images/avatar.png"
+            alt=""
+          />
+          <img
+            className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+            src="../images/avatar.png"
+            alt=""
+          />
+        </div>
+      </div>
       <p className="text-gray-300 text-md">{project.description}</p>
 
       <div className="mt-6 text-gray-400 text-md">
