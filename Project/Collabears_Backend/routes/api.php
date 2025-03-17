@@ -23,3 +23,4 @@ Route::get('dashboard', [ProjectController::class, 'getDashboardData']);
 Route::put('/projects/{id}', [ProjectController::class, 'update']);
 
 
+

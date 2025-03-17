@@ -23,21 +23,6 @@ const MyProjectCard = ({ project }: MyProjectCardProps) => {
             src="../images/avatar.png"
             alt=""
           />
-          <img
-            className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-            src="../images/avatar.png"
-            alt=""
-          />
-          <img
-            className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-            src="../images/avatar.png"
-            alt=""
-          />
-          <img
-            className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-            src="../images/avatar.png"
-            alt=""
-          />
         </div>
       </div>
       <p className="text-gray-300 text-md">{project.description}</p>
