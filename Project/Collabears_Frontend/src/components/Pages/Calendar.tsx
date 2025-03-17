@@ -1,41 +1,30 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { CgBoard } from "react-icons/cg";
 import { FaCalendar, FaList, FaShare, FaSort } from "react-icons/fa";
 import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoAddOutline, IoFilterSharp } from "react-icons/io5";
-import { DragEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { CiViewTimeline } from "react-icons/ci";
-import { ITask, IColumn } from "../../utils/util";
 import Sidebar from "../Layouts/Sidebar";
+import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { ITask } from "../../utils/util";
 
-const ProjectDetails = () => {
+const localizer = momentLocalizer(moment);
+
+const Calendar = () => {
   const [project, setProject] = useState(null);
   const { id } = useParams();
+  const [events, setEvents] = useState([]);
 
   const [tasks, setTasks] = useState<{ [key: number]: ITask }>({
-    1: { name: "Task 12", description: "Description for Task 1", column_id: 1 },
-    2: { name: "Task 12", description: "Description for Task 2", column_id: 2 },
-    3: { name: "Task 3", description: "Description for Task 3", column_id: 2 },
-    4: { name: "Task 4", description: "Description for Task 4", column_id: 2 },
-    5: { name: "Task 5", description: "Description for Task 5", column_id: 2 },
-    6: { name: "Task 6", description: "Description for Task 6", column_id: 2 },
-  });
-
-  const [columns, setColumns] = useState<{
-    [key: number]: IColumn & { taskIds: number[] };
-  }>({
-    1: {
-      id: 1,
-      name: "Column 1",
-      project_id: 1,
-      taskIds: [1],
-    },
-    2: {
-      id: 2,
-      name: "Column 2",
-      project_id: 1,
-      taskIds: [2, 3, 4, 5, 6],
-    },
+    1: { name: "Task 1", description: "Description for Task 1", column_id: 1, start: new Date(), end: new Date() },
+    2: { name: "Task 2", description: "Description for Task 2", column_id: 2, start: new Date(), end: new Date() },
+    3: { name: "Task 3", description: "Description for Task 3", column_id: 2, start: new Date(), end: new Date() },
+    4: { name: "Task 4", description: "Description for Task 4", column_id: 2, start: new Date(), end: new Date() },
+    5: { name: "Task 5", description: "Description for Task 5", column_id: 2, start: new Date(), end: new Date() },
+    6: { name: "Task 6", description: "Description for Task 6", column_id: 2, start: new Date(), end: new Date() },
   });
 
   useEffect(() => {
@@ -45,6 +34,14 @@ const ProjectDetails = () => {
         const result = await res.json();
         if (result.status) {
           setProject(result.data);
+          // Assuming result.data.tasks contains the tasks with start and end dates
+          const formattedEvents = result.data.tasks.map(task => ({
+            title: task.name,
+            start: new Date(task.start),
+            end: new Date(task.end),
+            allDay: false,
+          }));
+          setEvents(formattedEvents);
         } else {
           console.error("Error fetching project:", result.message);
         }
@@ -58,53 +55,6 @@ const ProjectDetails = () => {
 
   if (!project)
     return <h1 className="flex justify-center text-2xl p-5">Loading...</h1>;
-
-  const handleDragStart = (
-    event: DragEvent<HTMLDivElement>,
-    taskId: number
-  ) => {
-    event.dataTransfer.setData("text/plain", taskId.toString());
-  };
-
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event: DragEvent<HTMLDivElement>, columnId: number) => {
-    const taskId = parseInt(event.dataTransfer.getData("text/plain"), 10);
-
-    const startColumn = Object.values(columns).find((column) =>
-      column.taskIds.includes(taskId)
-    );
-
-    if (startColumn && startColumn.id !== columnId) {
-      const newStartTaskIds = Array.from(startColumn.taskIds);
-      newStartTaskIds.splice(newStartTaskIds.indexOf(taskId), 1);
-
-      const newEndTaskIds = Array.from(columns[columnId].taskIds);
-      newEndTaskIds.push(taskId);
-
-      setColumns((prevColumns) => ({
-        ...prevColumns,
-        [startColumn.id]: {
-          ...startColumn,
-          taskIds: newStartTaskIds,
-        },
-        [columnId]: {
-          ...prevColumns[columnId],
-          taskIds: newEndTaskIds,
-        },
-      }));
-
-      setTasks((prevTasks) => ({
-        ...prevTasks,
-        [taskId]: {
-          ...prevTasks[taskId],
-          column_id: columnId,
-        },
-      }));
-    }
-  };
 
   return (
     <>
@@ -270,49 +220,19 @@ const ProjectDetails = () => {
           {/* Card below navbar */}
           <div className="p-5 bg-gray-900 flex justify-start">
             <div className="taskview flex flex-col gap-4">
-              {/* Oszlopok */}
-              <ol className="taskcols p-3 mt-2 min-w-fit flex">
-                {Object.values(columns).map((column) => (
-                  <li
-                    key={column.id}
-                    className="taskcol bg-slate-800 p-2 rounded-lg shadow-sm mx-2 w-72 min-h-20 border border-slate-700"
-                    onDragOver={handleDragOver}
-                    onDrop={(event) => handleDrop(event, column.id)}
-                  >
-                    <div className="columnheader flex justify-between p-2 pb-4">
-                      <h2 className="text-font-semibold text-slate-100">
-                        {column.name}
-                      </h2>
-                      <i className="fa-solid fa-ellipsis inline-block text-slate-500 cursor-pointer" />
-                    </div>
-
-                    {/* Feladatok az oszlopokban */}
-                    <div className="task-list">
-                      {column.taskIds.map((taskId) => (
-                        <div
-                          key={taskId}
-                          className="taskbox bg-slate-700 shadow-md my-2 p-3 rounded cursor-pointer border border-slate-600"
-                          draggable
-                          onDragStart={(event) =>
-                            handleDragStart(event, taskId)
-                          }
-                        >
-                          <div className="flex justify-between flex-row">
-                            <p className="flex text-lg font-medium text-slate-100">
-                              {tasks[taskId].name}
-                            </p>
-                            <i className="flex fa-solid fa-ellipsis inline-block text-slate-500 cursor-pointer" />
-                          </div>
-
-                          <p className="text-slate-400 text-sm">
-                            {tasks[taskId].description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              {/* Calendar */}
+              <div className="calendar-container w-full h-full bg-gray-800 p-4 rounded-lg shadow-md">
+                <BigCalendar
+                  localizer={localizer}
+                  events={events}
+                  startAccessor="start"
+                  endAccessor="end"
+                  style={{ height: 700 }}
+                  className="bg-slate-700 text-slate-300 rounded-lg shadow-md"
+                  views={['month', 'week', 'day']}
+                  defaultView="month"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -321,4 +241,4 @@ const ProjectDetails = () => {
   );
 };
 
-export default ProjectDetails;
+export default Calendar;
