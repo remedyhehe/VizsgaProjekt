@@ -6,26 +6,16 @@ import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoAddOutline, IoFilterSharp } from "react-icons/io5";
 import { CiViewTimeline } from "react-icons/ci";
 import Sidebar from "../Layouts/Sidebar";
-import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { ITask } from "../../utils/util";
-
-const localizer = momentLocalizer(moment);
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
 
 const Calendar = () => {
   const [project, setProject] = useState(null);
   const { id } = useParams();
   const [events, setEvents] = useState([]);
 
-  const [tasks, setTasks] = useState<{ [key: number]: ITask }>({
-    1: { name: "Task 1", description: "Description for Task 1", column_id: 1, start: new Date(), end: new Date() },
-    2: { name: "Task 2", description: "Description for Task 2", column_id: 2, start: new Date(), end: new Date() },
-    3: { name: "Task 3", description: "Description for Task 3", column_id: 2, start: new Date(), end: new Date() },
-    4: { name: "Task 4", description: "Description for Task 4", column_id: 2, start: new Date(), end: new Date() },
-    5: { name: "Task 5", description: "Description for Task 5", column_id: 2, start: new Date(), end: new Date() },
-    6: { name: "Task 6", description: "Description for Task 6", column_id: 2, start: new Date(), end: new Date() },
-  });
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -143,7 +133,7 @@ const Calendar = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center p-5 gap-2 text-white rounded-sm md:bg-transparent md:text-orange-700 md:p-0 dark:text-white md:dark:text-orange-500"
+                      className="flex items-center p-5 gap-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                     >
                       <CgBoard />
                       Board
@@ -178,7 +168,7 @@ const Calendar = () => {
                   <li>
                     <a
                       href="#"
-                      className="flex items-center p-5 gap-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                      className="flex items-center p-5 gap-2 text-white rounded-sm md:bg-transparent md:text-orange-700 md:p-0 dark:text-white md:dark:text-orange-500"
                     >
                       <FaCalendar />
                       Calendar
@@ -188,53 +178,29 @@ const Calendar = () => {
               </div>
 
               {/* Gombok jobb oldalra igazítása */}
-              <div className="flex justify-end gap-5 w-full">
-                <button
-                  type="button"
-                  className="flex items-center gap-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                >
-                  <FaSort /> Sort
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center gap-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                >
-                  <IoFilterSharp /> More Filters
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center gap-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-200 dark:text-black dark:border-gray-200 dark:hover:bg-gray-200 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                >
-                  <FaShare /> Share
-                </button>
-                <button
-                  type="button"
-                  className="flex items-center gap-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-                >
-                  <IoAddOutline /> Add Task
-                </button>
-              </div>
+            
             </div>
           </nav>
 
           {/* Card below navbar */}
-          <div className="p-5 bg-gray-900 flex justify-start">
-            <div className="taskview flex flex-col gap-4">
+            <div className="p-5 bg-gray-900 flex justify-center">
+            <div className="flex flex-col w-full max-w-7xl">
               {/* Calendar */}
-              <div className="calendar-container w-full h-full bg-gray-800 p-4 rounded-lg shadow-md">
-                <BigCalendar
-                  localizer={localizer}
-                  events={events}
-                  startAccessor="start"
-                  endAccessor="end"
-                  style={{ height: 700 }}
-                  className="bg-slate-700 text-slate-300 rounded-lg shadow-md"
-                  views={['month', 'week', 'day']}
-                  defaultView="month"
-                />
+              <div className="calendar-container bg-gray-800 p-6 rounded-lg shadow-lg text-white">
+              <FullCalendar
+                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                initialView="dayGridMonth"
+                events={events}
+                height={700}
+                headerToolbar={{
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay"
+                }}
+              />
               </div>
             </div>
-          </div>
+            </div>
         </div>
       </div>
     </>

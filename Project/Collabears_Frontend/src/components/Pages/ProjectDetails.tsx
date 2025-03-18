@@ -18,7 +18,7 @@ const ProjectDetails = () => {
     3: { name: "Task 3", description: "Description for Task 3", column_id: 2 },
     4: { name: "Task 4", description: "Description for Task 4", column_id: 2 },
     5: { name: "Task 5", description: "Description for Task 5", column_id: 2 },
-    6: { name: "Task 6", description: "Description for Task 6", column_id: 2 },
+    6: { name: "Task 6", description: "Description for Task 6 Lorem Ipsum Szöveg még sssssssssssssssss asdssssssssd asd as asdasdasdasdad asdasd asd asd asd asd ad asd a", column_id: 2 },
   });
 
   const [columns, setColumns] = useState<{
@@ -307,6 +307,12 @@ const ProjectDetails = () => {
                           <p className="text-slate-400 text-sm">
                             {tasks[taskId].description}
                           </p>
+
+                          <div className="flex justify-start gap-2 pt-2">
+                            <div className="bg-amber-600 h-2.5 w-12 rounded-full" />
+                            <div className="bg-emerald-600 h-2.5 w-12 rounded-full" />
+                          </div>
+                          
                         </div>
                       ))}
                     </div>
