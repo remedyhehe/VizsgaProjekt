@@ -63,14 +63,7 @@ const Sidebar = () => {
             <IoSettingsOutline />
           </a>
         </li>
-        <li>
-          <a
-            href={`/projectNotification/${id || ""}`}
-            className="flex items-center hover:text-orange-500 text-2xl"
-          >
-            <IoMdNotificationsOutline />
-          </a>
-        </li>
+
         <li>
           <a
             href="/myprojects"

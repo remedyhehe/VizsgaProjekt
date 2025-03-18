@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
+import ReactCountryFlag from "react-country-flag";
+import { FaRegEdit } from "react-icons/fa";
+interface IUser {
+  name: string;
+  email: string;
+}
 
 const MembersPage = () => {
   interface Project {
@@ -9,6 +15,8 @@ const MembersPage = () => {
   }
 
   const [project, setProject] = useState<Project | null>(null);
+  const [userName, setUserName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const { id } = useParams();
 
   useEffect(() => {
@@ -28,9 +36,44 @@ const MembersPage = () => {
 
     fetchProjects();
   }, [id]);
+  useEffect(() => {
+    const storedName = localStorage.getItem("user_name");
+    setUserName(storedName);
+  }, []);
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    setEmail(storedEmail);
+  }, []);
 
   if (!project)
-    return <h1 className="flex justify-center text-2xl p-5">Loading...</h1>;
+    return (
+      <div className="flex gap-3 flex-wrap justify-center p-4 md:p-12">
+        <button
+          disabled={true}
+          type="button"
+          className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-full text-sm px-6 py-3 text-center inline-flex items-center animate-pulse dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800"
+        >
+          <svg
+            aria-hidden="true"
+            role="status"
+            className="inline w-5 h-5 mr-2 text-white animate-spin"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="#E5E7EB"
+            ></path>
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          Please wait..
+        </button>
+      </div>
+    );
 
   return (
     <>
@@ -133,10 +176,171 @@ const MembersPage = () => {
               </ol>
             </nav>
           </nav>
-          <div className="bg-gray-900">
-            <h1 className="text-2xl font-bold text-white ml-10 pt-5 flex">
-              {project.name}
-            </h1>
+          <div className="bg-gray-900 h-screen">
+            <div className="bg-gray-900 justify-between items-center p-5 ">
+              <h1 className="text-2xl font-bold text-white ml-10 pt-5 flex">
+                {project.name}
+              </h1>
+
+              <div className="relative flex flex-col w-full h-full text-white p-5 mt-5 bg-gray-800 shadow-md rounded-xl bg-clip-border">
+                <div className="relative mx-4 mt-4 overflow-hidden text-white bg-gray-800 rounded-none bg-clip-border">
+                  <div className="flex items-center justify-between gap-8 mb-8">
+                    <div>
+                      <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                        Members list
+                      </h5>
+                      <p className="block mt-1 font-sans text-base antialiased font-normal leading-relaxed text-white">
+                        See information about all members
+                      </p>
+                    </div>
+                    <div className="flex flex-col gap-2 shrink-0 sm:flex-row">
+                      <button className="text-zinc-500 hover:text-orange-600 backdrop-blur-lg bg-gradient-to-tr from-transparent via-[rgba(121,121,121,0.16)] to-transparent rounded-md py-2 px-6 shadow hover:shadow-orange-600 duration-700">
+                        View All
+                      </button>
+                      <button
+                        className="flex select-none items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          aria-hidden="true"
+                          stroke-width="2"
+                          className="w-4 h-4"
+                        >
+                          <path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"></path>
+                        </svg>
+                        Add member
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+                    <div className="block w-full overflow-hidden md:w-max">
+                      <nav>
+                        <ul
+                          role="tablist"
+                          className="relative flex flex-row p-1 rounded-lg bg-blue-gray-50 bg-opacity-60"
+                        >
+                          <li
+                            role="tab"
+                            className="relative flex items-center justify-center w-full h-full px-2 py-1 font-sans text-base antialiased font-normal leading-relaxed text-center bg-transparent cursor-pointer select-none text-blue-gray-900"
+                            data-value="all"
+                          >
+                            <div className="z-20 text-inherit">
+                              &nbsp;&nbsp;All&nbsp;&nbsp;
+                            </div>
+                            <div className="absolute inset-0 z-10 h-full bg-gray-700 rounded-md shadow"></div>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <div className="w-full md:w-72">
+                      <div className="p-5 overflow-hidden w-[60px] h-[30px] hover:w-[270px] bg-orange-500 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
+                        <div className="flex items-center justify-center fill-white">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            id="Isolation_Mode"
+                            data-name="Isolation Mode"
+                            viewBox="0 0 24 24"
+                            width="22"
+                            height="17"
+                          >
+                            <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"></path>
+                          </svg>
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Search"
+                          className="outline-none text-md bg-transparent w-full text-white font-normal px-4"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 px-0">
+                  <table className="w-full mt-4 text-left table-auto min-w-max">
+                    <thead>
+                      <tr>
+                        <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Member
+                          </p>
+                        </th>
+                        <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Country
+                          </p>
+                        </th>
+                        <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Role
+                          </p>
+                        </th>
+
+                        <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Added
+                          </p>
+                        </th>
+                        <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"></p>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <div className="flex items-center gap-3">
+                            <img
+                              src="../images/avatar.png"
+                              alt="John Michael"
+                              className="relative inline-block h-9 w-9 !rounded-full object-cover object-center"
+                            />
+                            <div className="flex flex-col">
+                              <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                                {userName}
+                              </p>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <div className="w-max">
+                            <ReactCountryFlag
+                              countryCode="HU"
+                              svg
+                              style={{
+                                width: "2em",
+                                height: "2em",
+                              }}
+                              title="HU"
+                            />
+                          </div>
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <div className="flex flex-col">
+                            <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                              Owner
+                            </p>
+                          </div>
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                            -
+                          </p>
+                        </td>
+                        <td className="p-4 border-b border-blue-gray-50">
+                          <a href="#">
+                            <FaRegEdit className="text-xl text-yellow-500" />
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

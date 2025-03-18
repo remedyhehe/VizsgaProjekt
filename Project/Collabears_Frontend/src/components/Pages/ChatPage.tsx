@@ -24,6 +24,8 @@ const ChatPage = () => {
   const [newMsg, setNewMessage] = useState("");
   const [hoveredMessage, setHoveredMessage] = useState<number | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Modal állapot
+  const [messageToDelete, setMessageToDelete] = useState<number | null>(null);
   useEffect(() => {
     const storedMessages = localStorage.getItem(`messages_${id}`);
     if (storedMessages) {
@@ -65,31 +67,71 @@ const ChatPage = () => {
 
     setNewMessage(""); // Üzenet mező törlése
   };
-  const deleteMessage = (index: number) => {
-    const confirmDelete = window.confirm(
-      "Biztosan törölni szeretnéd ezt az üzenetet?"
-    );
-    if (confirmDelete) {
-      const updatedMessages = messages.filter((_, i) => i !== index);
-      setMessages(updatedMessages); // Állapot frissítése
-      localStorage.setItem(`messages_${id}`, JSON.stringify(updatedMessages)); // LocalStorage frissítése
-    }
-  };
+
   useEffect(() => {
     const chatContainer = document.querySelector(".overflow-y-auto");
     if (chatContainer) {
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
-  }, [messages]); // Minden üzenet frissítéskor újragörgeti
+  }, [messages]);
+  const handleDeleteMessage = () => {
+    if (messageToDelete !== null) {
+      const updatedMessages = messages.filter(
+        (_, index) => index !== messageToDelete
+      );
+      setMessages(updatedMessages);
+      localStorage.setItem(`messages_${id}`, JSON.stringify(updatedMessages));
+      setShowModal(false); // Modal bezárása a törlés után
+    }
+  };
+
+  const handleOpenModal = (index: number) => {
+    setMessageToDelete(index);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setMessageToDelete(null);
+  };
+  // Minden üzenet frissítéskor újragörgeti
 
   if (!project)
-    return <h1 className="flex justify-center text-2xl p-5">Loading...</h1>;
+    return (
+      <div className="flex gap-3 flex-wrap justify-center p-4 md:p-12">
+        <button
+          disabled={true}
+          type="button"
+          className="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-full text-sm px-6 py-3 text-center inline-flex items-center animate-pulse dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800"
+        >
+          <svg
+            aria-hidden="true"
+            role="status"
+            className="inline w-5 h-5 mr-2 text-white animate-spin"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="#E5E7EB"
+            ></path>
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          Please wait..
+        </button>
+      </div>
+    );
 
   return (
     <div className="flex h-screen ml-32">
       <Sidebar />
 
       <div className="flex-1 flex flex-col bg-gray-900 text-white">
+        {/* Modal */}
         <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
           <nav
             className="flex justify-start ml-5 bg-gray-900 text-white p-5"
@@ -237,7 +279,7 @@ const ChatPage = () => {
                       <a
                         href="#"
                         className="text-xl text-red-500"
-                        onClick={() => deleteMessage(index)}
+                        onClick={() => handleOpenModal(index)}
                       >
                         <FaTrash className="duration-200 ease-in-out transform hover:scale-120" />
                       </a>
@@ -250,9 +292,70 @@ const ChatPage = () => {
               </div>
             ))}
           </div>
+          {showModal && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+              <div className="group select-none w-[250px] flex flex-col p-4 relative items-center justify-center bg-gray-800 border border-gray-800 shadow-lg rounded-2xl">
+                <div className="">
+                  <div className="text-center p-3 flex-auto justify-center">
+                    <svg
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      className="group-hover:animate-bounce w-12 h-12 flex items-center text-gray-600 fill-red-500 mx-auto"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                        fill-rule="evenodd"
+                      ></path>
+                    </svg>
+                    <h2 className="text-xl font-bold py-4 text-gray-200">
+                      Are you sure?
+                    </h2>
+                    <p className="font-bold text-sm text-gray-500 px-2">
+                      Do you really want to continue? This process cannot be
+                      undone.
+                    </p>
+                  </div>
+                  <div className="p-2 mt-2 text-center space-x-1 md:block">
+                    <button
+                      className="mb-2 md:mb-0 bg-gray-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider border-2 border-gray-600 hover:border-gray-700 text-gray-400 rounded-xl"
+                      onClick={handleCloseModal}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="bg-red-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider border-2 border-gray-600 hover:border-red-600 hover:text-white text-gray-400 rounded-xl"
+                      onClick={handleDeleteMessage}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="bg-gray-800 p-4 rounded-lg mt-4 flex items-center gap-5">
-            <IoIosAddCircle className="text-2xl" />
+            <button
+              title="Add New"
+              className="group cursor-pointer outline-none hover:rotate-90 duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50px"
+                height="30px"
+                viewBox="0 0 24 24"
+                className="stroke-zinc-400 fill-none group-hover:fill-zinc-800 group-active:stroke-zinc-200 group-active:fill-zinc-600 group-active:duration-0 duration-300"
+              >
+                <path
+                  d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+                  stroke-width="1.5"
+                ></path>
+                <path d="M8 12H16" stroke-width="1.5"></path>
+                <path d="M12 16V8" stroke-width="1.5"></path>
+              </svg>
+            </button>
             <input
               type="text"
               className="flex-1 p-2 rounded-lg bg-gray-700 text-white border-none focus:ring-2 focus:ring-blue-500"
@@ -261,10 +364,53 @@ const ChatPage = () => {
               onChange={(e) => setNewMessage(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             />
+            {showModal && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="group select-none w-[250px] flex flex-col p-4 relative items-center justify-center bg-gray-800 border border-gray-800 shadow-lg rounded-2xl">
+                  <div className="">
+                    <div className="text-center p-3 flex-auto justify-center">
+                      <svg
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        className="group-hover:animate-bounce w-12 h-12 flex items-center text-gray-600 fill-red-500 mx-auto"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          clip-rule="evenodd"
+                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          fill-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <h2 className="text-xl font-bold py-4 text-gray-200">
+                        Are you sure?
+                      </h2>
+                      <p className="font-bold text-sm text-gray-500 px-2">
+                        Do you really want to continue? This process cannot be
+                        undone.
+                      </p>
+                    </div>
+                    <div className="p-2 mt-2 text-center space-x-1 md:block">
+                      <button
+                        className="mb-2 md:mb-0 bg-gray-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider border-2 border-gray-600 hover:border-gray-700 text-gray-400 rounded-xl"
+                        onClick={handleCloseModal}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="bg-red-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider border-2 border-gray-600 hover:border-red-600 hover:text-white text-gray-400 rounded-xl"
+                        onClick={handleDeleteMessage}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
             <div className="relative">
               {/* FaFaceSmile ikon */}
               <FaFaceSmile
-                className="hover:text-amber-300 text-2xl cursor-pointer"
+                className="hover:text-amber-300 text-2xl "
                 onClick={() => setShowEmojiPicker((prev) => !prev)} // Kattintás esemény: emoji picker megjelenítése/eltüntetése
               />
 
@@ -278,7 +424,6 @@ const ChatPage = () => {
                 </div>
               )}
             </div>
-
             <MdOutlineGifBox className="hover:text-blue-300 text-3xl" />
             <FaGift className="hover:text-purple-300 text-2xl" />
             <button

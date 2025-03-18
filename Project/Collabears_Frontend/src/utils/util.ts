@@ -8,6 +8,11 @@ export interface Project {
   end_date?: string;
 }
 
+export interface IUser{
+  name: string;
+  email: string;
+}
+
 
 export interface IColumn {
   name: string;
