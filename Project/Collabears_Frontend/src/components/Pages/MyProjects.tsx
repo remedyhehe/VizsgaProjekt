@@ -86,36 +86,56 @@ const MyProjects = () => {
           </h1>
 
           {/* Center-aligned dropdown */}
-          <form className="flex justify-center">
-            <select
-              id="countries"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          <div className="relative group rounded-lg w-5/6 bg-gray-100 overflow-hidden before:absolute before:w-12 before:h-12 before:content['']  before:rounded-full before:blur-lg ]">
+            <svg
+              y="0"
+              xmlns="http://www.w3.org/2000/svg"
+              x="0"
+              width="100"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="xMidYMid meet"
+              height="100"
+              className="w-8 h-8 absolute right-0 -rotate-45 stroke-orange-500 top-1.5 group-hover:rotate-0 duration-300"
             >
-              <option selected>Latest</option>
-              <option value="US">Oldest</option>
+              <path
+                stroke-width="4"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                fill="none"
+                d="M60.7,53.6,50,64.3m0,0L39.3,53.6M50,64.3V35.7m0,46.4A32.1,32.1,0,1,1,82.1,50,32.1,32.1,0,0,1,50,82.1Z"
+                className="svg-stroke-primary"
+              ></path>
+            </svg>
+            <select className="appearance-none hover:placeholder-shown:bg-emerald-500 relative bg-transparent ring-0 outline-none border border-neutral-500 text-neutral-900 text-sm font-bold rounded-lg block w-full p-2.5">
+              <option className="">Latest</option>
+              <option className="">Oldest</option>
+              <option className="">Most popular</option>
             </select>
-          </form>
+          </div>
 
           {/* Right-aligned "New Project" button */}
           <a href="/newproject">
-            <button className="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#14b8a6] via-[#059669] to-[#047857] hover:shadow-xl hover:shadow-green-500 hover:scale-105 duration-300 hover:from-[#047857] hover:to-[#14b8a6]">
-              <svg className="w-5 fill-white" viewBox="0 0 15 15">
+            <button className="rounded-lg relative w-43 h-10 cursor-pointer flex items-center border border-orange-500 bg-orange-500 group hover:bg-orange-500 active:bg-orange-500 active:border-orange-500">
+              <span className="text-white font-semibold ml-8 transform group-hover:translate-x-20 transition-all duration-300">
+                New Project
+              </span>
+              <span className="absolute right-0 h-full w-10 rounded-lg bg-orange-500 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300">
                 <svg
-                  className="w-6 h-6"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
+                  className="svg w-8 text-white"
                   fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path
-                    d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                    stroke-linejoin="round"
-                    stroke-linecap="round"
-                  ></path>
-                  New Project
+                  <line x1="12" x2="12" y1="5" y2="19"></line>
+                  <line x1="5" x2="19" y1="12" y2="12"></line>
                 </svg>
-              </svg>
+              </span>
             </button>
           </a>
         </div>

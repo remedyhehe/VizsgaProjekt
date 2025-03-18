@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
 import ReactCountryFlag from "react-country-flag";
 import { FaRegEdit } from "react-icons/fa";
+import React from "react";
+import { IoMdClose } from "react-icons/io";
 interface IUser {
   name: string;
   email: string;
@@ -19,6 +21,35 @@ const MembersPage = () => {
   const [project, setProject] = useState<Project | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
+  const [open, setOpen] = React.useState(false);
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/users");
+      const result = await res.json();
+      if (result.status) {
+        setUsers(result.data); // Frissíti a users állapotot
+      } else {
+        console.error("Error fetching users:", result.message);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleOpen = () => setOpen(!open);
   const { id } = useParams();
 
   useEffect(() => {
@@ -202,6 +233,7 @@ const MembersPage = () => {
                         View All
                       </button>
                       <button
+                        onClick={handleOpen}
                         className="flex select-none items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button"
                       >
@@ -217,6 +249,87 @@ const MembersPage = () => {
                         </svg>
                         Add member
                       </button>
+                      {open && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-50">
+                          <div className="relative w-2/5 p-6 bg-gray-700 rounded-lg shadow-lg">
+                            <div className="flex justify-between p-5">
+                              <h2 className="text-xl font-semibold text-white">
+                                Add New Member
+                              </h2>
+                              <button
+                                onClick={handleOpen} // Bezáráskor is meghívja a handleOpen-t
+                                className="px-4 py-2 text-white bg-slate-900 rounded-md"
+                              >
+                                <IoMdClose className="text-red-500" />
+                              </button>
+                            </div>
+
+                            <form className="max-w-md mx-auto mt-5">
+                              <label
+                                htmlFor="default-search"
+                                className="mb-2 text-sm font-medium text-white sr-only dark:text-black"
+                              >
+                                Search
+                              </label>
+                              <div className="relative">
+                                <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                  <svg
+                                    className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 20 20"
+                                  >
+                                    <path
+                                      stroke="currentColor"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      stroke-width="2"
+                                      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                                    />
+                                  </svg>
+                                </div>
+                                <input
+                                  type="search"
+                                  id="default-search"
+                                  className="block w-full p-4 ps-10 text-sm text-gray-900  rounded-lg bg-gray-50 dark:bg-gray-100  dark:text-black"
+                                  placeholder="Search members"
+                                  value={searchTerm}
+                                  onChange={(e) =>
+                                    setSearchTerm(e.target.value)
+                                  }
+                                  required
+                                />
+                                <button
+                                  type="submit"
+                                  className="text-white absolute end-2.5 bottom-2.5 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                                >
+                                  Search
+                                </button>
+                              </div>
+                            </form>
+                            <div className="mt-4 max-h-60 overflow-y-auto">
+                              {filteredUsers.map((user) => (
+                                <div
+                                  key={user.email}
+                                  className="p-3 border-b border-gray-600 text-white flex justify-between items-center"
+                                >
+                                  <span className="flex items-center gap-3">
+                                    <img
+                                      src="../images/avatar.png"
+                                      className="h-10"
+                                    />
+                                    {user.name} ({user.email})
+                                  </span>
+                                  <button className="px-3 py-1 text-white bg-orange-600 rounded-md hover:bg-orange-700">
+                                    Add
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex flex-col items-center justify-between gap-4 md:flex-row">

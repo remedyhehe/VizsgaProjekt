@@ -7,7 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
-    
+
+public function getAllUsers()
+{
+    $users = User::all();
+    return response()->json(['status' => true, 'data' => $users]);
+}
+
 
     public function register(Request $request)
     {
