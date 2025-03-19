@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { FaTrash } from "react-icons/fa";
+import { GoCheck } from "react-icons/go";
 
 interface Project {
   name: string;
@@ -14,16 +16,11 @@ interface Project {
 }
 
 const SettingsPage = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    setValue,
-  } = useForm<Project>();
+  const { register, handleSubmit, reset } = useForm<Project>();
 
   const [project, setProject] = useState<Project | null>(null);
   const [input, setInput] = useState("");
+  const [showModal, setShowModal] = useState(false); // Modal állapot
   const { id } = useParams();
   const [notifications, setNotifications] = useState({
     projectUpdates: true,
@@ -47,7 +44,21 @@ const SettingsPage = () => {
         },
         body: JSON.stringify(data),
       });
-      toast("Project updated successfully");
+      toast.success("Project updated successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        style: {
+          backgroundColor: "#008000",
+          color: "#fff",
+          fontWeight: "bold",
+        },
+        icon: <GoCheck color="black" />,
+      });
       navigate("/myprojects");
     } catch (error) {
       console.error("Error:", error);
@@ -80,14 +91,35 @@ const SettingsPage = () => {
       });
       const result = await res.json();
       if (result.status) {
-        alert("Project deleted successfully");
-        navigate("/");
+        toast.success("Project deleted successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+          style: {
+            backgroundColor: "#FF0000",
+            color: "#fff",
+            fontWeight: "bold",
+          },
+          icon: <FaTrash color="black" />,
+        });
+
+        navigate("/myprojects");
       } else {
         alert("Error deleting project: " + result.message);
       }
     } catch (error) {
       console.error("Delete error:", error);
+    } finally {
+      setShowModal(false); // Modal bezárása törlés után
     }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -194,7 +226,7 @@ const SettingsPage = () => {
           <div className="flex flex-col lg:flex-row gap-6">
             <form
               onSubmit={handleSubmit(formSubmit)}
-              className="bg-gray-800 p-6 rounded-lg shadow-md w-full lg:w-1/2 mb-10"
+              className="bg-gray-800 p-6 rounded-lg shadow-md w-full lg:w-1/2 "
             >
               <div className="mb-4">
                 <label
@@ -280,6 +312,12 @@ const SettingsPage = () => {
                   className="mt-1 p-2 block w-full border border-gray-300 rounded-md text-white"
                 />
               </div>
+              <button
+                type="submit"
+                className="flex items-center gap-1 text-gray-900 bg-green-500 border border-green-300 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-500 dark:text-black dark:border-green-500 dark:hover:bg-green-500 dark:hover:border-green-500 dark:focus:ring-green-500"
+              >
+                Save changes
+              </button>
             </form>
             <div className="bg-gray-800 p-6 rounded-lg shadow-md flex-1">
               <h2 className="text-xl text-white mb-4">Notification Settings</h2>
@@ -350,24 +388,61 @@ const SettingsPage = () => {
                   </div>
                 ))}
               </div>
+              <button
+                type="submit"
+                className="flex items-center mt-5 text-gray-900 bg-green-500 border border-green-300 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-500 dark:text-black dark:border-green-500 dark:hover:bg-green-500 dark:hover:border-green-500 dark:focus:ring-green-500"
+              >
+                Save changes
+              </button>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row justify-start gap-5 w-full p-4 bg-gray-700 mt-5 rounded">
-            <button
-              type="button"
-              className="flex items-center gap-1 text-gray-900 bg-green-500 border border-green-300 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-500 dark:text-black dark:border-green-500 dark:hover:bg-green-500 dark:hover:border-green-500 dark:focus:ring-green-500"
-            >
-              Save changes
-            </button>
-            <button
-              onClick={handleDelete}
-              type="button"
-              className="flex items-center gap-1 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-            >
-              {" "}
-              Delete project
-            </button>
-          </div>
+          <button
+            className="bg-red-600 px-4 py-2 mt-10 text-white rounded-lg"
+            onClick={() => setShowModal(true)}
+          >
+            Delete Project
+          </button>
+          {showModal && (
+            <div className="fixed inset-0 bg-transparent bg-opacity-50 flex items-center justify-center">
+              <div className="group select-none w-[300px] flex flex-col p-5 relative items-center justify-center bg-gray-900 border border-gray-800 shadow-lg rounded-2xl">
+                <div className="text-center p-3 flex-auto justify-center">
+                  <svg
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    className="group-hover:animate-bounce w-12 h-12 flex items-center text-gray-500 fill-red-500 mx-auto"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                      fillRule="evenodd"
+                    ></path>
+                  </svg>
+                  <h2 className="text-xl font-bold py-4 text-gray-200">
+                    Are you sure?
+                  </h2>
+                  <p className="font-bold text-sm text-gray-500 px-2">
+                    Do you really want to continue? This process cannot be
+                    undone.
+                  </p>
+                </div>
+                <div className="p-2 mt-2 text-center space-x-2">
+                  <button
+                    className="bg-gray-500 px-5 py-2 text-sm text-white rounded-xl"
+                    onClick={handleCloseModal}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="bg-red-600 px-5 py-2 text-sm text-white rounded-xl"
+                    onClick={handleDelete}
+                  >
+                    Delete project
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

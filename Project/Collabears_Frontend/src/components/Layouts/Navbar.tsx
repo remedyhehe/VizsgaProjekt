@@ -112,7 +112,11 @@ const Navbar = () => {
             className="w-10 h-10 rounded-full cursor-pointer"
             onClick={toggleDropdown}
           >
-            <i className="fa-solid fa-circle-user fa-2xl"></i>
+            <img
+              className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+              src="../images/avatar.png"
+              alt=""
+            />
           </button>
           {isDropdownOpen && (
             <div

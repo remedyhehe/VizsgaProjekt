@@ -300,12 +300,6 @@ const MembersPage = () => {
                                   }
                                   required
                                 />
-                                <button
-                                  type="submit"
-                                  className="text-white absolute end-2.5 bottom-2.5 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-                                >
-                                  Search
-                                </button>
                               </div>
                             </form>
                             <div className="mt-4 max-h-60 overflow-y-auto">
@@ -317,7 +311,7 @@ const MembersPage = () => {
                                   <span className="flex items-center gap-3 mb-2 sm:mb-0">
                                     <img
                                       src="../images/avatar.png"
-                                      className="h-10"
+                                      className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
                                     />
                                     {user.name} ({user.email})
                                   </span>
