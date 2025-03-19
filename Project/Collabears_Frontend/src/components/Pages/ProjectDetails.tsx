@@ -11,6 +11,7 @@ import { ITask, IColumn } from "../../utils/util";
 import Sidebar from "../Layouts/Sidebar";
 import Tasks from "./ProjectDetailsFolder/Tasks";
 import Calendar from "./ProjectDetailsFolder/Calendar";
+import Table from "./ProjectDetailsFolder/Table";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState<{ id: number; name: string } | null>(
@@ -69,8 +70,6 @@ const ProjectDetails = () => {
         </div>
       </div>
     );
-
-  
 
   return (
     <>
@@ -183,13 +182,13 @@ const ProjectDetails = () => {
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <button
+                      onClick={() => setSmallSiteId(3)}
                       className="flex items-center p-5 gap-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                     >
                       <FaTableCellsLarge />
                       Table
-                    </a>
+                    </button>
                   </li>
                   <li>
                     <button
@@ -204,7 +203,7 @@ const ProjectDetails = () => {
               </div>
 
               {/* Gombok jobb oldalra igazítása */}
-              <div className="flex justify-end gap-5 w-full">
+              <div className="flex flex-col md:flex-row justify-end gap-5 w-full p-5">
                 <button
                   type="button"
                   className="flex items-center gap-1 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -233,12 +232,12 @@ const ProjectDetails = () => {
             </div>
           </nav>
           {/* Változó tartalom innen -------------------------------------------------------------------------------------------- */}
-          
-            {smallSiteId === 0 && <Tasks />}
-            {smallSiteId === 1 && <div>Timeline Component</div>}
-            {smallSiteId === 2 && <div>List Component</div>}
-            {smallSiteId === 3 && <div>Table Component</div>}
-            {smallSiteId === 4 && <Calendar />}
+
+          {smallSiteId === 0 && <Tasks />}
+          {smallSiteId === 1 && <div>Timeline Component</div>}
+          {smallSiteId === 2 && <div>List Component</div>}
+          {smallSiteId === 3 && <Table />}
+          {smallSiteId === 4 && <Calendar />}
         </div>
       </div>
     </>
