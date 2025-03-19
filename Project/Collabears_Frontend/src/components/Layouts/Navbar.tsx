@@ -57,7 +57,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-gray-800 text-white sticky top-0 z-50 px-5 py-4 flex justify-between items-center">
+      <nav className="bg-gray-800 text-white sticky top-0 z-50 px-5 py-4 flex justify-between items-center shadow-xl">
         <a className="text-3xl font-bold leading-none" href="/">
           <img className="h-16" src="/images/maci.PNG" alt="Logo" />
         </a>
