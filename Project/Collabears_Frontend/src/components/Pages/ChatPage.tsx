@@ -8,6 +8,7 @@ import { IoArrowUndoOutline, IoArrowUndoSharp, IoSend } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
 import { FaFaceSmile, FaGift, FaTrash } from "react-icons/fa6";
 import EmojiPicker from "emoji-picker-react";
+import GifPicker from "gif-picker-react";
 
 const ChatPage = () => {
   interface Project {
@@ -26,6 +27,7 @@ const ChatPage = () => {
   const [newMsg, setNewMessage] = useState("");
   const [hoveredMessage, setHoveredMessage] = useState<number | null>(null);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showGifPicker, setShowGifPicker] = useState(false);
   const [showModal, setShowModal] = useState(false); // Modal állapot
   const [messageToDelete, setMessageToDelete] = useState<number | null>(null);
   useEffect(() => {
@@ -386,7 +388,18 @@ const ChatPage = () => {
                 </div>
               )}
             </div>
-            <MdOutlineGifBox className="hover:text-blue-300 text-3xl" />
+            <MdOutlineGifBox
+              onClick={() => setShowGifPicker((prev) => !prev)}
+              className="hover:text-blue-300 text-3xl"
+            />
+            {showGifPicker && (
+              <div
+                className="fixed bottom-25 right-6"
+                style={{ display: showGifPicker ? "block" : "none" }}
+              >
+                <GifPicker tenorApiKey="AIzaSyBqQJobmLXxQJfbHmLfsWJzpqPZ4Ia86CI" />
+              </div>
+            )}
             <FaGift className="hover:text-purple-300 text-2xl" />
             <button
               className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700"
