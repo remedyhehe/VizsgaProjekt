@@ -1,5 +1,5 @@
 import { CgBoard } from "react-icons/cg";
-import { FaCalendar, FaList, FaShare, FaSort } from "react-icons/fa";
+import { FaCalendar, FaList, FaMinus, FaPlus, FaShare, FaSort } from "react-icons/fa";
 import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoAddOutline, IoFilterSharp } from "react-icons/io5";
 import { DragEvent, useEffect, useState } from "react";
@@ -139,6 +139,10 @@ const Tasks = () => {
                 </div>
             </li>
             ))}
+            <div className="mx-1 mt-1 bg-slate-800 h-fit p-1 rounded border border-slate-700">
+
+                <FaPlus className="text-3xl text-slate-600 cursor-pointer" />
+            </div>
         </ol>
         </div>
         </div>
