@@ -52,14 +52,18 @@ const YourAccountPage = () => {
     <>
       <Navbar />
 
-      <div className="sm:flex overflow-x-hidden">
+      <div className="sm:flex overflow-x-hidden bg-gray-800 pt-3">
         {/* Oldalsó nem látható sáv */}
         <div className="bg-gray-800 hidden sm:block sm:w-1/10"></div>
 
         {/* Bal oldalsó látható sáv (Menü opciók) */}
         <div className="bg-gray-800 w-full sm:w-2/6 md:w-1/4 text-white">
-          <h2 className="text-2xl font-semibold">username</h2>
-          <h2 className="text-lg text-gray-500">Free subscription</h2>
+          <h2 className="text-2xl font-semibold text-center sm:text-left">
+            username
+          </h2>
+          <h2 className="text-lg text-gray-500 text-center sm:text-left">
+            Free subscription
+          </h2>
           <div>
             <a href="#">
               <h2 className="p-2 hover:bg-slate-700 font-thin hover:text-orange-500 mb-2 border-b-1 border-orange-500">
