@@ -186,15 +186,15 @@ const SettingsPage = () => {
             </ol>
           </nav>
         </nav>
-        <div className="bg-gray-900 p-6">
+        <div className="bg-gray-900 p-6 sm:p-4">
           <h1 className="text-2xl font-bold text-white mb-6">
             Project Settings
           </h1>
 
-          <div className="flex gap-6">
+          <div className="flex flex-col lg:flex-row gap-6">
             <form
               onSubmit={handleSubmit(formSubmit)}
-              className="bg-gray-800 p-6 rounded-lg shadow-md w-1/2 mb-10"
+              className="bg-gray-800 p-6 rounded-lg shadow-md w-full lg:w-1/2 mb-10"
             >
               <div className="mb-4">
                 <label
@@ -352,7 +352,7 @@ const SettingsPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-start gap-5 w-full p-4 bg-gray-700 mt-5 rounded">
+          <div className="flex flex-col sm:flex-row justify-start gap-5 w-full p-4 bg-gray-700 mt-5 rounded">
             <button
               type="button"
               className="flex items-center gap-1 text-gray-900 bg-green-500 border border-green-300 focus:outline-none hover:bg-green-500 focus:ring-4 focus:ring-green-500 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-500 dark:text-black dark:border-green-500 dark:hover:bg-green-500 dark:hover:border-green-500 dark:focus:ring-green-500"

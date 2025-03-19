@@ -5,13 +5,15 @@ import { FaCalendar, FaList, FaShare, FaSort } from "react-icons/fa";
 import { FaTableCellsLarge } from "react-icons/fa6";
 import { IoAddOutline, IoFilterSharp } from "react-icons/io5";
 import { DragEvent, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CiViewTimeline } from "react-icons/ci";
 import { ITask, IColumn } from "../../utils/util";
 import Sidebar from "../Layouts/Sidebar";
 
 const ProjectDetails = () => {
-  const [project, setProject] = useState(null);
+  const [project, setProject] = useState<{ id: number; name: string } | null>(
+    null
+  );
   const { id } = useParams();
 
   const [tasks, setTasks] = useState<{ [key: number]: ITask }>({
@@ -102,11 +104,11 @@ const ProjectDetails = () => {
     event.dataTransfer.setData("text/plain", taskId.toString());
   };
 
-  const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (event: DragEvent<HTMLLIElement>) => {
     event.preventDefault();
   };
 
-  const handleDrop = (event: DragEvent<HTMLDivElement>, columnId: number) => {
+  const handleDrop = (event: DragEvent<HTMLLIElement>, columnId: number) => {
     const taskId = parseInt(event.dataTransfer.getData("text/plain"), 10);
 
     const startColumn = Object.values(columns).find((column) =>
@@ -262,13 +264,13 @@ const ProjectDetails = () => {
                     </a>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to={`/calendar/${id}`}
                       className="flex items-center p-5 gap-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                     >
                       <FaCalendar />
                       Calendar
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

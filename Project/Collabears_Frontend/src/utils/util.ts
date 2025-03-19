@@ -15,6 +15,7 @@ export interface IUser{
 
 
 export interface IColumn {
+  id: number;
   name: string;
   project_id: number;
   taskIds: number[];

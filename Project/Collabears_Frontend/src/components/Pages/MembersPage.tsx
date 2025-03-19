@@ -219,7 +219,7 @@ const MembersPage = () => {
 
               <div className="relative flex flex-col w-full h-full text-white p-5 mt-5 bg-gray-800 shadow-md rounded-xl bg-clip-border">
                 <div className="relative mx-4 mt-4 overflow-hidden text-white bg-gray-800 rounded-none bg-clip-border">
-                  <div className="flex items-center justify-between gap-8 mb-8">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
                     <div>
                       <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                         Members list
@@ -228,7 +228,7 @@ const MembersPage = () => {
                         See information about all members
                       </p>
                     </div>
-                    <div className="flex flex-col gap-2 shrink-0 sm:flex-row">
+                    <div className="flex flex-col gap-2 sm:flex-row">
                       <button className="text-zinc-500 hover:text-orange-600 backdrop-blur-lg bg-gradient-to-tr from-transparent via-[rgba(121,121,121,0.16)] to-transparent rounded-md py-2 px-6 shadow hover:shadow-orange-600 duration-700">
                         View All
                       </button>
@@ -251,7 +251,7 @@ const MembersPage = () => {
                       </button>
                       {open && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-50">
-                          <div className="relative w-2/5 p-6 bg-gray-700 rounded-lg shadow-lg">
+                          <div className="relative w-full max-w-lg p-6 bg-gray-700 rounded-lg shadow-lg">
                             <div className="flex justify-between p-5">
                               <h2 className="text-xl font-semibold text-white">
                                 Add New Member
@@ -312,9 +312,9 @@ const MembersPage = () => {
                               {filteredUsers.map((user) => (
                                 <div
                                   key={user.email}
-                                  className="p-3 border-b border-gray-600 text-white flex justify-between items-center"
+                                  className="p-3 border-b border-gray-600 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center"
                                 >
-                                  <span className="flex items-center gap-3">
+                                  <span className="flex items-center gap-3 mb-2 sm:mb-0">
                                     <img
                                       src="../images/avatar.png"
                                       className="h-10"

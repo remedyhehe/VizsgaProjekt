@@ -13,8 +13,13 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
+interface Project {
+  name: string;
+  tasks: { name: string; start: string; end: string }[];
+}
+
 const Calendar = () => {
-  const [project, setProject] = useState(null);
+  const [project, setProject] = useState<Project | null>(null);
   const { id } = useParams();
   const [events, setEvents] = useState([]);
 
@@ -26,12 +31,14 @@ const Calendar = () => {
         if (result.status) {
           setProject(result.data);
           // Assuming result.data.tasks contains the tasks with start and end dates
-          const formattedEvents = result.data.tasks.map((task) => ({
-            title: task.name,
-            start: new Date(task.start),
-            end: new Date(task.end),
-            allDay: false,
-          }));
+          const formattedEvents = result.data.tasks.map(
+            (task: { name: string; start: string; end: string }) => ({
+              title: task.name,
+              start: new Date(task.start),
+              end: new Date(task.end),
+              allDay: false,
+            })
+          );
           setEvents(formattedEvents);
         } else {
           console.error("Error fetching project:", result.message);

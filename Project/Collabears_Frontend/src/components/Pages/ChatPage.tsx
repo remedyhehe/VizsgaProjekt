@@ -228,7 +228,7 @@ const ChatPage = () => {
             </ol>
           </nav>
         </nav>
-        <div className="flex-1 flex flex-col justify-between p-5">
+        <div className="flex-1 flex flex-col justify-between p-5 h-screen">
           <h1 className="text-2xl font-bold">{project.name}</h1>
           <div className="flex-1 overflow-y-auto bg-gray-800 p-2 pr-8 pt-5 rounded-lg mt-4 max-h-[calc(100vh-200px)]">
             {messages.map((msg, index) => (
@@ -297,8 +297,9 @@ const ChatPage = () => {
             ))}
           </div>
 
-          <div className="bg-gray-800 p-4 rounded-lg mt-4 flex items-center gap-5">
+          <div className="bg-gray-800 p-4 rounded-lg mt-4 flex items-center gap-5 flex-wrap">
             <button
+              id="file_input"
               title="Add New"
               className="group cursor-pointer outline-none hover:rotate-90 duration-300"
             >

@@ -150,6 +150,7 @@ const MyProjects = () => {
                 setProjects={setProjects}
                 key={project.id}
                 project={project}
+                created_at={project.created_at}
                 onEdit={(updatedProject) => {
                   const updatedProjects = projects.map((p) =>
                     p.id === updatedProject.id ? updatedProject : p
