@@ -3,11 +3,15 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../Layouts/Navbar";
 import Footer from "../../Layouts/Footer";
+import { Pencil } from "lucide-react";
 
 const YourAccountPage = () => {
   const [countries, setCountries] = useState<{ name: string }[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
+  const [hover, setHover] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [newUrl, setNewUrl] = useState("");
 
   useEffect(() => {
     // API hívás az országok lekérésére
@@ -36,15 +40,18 @@ const YourAccountPage = () => {
     }
   }, []);
 
-  const handleAvatarSelect = (avatar: string) => {
-    setSelectedAvatar(avatar);
-    localStorage.setItem("user_avatar", avatar);
-    window.dispatchEvent(new Event("avatarChanged"));
+  const handleAvatarSelect = () => {
+    if (newUrl) {
+      setSelectedAvatar(newUrl);
+      localStorage.setItem("user_avatar", newUrl);
+    }
+    setModalOpen(false);
   };
 
   return (
     <>
       <Navbar />
+
       <div className="sm:flex overflow-x-hidden">
         {/* Oldalsó nem látható sáv */}
         <div className="bg-gray-800 hidden sm:block sm:w-1/10"></div>
@@ -161,12 +168,30 @@ const YourAccountPage = () => {
 
             {/* Jobb oldalsó */}
             <div className="w-full lg:w-1/2">
-              <div className="mt-10">
-                <img
-                  className="w-2/3 h-2/3 rounded-full text-center mx-auto"
-                  src="https://i.imgur.com/kHNQ3vD.jpeg"
-                  alt="Rounded avatar"
-                />
+              {/* Profilkép */}
+              <div className="mt-10 text-center">
+                <label className="block mb-2 text-md font-medium  text-white">
+                  Profile Picture
+                </label>
+                <div
+                  className="relative w-40 h-40 mx-auto rounded-full transition-all duration-300 cursor-pointer"
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                  onClick={() => setModalOpen(true)}
+                >
+                  <img
+                    className={`w-full h-full rounded-full object-cover transition-opacity duration-300 ${
+                      hover ? "opacity-70 cursor-pointer" : "opacity-100"
+                    }`}
+                    src={selectedAvatar || "https://i.imgur.com/kHNQ3vD.jpeg"}
+                    alt="Profile"
+                  />
+                  {hover && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Pencil className="w-8 h-8 text-white bg-black/50 p-2 rounded-full" />
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="flex flex-col items-center py-10">
                 <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded cursor-pointer">
@@ -181,6 +206,37 @@ const YourAccountPage = () => {
         <div className="bg-gray-800 hidden sm:block sm:w-1/6"></div>
       </div>
       <Footer />
+      {/* Profilkép csere Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-opacity-">
+          <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-96">
+            <h2 className="text-xl font-semibold text-white mb-4">
+              Change Profile Picture
+            </h2>
+            <input
+              type="text"
+              placeholder="Enter image URL (e.g., Imgur link)"
+              value={newUrl}
+              onChange={(e) => setNewUrl(e.target.value)}
+              className="w-full p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+            <div className="flex justify-end space-x-3 mt-4">
+              <button
+                onClick={() => setModalOpen(false)}
+                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAvatarSelect}
+                className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
