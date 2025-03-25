@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\JsonResponse;
-
+use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
@@ -133,23 +133,38 @@ public function toggleFavorite($id)
     {
         $project = Project::find($id);
 
-        if (!$project) {
+        if ($project == null) {
             return response()->json([
                 'status' => false,
-                'message' => 'Project not found',
-            ], 404);
-        }
-
-        try {
-            $project->update([
-                'name' => $request->name,
-                'description' => $request->description,
-                'category' => $request->category,
-                'member_number' => $request->member_number,
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
+                'message' => 'Project not found.',
             ]);
+        } 
 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'category' => 'required|string|max:100',
+            'member_number' => 'required|integer|min:1',
+            'start_date' => 'required|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Please fix the errors',
+                'errors' => $validator->errors()
+            ]);
+        }
+        try {
+            $project->name = $request->name;
+            $project->description = $request->description;
+            $project->category = $request->category;
+            $project->member_number = $request->member_number;
+            $project->start_date = $request->start_date;
+            $project->end_date = $request->end_date;
+            $project->save();
+    
             return response()->json([
                 'status' => true,
                 'message' => 'Project updated successfully',
@@ -162,6 +177,8 @@ public function toggleFavorite($id)
                 'error' => $e->getMessage(),
             ], 500);
         }
+    
+
     }
     /**
      * Remove the specified resource from storage.
