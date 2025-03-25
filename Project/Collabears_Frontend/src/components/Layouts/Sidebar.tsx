@@ -4,7 +4,6 @@ import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
 import { PiChats } from "react-icons/pi";
 import { AiOutlineHome } from "react-icons/ai";
 import { FaDoorOpen } from "react-icons/fa";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { useParams } from "react-router-dom";
 
 const Sidebar = () => {

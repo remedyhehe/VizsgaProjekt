@@ -1,7 +1,4 @@
-/** @format */
-
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import LogoutButton from "../Function/LogoutButton";
 import useLogin from "../Function/LoginFunction";
 import UserMenu from "../Function/UserMenu";
@@ -83,24 +80,27 @@ const Navbar = () => {
             isMenuOpen ? "hidden" : ""
           } hidden lg:items-center lg:space-x-6`}
         >
-          <a href="/" className="px-3 py-2 text-sm font-medium text-white">
+          <a
+            href="/"
+            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
+          >
             <i className="fa-solid fa-house"></i> Home
           </a>
           <a
             href="/myprojects"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
+            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
           >
             <i className="fa-solid fa-plus"></i> My Projects
           </a>
           <a
             href="/projects"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
+            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
           >
             <i className="fa-solid fa-globe"></i> Browse
           </a>
           <a
             href="/premium"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
+            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
           >
             <i className="fa-solid fa-shield"></i> Premium
           </a>
