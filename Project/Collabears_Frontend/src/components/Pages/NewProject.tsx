@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Navbar from "../Layouts/Navbar";
-import { useWindowSize } from "react-use";
-import Confetti from "react-confetti";
 
 const NewProject = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [showConfetti, setShowConfetti] = useState(false);
   const totalSteps = 5; // The total number of steps
-  const { width, height } = useWindowSize();
 
   const nextStep = () => {
     if (currentStep < totalSteps) {
@@ -43,8 +39,7 @@ const NewProject = () => {
       });
 
       if (response.ok) {
-        setCurrentStep(totalSteps + 1);
-        setShowConfetti(true); // Confetti indítása
+        setCurrentStep(totalSteps + 1); // Navigate to the success screen
       } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
@@ -55,14 +50,9 @@ const NewProject = () => {
       // Handle network or other errors
     }
   };
-  const handleGoToProjects = () => {
-    setShowConfetti(false); // Konfetti leállítása
-    window.location.href = "/myprojects"; // Navigálás a projektekhez
-  };
 
   return (
     <>
-      {showConfetti && <Confetti width={width} height={height} />}
       <Navbar />
       <nav className="flex m-4 justify-center" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -299,7 +289,7 @@ const NewProject = () => {
               </p>
               <button
                 type="button"
-                onClick={handleGoToProjects}
+                onClick={() => (window.location.href = "/myprojects")}
                 className="w-full mt-4 bg-green-500 text-white p-4 rounded-xl hover:bg-green-600"
               >
                 Go to My Projects

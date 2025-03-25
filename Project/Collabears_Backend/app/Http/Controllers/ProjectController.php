@@ -6,9 +6,7 @@ use App\Models\Project;
 use App\Models\User;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 
 
 class ProjectController extends Controller
@@ -131,45 +129,30 @@ public function toggleFavorite($id)
     /**
      * Update the specified resource in storage.
      */
-    public function update($id, UpdateProjectRequest $request) {
+    public function update(UpdateProjectRequest $request, $id)
+    {
         $project = Project::find($id);
-    
-        if ($project == null) {
+
+        if (!$project) {
             return response()->json([
                 'status' => false,
-                'message' => 'Project not found.',
+                'message' => 'Project not found',
             ], 404);
         }
-    
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'category' => 'required|string|max:100',
-            'member_number' => 'required|integer|min:1',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
-    
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Please fix the errors',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-    
+
         try {
-            $project->name = $request->name;
-            $project->description = $request->description;
-            $project->category = $request->category;
-            $project->member_number = $request->member_number;
-            $project->start_date = $request->start_date;
-            $project->end_date = $request->end_date;
-            $project->save();
-    
+            $project->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'category' => $request->category,
+                'member_number' => $request->member_number,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+            ]);
+
             return response()->json([
                 'status' => true,
-                'message' => 'Project updated successfully.',
+                'message' => 'Project updated successfully',
                 'data' => $project
             ]);
         } catch (\Exception $e) {

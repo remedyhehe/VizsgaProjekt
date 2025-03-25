@@ -83,10 +83,7 @@ const Navbar = () => {
             isMenuOpen ? "hidden" : ""
           } hidden lg:items-center lg:space-x-6`}
         >
-          <a
-            href="/"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
-          >
+          <a href="/" className="px-3 py-2 text-sm font-medium text-white">
             <i className="fa-solid fa-house"></i> Home
           </a>
           <a

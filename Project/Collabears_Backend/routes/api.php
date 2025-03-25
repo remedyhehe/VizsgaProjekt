@@ -21,7 +21,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanc
 // web.php
 Route::get('dashboard', [ProjectController::class, 'getDashboardData']);
 Route::put('/projects/{id}', [ProjectController::class, 'update']);
-
 Route::get('/users', [AuthController::class, 'getAllUsers']);
 
 

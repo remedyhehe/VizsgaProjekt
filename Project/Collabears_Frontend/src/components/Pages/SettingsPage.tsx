@@ -19,6 +19,7 @@ const SettingsPage = () => {
   const { register, handleSubmit, reset } = useForm<Project>();
 
   const [project, setProject] = useState<Project | null>(null);
+  const [input, setInput] = useState("");
   const [showModal, setShowModal] = useState(false); // Modal állapot
   const { id } = useParams();
   const [notifications, setNotifications] = useState({
@@ -27,19 +28,21 @@ const SettingsPage = () => {
     deadlineReminders: true,
   });
   const navigate = useNavigate();
-
+  function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInput(e.target.value);
+  }
   const handleNotificationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNotifications({ ...notifications, [e.target.name]: e.target.checked });
   };
-
   const formSubmit: SubmitHandler<Project> = async (formData) => {
+    const data = { ...formData, description: input };
     try {
       const response = await fetch("http://localhost:8000/api/projects/" + id, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
       toast.success("Project updated successfully!", {
         position: "top-right",
@@ -81,7 +84,6 @@ const SettingsPage = () => {
 
     fetchProjects();
   }, [id]);
-
   const handleDelete = async () => {
     try {
       const res = await fetch(`http://localhost:8000/api/projects/${id}`, {
