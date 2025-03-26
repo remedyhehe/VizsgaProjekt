@@ -21,6 +21,9 @@ public function getAllUsers()
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
             
         ]);
 
@@ -28,6 +31,10 @@ public function getAllUsers()
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'country' => $request->country,
+
         ]);
 
         return response()->json(['message' => 'Registration successful'], 201);

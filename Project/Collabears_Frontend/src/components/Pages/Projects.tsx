@@ -121,8 +121,8 @@ const Projects = () => {
           <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 sm:flex sm:gap-0 justify-center">
             {categories.map((category) => (
               <a
-                key={category.name}
                 href="#"
+                key={category.name}
                 className={`px-3 py-2 flex items-center ${
                   selectedCategory === category.name
                     ? "text-orange-500"

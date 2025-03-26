@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import LogoutButton from "../Function/LogoutButton";
 import useLogin from "../Function/LoginFunction";
 import UserMenu from "../Function/UserMenu";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,12 +14,13 @@ const Navbar = () => {
   useEffect(() => {
     const storedName = localStorage.getItem("user_name");
     setUserName(storedName);
-  }, [localStorage.getItem("user_name")]); // ❗ Figyeljük a változást!
+  }, []); // ❗ Figyeljük a változást!
 
-  //LOGIN
+  // LOGIN
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { login, message } = useLogin(); // Login függvény és üzenet
 
   const handleLogin = (e: React.FormEvent) => {
@@ -26,7 +28,7 @@ const Navbar = () => {
     login(email, password); // Meghívjuk a login funkciót
   };
 
-  //MENÜ
+  // MENÜ
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -140,7 +142,7 @@ const Navbar = () => {
                       <i className="fa-regular fa-circle-up"></i> Upgrade Plan
                     </h2>
                   </a>
-                  <a href="/">
+                  <a href="/settings">
                     <h2 className="p-2 hover:bg-slate-300 rounded-lg">
                       <i className="fa-solid fa-gear"></i> Settings
                     </h2>
@@ -159,17 +161,34 @@ const Navbar = () => {
                       placeholder="Email..."
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-md mb-2 focus:ring-2 focus:ring-orange-500"
+                      className="w-full px-3 py-2 border rounded-md mb-2  "
                       required
                     />
-                    <input
-                      type="password"
-                      placeholder="Password..."
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-md mb-4 focus:ring-2 focus:ring-orange-500"
-                      required
-                    />
+                    <div className="relative mb-4">
+                      <input
+                        type={showPassword ? "text" : "password"} // Jelszó láthatóságának váltogatása
+                        placeholder="Password..."
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md "
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent event from propagating to the document
+                          setShowPassword((prev) => !prev);
+                        }}
+                      >
+                        {showPassword ? (
+                          <FaEyeSlash size={20} />
+                        ) : (
+                          <FaEye size={20} />
+                        )}
+                      </button>
+                    </div>
+
                     <button
                       type="submit"
                       className="w-full bg-orange-500 text-white py-2 rounded-md cursor-pointer"
@@ -272,14 +291,31 @@ const Navbar = () => {
                   className="w-full px-3 py-2 border rounded-md mb-2 focus:ring-2 focus:ring-orange-500"
                   required
                 />
-                <input
-                  type="password"
-                  placeholder="Password..."
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2 border rounded-md mb-4 focus:ring-2 focus:ring-orange-500"
-                  required
-                />
+                <div className="relative mb-4">
+                  <input
+                    type={showPassword ? "text" : "password"} // Jelszó láthatóságának váltogatása
+                    placeholder="Password..."
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-orange-500"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent event from propagating to the document
+                      setShowPassword((prev) => !prev);
+                    }}
+                  >
+                    {showPassword ? (
+                      <FaEyeSlash size={20} />
+                    ) : (
+                      <FaEye size={20} />
+                    )}
+                  </button>
+                </div>
+
                 <button
                   type="submit"
                   className="w-full bg-orange-500 text-white py-2 rounded-md cursor-pointer"

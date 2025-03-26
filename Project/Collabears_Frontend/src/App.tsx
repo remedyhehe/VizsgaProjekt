@@ -8,7 +8,6 @@ import NewProject from "./components/Pages/NewProject";
 import Projects from "./components/Pages/Projects";
 import ProjectDetails from "./components/Pages/ProjectDetails";
 import RegisterPage from "./components/Pages/RegisterPage";
-import LoginPage from "./components/Pages/LoginPage";
 import { ToastContainer } from "react-toastify";
 import PremiumPage from "./components/Pages/PremiumPage";
 import SettingsPage from "./components/Pages/SettingsPage";
@@ -30,7 +29,6 @@ function App() {
           <Route path="/newproject" element={<NewProject />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
           <Route path="/account" element={<YourAccountPage />} />
           <Route path="/premium" element={<PremiumPage />} />
           <Route path="/projectDetails/:id" element={<ProjectDetails />} />
