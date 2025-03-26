@@ -215,14 +215,14 @@ const SettingsPage = () => {
           </nav>
         </nav>
         <div className="bg-gray-900 p-6 sm:p-4">
-          <h1 className="text-2xl font-bold text-white mb-6">
+          <h1 className="text-2xl font-bold text-white mb-6 mx-10">
             Project Settings
           </h1>
 
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex flex-col lg:flex-col gap-6 p-10">
             <form
               onSubmit={handleSubmit(formSubmit)}
-              className="bg-gray-800 p-6 rounded-lg shadow-md w-full lg:w-1/2 "
+              className="bg-gray-800 p-6 rounded-lg shadow-md w-full lg:w-full"
             >
               <div className="mb-4">
                 <label

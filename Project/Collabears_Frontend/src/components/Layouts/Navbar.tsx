@@ -3,10 +3,12 @@ import LogoutButton from "../Function/LogoutButton";
 import useLogin from "../Function/LoginFunction";
 import UserMenu from "../Function/UserMenu";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isNotDropdownOpen, setIsNotDropdownOpen] = useState(false);
 
   // USER MEGJELENÍTÉS
   const [userName, setUserName] = useState<string | null>(null);
@@ -36,15 +38,25 @@ const Navbar = () => {
 
   const toggleDropdown = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsDropdownOpen(!isDropdownOpen);
+    setIsDropdownOpen((prev) => !prev);
+    setIsNotDropdownOpen(false); // Bezárja az értesítési dropdown-t
+  };
+
+  const notificationDropdown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsNotDropdownOpen((prev) => !prev);
+    setIsDropdownOpen(false); // Bezárja a user dropdown-t
   };
   useEffect(() => {
     const closeDropdown = (e: MouseEvent) => {
       if (
         !document.getElementById("userIcon")?.contains(e.target as Node) &&
-        !document.getElementById("userDropdown")?.contains(e.target as Node)
+        !document.getElementById("userDropdown")?.contains(e.target as Node) &&
+        !document.getElementById("notIcon")?.contains(e.target as Node) &&
+        !document.getElementById("notDropDown")?.contains(e.target as Node)
       ) {
         setIsDropdownOpen(false);
+        setIsNotDropdownOpen(false);
       }
     };
     document.addEventListener("click", closeDropdown);
@@ -109,21 +121,146 @@ const Navbar = () => {
         </div>
 
         <div className="hidden lg:inline-block relative text-white">
-          <button
-            id="userIcon"
-            className="w-10 h-10 rounded-full cursor-pointer"
-            onClick={toggleDropdown}
-          >
-            <img
-              className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-              src="../images/avatar.png"
-              alt=""
-            />
-          </button>
+          <div className="flex gap-5 items-center">
+            <a href="#">
+              <IoMdNotificationsOutline
+                id="notIcon"
+                onClick={notificationDropdown}
+                className="text-2xl"
+              />
+            </a>
+            <button
+              id="userIcon"
+              className="w-10 h-10 rounded-full cursor-pointer"
+              onClick={toggleDropdown}
+            >
+              <img
+                className="w-9 h-9 border-2 border-white rounded-full dark:border-gray-800"
+                src="/images/avatar.png"
+                alt=""
+              />
+            </button>
+          </div>
+          {isNotDropdownOpen && (
+            <div
+              id="notDropDown"
+              className="absolute right-0 mt-7 w-lg bg-white text-black rounded-lg shadow-lg p-5 z-10"
+            >
+              <h3 className="text-xl font-semibold mb-5">Notifications</h3>
+              <hr className="text-gray-300" />
+              <div className="flex flex-col p-10 my-10 items-center">
+                <img
+                  className="p-5 h-40 w-40"
+                  src="/images/sleepBear.png"
+                  alt="Sleep Bear"
+                />
+
+                <p className="text-lg font-semibold">
+                  You do not have any notification
+                </p>
+              </div>
+            </div>
+          )}
           {isDropdownOpen && (
             <div
               id="userDropdown"
-              className="absolute right-0 mt-2 w-75 bg-white text-black rounded-lg shadow-lg p-2 z-10"
+              className="absolute right-0 mt-7 w-75 bg-white text-black rounded-lg shadow-lg p-2 z-10"
+            >
+              {/* HA BE VAN JELENTKEZVE */}
+              {userName && (
+                <div className="text-left">
+                  <h2 className="text-center p-2 rounded-lg font-semibold">
+                    Welcome, {userName}!
+                  </h2>
+                  <div className="my-2 text-center mx-auto w-2/3 h-[2px] bg-gray-200"></div>
+                  <a href="/account">
+                    <h2 className="p-2 hover:bg-slate-300 rounded-lg">
+                      <i className="fa-regular fa-user"></i> Account
+                    </h2>
+                  </a>
+                  <a href="/premium">
+                    <h2 className="p-2 hover:bg-slate-300 rounded-lg">
+                      <i className="fa-regular fa-circle-up"></i> Upgrade Plan
+                    </h2>
+                  </a>
+                  <a href="/settings">
+                    <h2 className="p-2 hover:bg-slate-300 rounded-lg">
+                      <i className="fa-solid fa-gear"></i> Settings
+                    </h2>
+                  </a>
+                  <div className="my-2 text-center mx-auto w-2/3 h-[2px] bg-gray-200"></div>
+                  <LogoutButton />
+                </div>
+              )}
+              {/* HA NINCS BEJELENTKEZVE */}
+              {!userName && (
+                <div>
+                  <h3 className="text-center text-lg mb-1">Have an account?</h3>
+                  <form onSubmit={handleLogin}>
+                    <input
+                      type="email"
+                      placeholder="Email..."
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-md mb-2  "
+                      required
+                    />
+                    <div className="relative mb-4">
+                      <input
+                        type={showPassword ? "text" : "password"} // Jelszó láthatóságának váltogatása
+                        placeholder="Password..."
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md "
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent event from propagating to the document
+                          setShowPassword((prev) => !prev);
+                        }}
+                      >
+                        {showPassword ? (
+                          <FaEyeSlash size={20} />
+                        ) : (
+                          <FaEye size={20} />
+                        )}
+                      </button>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full bg-orange-500 text-white py-2 rounded-md cursor-pointer"
+                    >
+                      Login
+                    </button>
+                  </form>
+                  {message && (
+                    <p className="text-center text-red-500">{message}</p>
+                  )}{" "}
+                  {/* Hibák megjelenítése */}
+                  <div className="mt-4 text-center">
+                    <p className="text-sm text-gray-600">
+                      You don't have an account yet?{" "}
+                      <a
+                        href="/register"
+                        className="text-orange-500 hover:underline"
+                      >
+                        Sign up!
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {isDropdownOpen && (
+            <div
+              id="userDropdown"
+              className="absolute right-0 mt-7 w-75 bg-white text-black rounded-lg shadow-lg p-2 z-10"
             >
               {/* HA BE VAN JELENTKEZVE */}
               {userName && (
