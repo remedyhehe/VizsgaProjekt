@@ -202,6 +202,9 @@ const Navbar = () => {
                       placeholder="Email..."
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }} // Megakadályozza, hogy a kattintás a dropdown bezáródását okozza
                       className="w-full px-3 py-2 border rounded-md mb-2  "
                       required
                     />
@@ -211,6 +214,9 @@ const Navbar = () => {
                         placeholder="Password..."
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }} // Megakadályozza, hogy a kattintás a dropdown bezáródását okozza
                         className="w-full px-3 py-2 border rounded-md "
                         required
                       />
@@ -232,6 +238,9 @@ const Navbar = () => {
 
                     <button
                       type="submit"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }} // Megakadályozza, hogy a kattintás a dropdown bezáródását okozza
                       className="w-full bg-orange-500 text-white py-2 rounded-md cursor-pointer"
                     >
                       Login
@@ -298,6 +307,9 @@ const Navbar = () => {
                       placeholder="Email..."
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }} // Megakadályozza, hogy a kattintás a dropdown bezáródását okozza
                       className="w-full px-3 py-2 border rounded-md mb-2  "
                       required
                     />
@@ -306,6 +318,9 @@ const Navbar = () => {
                         type={showPassword ? "text" : "password"} // Jelszó láthatóságának váltogatása
                         placeholder="Password..."
                         value={password}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }} // Megakadályozza, hogy a kattintás a dropdown bezáródását okozza
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full px-3 py-2 border rounded-md "
                         required
@@ -328,6 +343,9 @@ const Navbar = () => {
 
                     <button
                       type="submit"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }} // Megakadályozza, hogy a kattintás a dropdown bezáródását okozza
                       className="w-full bg-orange-500 text-white py-2 rounded-md cursor-pointer"
                     >
                       Login

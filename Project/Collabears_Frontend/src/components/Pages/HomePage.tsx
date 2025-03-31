@@ -150,14 +150,12 @@ const HomePage = () => {
     <>
       <Navbar />
       <div className="bg-gray-300 min-h-screen">
-        <section className="relative bg-cover bg-center text-white py-20">
-          <div className="absolute inset-0 bg-[url(/images/proj.jpeg)] bg-cover bg-center blur-[5px] rounded-lg"></div>
-
-          <div className="absolute inset-0 bg-black/30"></div>
-          <div className="relative container mx-auto px-6 text-center fade-in-element">
+        <section className="flex flex-col md:flex-row items-center text-white px-6 py-10 md:px-20 bg-gradient-to-r from-orange-500 to-orange-700">
+          {/* Text Content */}
+          <div className="w-full md:w-1/2 pr-0 md:pr-10 text-center md:text-left">
             <motion.h1
               key={texts[index]}
-              className="text-4xl font-bold mb-4"
+              className="text-4xl md:text-6xl font-bold mb-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -165,34 +163,55 @@ const HomePage = () => {
             >
               {texts[index]}
             </motion.h1>
-            <p className="text-lg mb-6">
+            <p className="text-xl md:text-2xl mb-6">
               Start your own project or join others to do great things together.
             </p>
-            <div className="flex justify-center space-x-4">
+            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 items-center">
               <a
                 href="myprojects"
-                className="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg shadow-md hover:bg-orange-700"
+                className="px-6 py-3 bg-orange-300 border-b-4 text-black font-medium rounded-lg shadow-md hover:bg-orange-200"
               >
                 <i className="fa-solid fa-folder-plus"></i> My Projects
               </a>
-
               <a
                 href="projects"
-                className="px-6 py-3 bg-gray-800 text-white font-medium rounded-lg hover:bg-gray-900"
+                className="relative px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg border-2 border-orange-700 hover:border-orange-500 transition-all duration-300 hover:shadow-[0_0_20px_10px_rgba(255,165,0,0.6)] active:scale-95"
               >
-                Browse between projects
+                Browse projects
               </a>
             </div>
           </div>
+          {/* Image */}
+          <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0">
+            <motion.img
+              src="/images/hatterke.png"
+              alt="Web development illustration"
+              className="rounded-lg w-full md:w-auto max-w-xs md:max-w-md"
+              animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
+              transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+            />
+          </div>
         </section>
 
-        <section className="bg-white py-16">
+        <section className="bg-white py-10">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 text-center gap-10 mb-12 fade-in-element">
+            <div className="grid grid-cols-1 md:grid-cols-4 text-center gap-10 mb-12 fade-in-element">
               <div>
                 <Counter targetNumber={projectsCount} />
                 <p className="text-gray-600">
                   <i className="fa-solid fa-play"></i> Started Projects
+                </p>
+              </div>
+              <div>
+                <Counter targetNumber={projectsCount} />
+                <p className="text-gray-600">
+                  <i className="fa-solid fa-flag-checkered"></i> Projects done
+                </p>
+              </div>
+              <div>
+                <Counter targetNumber={projectsCount} />
+                <p className="text-gray-600">
+                  <i className="fa-solid fa-user-plus"></i> Subscribed members
                 </p>
               </div>
               <div>

@@ -5,10 +5,11 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
 import { MdEdit, MdOutlineGifBox } from "react-icons/md";
 import { IoArrowUndoOutline, IoArrowUndoSharp, IoSend } from "react-icons/io5";
-import { IoIosAddCircle } from "react-icons/io";
 import { FaFaceSmile, FaGift, FaTrash } from "react-icons/fa6";
 import EmojiPicker from "emoji-picker-react";
 import GifPicker from "gif-picker-react";
+import { EmojiClickData } from "emoji-picker-react";
+import { Gif } from "gif-picker-react";
 
 const ChatPage = () => {
   interface Project {
@@ -60,16 +61,28 @@ const ChatPage = () => {
     fetchProjects();
   }, [id]);
 
-  const sendMessage = () => {
-    if (newMsg.trim() === "") return;
+  const sendMessage = (content: string) => {
+    if (content.trim() === "") return;
     const timestamp = new Date().toLocaleTimeString();
-    const newMessageData = { user: userName || "You", text: newMsg, timestamp };
+    const newMessageData = {
+      user: userName || "You",
+      text: content,
+      timestamp,
+    };
 
     const updatedMessages = [...messages, newMessageData];
-    setMessages(updatedMessages); // Állapot frissítése
-    localStorage.setItem(`messages_${id}`, JSON.stringify(updatedMessages)); // LocalStorage frissítése
+    setMessages(updatedMessages); // Update state
+    localStorage.setItem(`messages_${id}`, JSON.stringify(updatedMessages)); // Update localStorage
 
-    setNewMessage(""); // Üzenet mező törlése
+    setNewMessage(""); // Clear the input field
+  };
+  const handleEmojiClick = (emojiData: EmojiClickData) => {
+    const emoji = emojiData.emoji;
+    setNewMessage((prev) => prev + emoji); // Append the selected emoji to the input field
+  };
+
+  const handleGifSelect = (gif: Gif) => {
+    sendMessage(gif.url); // Send the GIF URL as a message
   };
 
   useEffect(() => {
@@ -326,7 +339,7 @@ const ChatPage = () => {
               placeholder="Write a message..."
               value={newMsg}
               onChange={(e) => setNewMessage(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+              onKeyDown={(e) => e.key === "Enter" && sendMessage(newMsg)}
             />
             {showModal && (
               <div className="fixed inset-0 bg-transparent  flex items-center justify-center">
@@ -384,7 +397,7 @@ const ChatPage = () => {
                   className="fixed bottom-25 right-6"
                   style={{ display: showEmojiPicker ? "block" : "none" }}
                 >
-                  <EmojiPicker />
+                  <EmojiPicker onEmojiClick={handleEmojiClick} />
                 </div>
               )}
             </div>
@@ -397,13 +410,16 @@ const ChatPage = () => {
                 className="fixed bottom-25 right-6"
                 style={{ display: showGifPicker ? "block" : "none" }}
               >
-                <GifPicker tenorApiKey="AIzaSyBqQJobmLXxQJfbHmLfsWJzpqPZ4Ia86CI" />
+                <GifPicker
+                  tenorApiKey="AIzaSyBqQJobmLXxQJfbHmLfsWJzpqPZ4Ia86CI"
+                  onGifClick={handleGifSelect}
+                />
               </div>
             )}
             <FaGift className="hover:text-purple-300 text-2xl" />
             <button
               className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700"
-              onClick={sendMessage}
+              onClick={() => sendMessage(newMsg)}
             >
               <IoSend />
             </button>

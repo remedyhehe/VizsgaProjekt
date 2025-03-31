@@ -20,7 +20,19 @@ class ProjectController extends Controller
 
     return response()->json([
         'status' => true,
-        'data' => $projects ?? [] // Ha nincs projekt, akkor üres tömböt küldünk
+        'data' => $projects->map(function ($project) {
+            return [
+                'id' => $project->id,
+                'name' => $project->name,
+                'description' => $project->description,
+                'category' => $project->category,
+                'member_number' => $project->member_number,
+                'start_date' => $project->start_date,
+                'end_date' => $project->end_date,
+                'is_favorite' => $project->is_favorite,
+                'image_url' => url($project->image_url),
+            ];
+        }),
     ]);
 }
 

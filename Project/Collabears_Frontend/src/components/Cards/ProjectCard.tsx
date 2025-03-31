@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Project } from "..//../utils/util";
+import { Project } from "../../utils/util";
 import { PiCursorClickBold } from "react-icons/pi";
 
 interface ProjectCardProps {
@@ -26,7 +26,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         ></i>
       </div>
       <img
-        src="/images/kep2.png"
+        src={project.image_url || "/images/default.png"}
         alt="Card Image"
         className="w-full h-32 object-cover mb-4 rounded-md"
       />

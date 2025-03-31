@@ -17,6 +17,7 @@ class Project extends Model
         'member_number',
         'start_date',
         'end_date',
+        'image_url', // Add this line
     ];
 
     
