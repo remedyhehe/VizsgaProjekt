@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../Layouts/Navbar";
 import Footer from "../Layouts/Footer";
+import { motion } from "framer-motion";
 
 interface Project {
   name: string;
@@ -136,161 +137,167 @@ const BrowseProjectMore = () => {
           </li>
         </ol>
       </nav>
-      <div className="p-10 flex justify-center gap-5 flex-col items-center">
-        <h1 className="text-3xl font-bold">{project.name}</h1>
-        <p className="text-lg">{project.description}</p>
-      </div>
-      <div className="flex-grow bg-white py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-center">
-            <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Members
-              </h5>
-              <p className="font-normal text-lg text-gray-700 dark:text-gray-400">
-                How many members do we need in the project?
-              </p>
-              <div className="flex justify-center p-5">
-                <h1 className="text-4xl font-bold text-orange-500">
-                  {project.member_number}
-                </h1>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }} // Kezdőállapot: teljesen áttetsző és lentebb
+        animate={{ opacity: 1, y: 0 }} // Animáció: fokozatosan jelenjen meg és mozogjon felfelé
+        transition={{ duration: 1, ease: "easeOut" }} // Lassú, sima megjelenés
+      >
+        <div className="p-10 flex justify-center gap-5 flex-col items-center">
+          <h1 className="text-3xl font-bold">{project.name}</h1>
+          <p className="text-lg">{project.description}</p>
+        </div>
+        <div className="flex-grow bg-white py-8">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 justify-center">
+              <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Members
+                </h5>
+                <p className="font-normal text-lg text-gray-700 dark:text-gray-400">
+                  How many members do we need in the project?
+                </p>
+                <div className="flex justify-center p-5">
+                  <h1 className="text-4xl font-bold text-orange-500">
+                    {project.member_number}
+                  </h1>
+                </div>
               </div>
-            </div>
-            <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Category
-              </h5>
-              <p className="font-normal text-lg text-gray-700 dark:text-gray-400">
-                What is the category of the project?
-              </p>
-              <div className="flex justify-center p-5">
-                <h1 className="text-2xl font-bold text-orange-500">
-                  {project.category}
-                </h1>
+              <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Category
+                </h5>
+                <p className="font-normal text-lg text-gray-700 dark:text-gray-400">
+                  What is the category of the project?
+                </p>
+                <div className="flex justify-center p-5">
+                  <h1 className="text-2xl font-bold text-orange-500">
+                    {project.category}
+                  </h1>
+                </div>
               </div>
-            </div>
-            <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Time
-              </h5>
-              <p className="font-normal text-lg text-gray-700 dark:text-gray-400">
-                How long will the project take?
-              </p>
-              <div className="flex justify-center p-5">
-                <h1 className="text-4xl font-bold text-orange-500">
-                  {project.start_date} - {project.end_date}
-                </h1>
+              <div className="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  Time
+                </h5>
+                <p className="font-normal text-lg text-gray-700 dark:text-gray-400">
+                  How long will the project take?
+                </p>
+                <div className="flex justify-center p-5">
+                  <h1 className="text-4xl font-bold text-orange-500">
+                    {project.start_date} - {project.end_date}
+                  </h1>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* Kapcsolatfelvételi és jelentkezési szekció */}
-      <div className="bg-gray-100 py-10 p-10">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
-          <div className="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold text-center text-gray-900">
-              Apply Now
-            </h2>
-            <p className="mt-4 text-gray-700 flex justify-center">
-              If you are interested, fill the forms below and apply for this
-              project.
-            </p>
+        {/* Kapcsolatfelvételi és jelentkezési szekció */}
+        <div className="bg-gray-100 py-10 p-10">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 justify-center">
+            <div className="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
+              <h2 className="text-2xl font-bold text-center text-gray-900">
+                Apply Now
+              </h2>
+              <p className="mt-4 text-gray-700 flex justify-center">
+                If you are interested, fill the forms below and apply for this
+                project.
+              </p>
 
-            {/* Jelentkezési űrlap */}
-            <form className="mt-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Why do you want to join?
-                </label>
-                <textarea
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  rows={4}
-                  required
-                ></textarea>
-              </div>
-              <div className="text-center">
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
-                >
-                  Apply Now
-                </button>
-              </div>
-            </form>
-          </div>
-          <div className="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold text-center text-gray-900">
-              Contact the Project Owner
-            </h2>
-            <p className="mt-4 text-gray-700 flex justify-center">
-              You can contact the project owner for more information.
-            </p>
+              {/* Jelentkezési űrlap */}
+              <form className="mt-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Your Email
+                  </label>
+                  <input
+                    type="email"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Why do you want to join?
+                  </label>
+                  <textarea
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    rows={4}
+                    required
+                  ></textarea>
+                </div>
+                <div className="text-center">
+                  <button
+                    type="submit"
+                    className="px-5 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
+                  >
+                    Apply Now
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div className="w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
+              <h2 className="text-2xl font-bold text-center text-gray-900">
+                Contact the Project Owner
+              </h2>
+              <p className="mt-4 text-gray-700 flex justify-center">
+                You can contact the project owner for more information.
+              </p>
 
-            {/* Jelentkezési űrlap */}
-            <form className="mt-6 space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Your Message
-                </label>
-                <textarea
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                  rows={4}
-                  required
-                ></textarea>
-              </div>
-              <div className="text-center">
-                <button
-                  type="submit"
-                  className="px-5 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
-                >
-                  Send Message
-                </button>
-              </div>
-            </form>
+              {/* Jelentkezési űrlap */}
+              <form className="mt-6 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Your Email
+                  </label>
+                  <input
+                    type="email"
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Your Message
+                  </label>
+                  <textarea
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+                    rows={4}
+                    required
+                  ></textarea>
+                </div>
+                <div className="text-center">
+                  <button
+                    type="submit"
+                    className="px-5 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition"
+                  >
+                    Send Message
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      </motion.div>
       <Footer />
     </>
   );

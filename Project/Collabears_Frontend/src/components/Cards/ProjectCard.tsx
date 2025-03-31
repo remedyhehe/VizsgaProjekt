@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { Project } from "../../utils/util";
-import { PiCursorClickBold } from "react-icons/pi";
 
 interface ProjectCardProps {
   project: Project;
@@ -14,7 +13,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   onToggleFavorite,
 }) => {
   return (
-    <div className="border rounded-lg shadow-lg p-3 text-center transform transition duration-500 hover:scale-105 bg-gray-700 text-white">
+    <div className="border rounded-lg shadow-lg p-3 text-center transform transition duration-500 hover:scale-102 bg-gray-700 text-white h-[450px] hover:shadow-[0_0_30px_rgba(0,183,255,0.5)]">
       <div className="flex justify-start p-3">
         <i
           className={`fa-${

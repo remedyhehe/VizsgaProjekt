@@ -35,9 +35,6 @@ const MyProjectCard = ({ project }: MyProjectCardProps) => {
           <i className="fa-solid fa-eye"></i> View
         </Link>
       </div>
-      <div className="mt-6 text-gray-400 text-md">
-        Created at: {new Date(project.created_at).toLocaleDateString()}
-      </div>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { Project } from "../../utils/util";
 import MyProjectCard from "../Cards/MyProjectCard";
 import Navbar from "../Layouts/Navbar";
 import Footer from "../Layouts/Footer";
+import { motion } from "framer-motion";
 
 const MyProjects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -144,20 +145,27 @@ const MyProjects = () => {
       <div className="flex-grow bg-white py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.slice(9, 100).map((project) => (
-              <MyProjectCard
-                projects={projects}
-                setProjects={setProjects}
+            {projects.slice(9, 100).map((project, index) => (
+              <motion.div
                 key={project.id}
-                project={project}
-                created_at={project.created_at}
-                onEdit={(updatedProject) => {
-                  const updatedProjects = projects.map((p) =>
-                    p.id === updatedProject.id ? updatedProject : p
-                  );
-                  setProjects(updatedProjects);
-                }}
-              />
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: index * 0.1 }} // Egyenkénti megjelenés
+              >
+                <MyProjectCard
+                  projects={projects}
+                  setProjects={setProjects}
+                  key={project.id}
+                  project={project}
+                  created_at={project.created_at}
+                  onEdit={(updatedProject) => {
+                    const updatedProjects = projects.map((p) =>
+                      p.id === updatedProject.id ? updatedProject : p
+                    );
+                    setProjects(updatedProjects);
+                  }}
+                />
+              </motion.div>
             ))}
           </div>
         </div>

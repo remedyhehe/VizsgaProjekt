@@ -33,7 +33,7 @@ const Counter = ({ targetNumber }: { targetNumber: number }) => {
       className="text-4xl font-bold text-orange-500"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 2 }}
     >
       {count}
     </motion.h3>
@@ -151,11 +151,15 @@ const HomePage = () => {
       <Navbar />
       <div className="bg-gray-300 min-h-screen">
         <section className="flex flex-col md:flex-row items-center text-white px-6 py-10 md:px-20 bg-gradient-to-r from-orange-500 to-orange-700">
-          {/* Text Content */}
-          <div className="w-full md:w-1/2 pr-0 md:pr-10 text-center md:text-left">
+          <motion.div
+            className="w-full md:w-1/2 pr-0 md:pr-10 text-center md:text-left"
+            initial={{ opacity: 0, y: 50 }} // Kezdőállapot: teljesen áttetsző és lentebb
+            animate={{ opacity: 1, y: 0 }} // Animáció: fokozatosan jelenjen meg és mozogjon felfelé
+            transition={{ duration: 1, ease: "easeOut" }} // Lassú, sima megjelenés
+          >
             <motion.h1
               key={texts[index]}
-              className="text-4xl md:text-6xl font-bold mb-4"
+              className="text-5xl md:text-6xl font-bold mb-4"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -180,7 +184,7 @@ const HomePage = () => {
                 Browse projects
               </a>
             </div>
-          </div>
+          </motion.div>
           {/* Image */}
           <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0">
             <motion.img
@@ -260,19 +264,25 @@ const HomePage = () => {
           </div>
         </section>
 
-        <div className="py-10">
+        <div className="py-10 w-full">
           <div className="container mx-auto">
-            <h2 className="text-2xl font-bold text-gray-800 text-center mb-8 fade-in-element">
+            <h2 className="text-2xl font-bold text-gray-800 text-center mb-8">
               Top Projects <i className="fa-solid fa-star"></i>
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-10 fade-in-element">
-              {projects.slice(0, 3).map((project) => (
-                <ProjectCard
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-10">
+              {projects.slice(0, 3).map((project, i) => (
+                <motion.div
                   key={project.id}
-                  project={project}
-                  isFavorite={favorites[project.id] || false}
-                  onToggleFavorite={() => toggleFavorite(project.id)}
-                />
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.2 }}
+                >
+                  <ProjectCard
+                    project={project}
+                    isFavorite={favorites[project.id] || false}
+                    onToggleFavorite={() => toggleFavorite(project.id)}
+                  />
+                </motion.div>
               ))}
             </div>
           </div>

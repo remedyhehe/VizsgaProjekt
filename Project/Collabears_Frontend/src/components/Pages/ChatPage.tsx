@@ -9,7 +9,6 @@ import { FaFaceSmile, FaGift, FaTrash } from "react-icons/fa6";
 import EmojiPicker from "emoji-picker-react";
 import GifPicker from "gif-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
-import { Gif } from "gif-picker-react";
 
 const ChatPage = () => {
   interface Project {
@@ -79,10 +78,6 @@ const ChatPage = () => {
   const handleEmojiClick = (emojiData: EmojiClickData) => {
     const emoji = emojiData.emoji;
     setNewMessage((prev) => prev + emoji); // Append the selected emoji to the input field
-  };
-
-  const handleGifSelect = (gif: Gif) => {
-    sendMessage(gif.url); // Send the GIF URL as a message
   };
 
   useEffect(() => {
@@ -410,10 +405,7 @@ const ChatPage = () => {
                 className="fixed bottom-25 right-6"
                 style={{ display: showGifPicker ? "block" : "none" }}
               >
-                <GifPicker
-                  tenorApiKey="AIzaSyBqQJobmLXxQJfbHmLfsWJzpqPZ4Ia86CI"
-                  onGifClick={handleGifSelect}
-                />
+                <GifPicker tenorApiKey="AIzaSyBqQJobmLXxQJfbHmLfsWJzpqPZ4Ia86CI" />
               </div>
             )}
             <FaGift className="hover:text-purple-300 text-2xl" />

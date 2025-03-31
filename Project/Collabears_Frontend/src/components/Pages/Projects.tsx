@@ -10,6 +10,7 @@ import { IoGameController } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
 import Navbar from "../Layouts/Navbar";
 import Footer from "../Layouts/Footer";
+import { motion } from "framer-motion";
 
 const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -163,7 +164,7 @@ const Projects = () => {
               <input
                 type="search"
                 id="default-search"
-                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search Categories..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -179,20 +180,23 @@ const Projects = () => {
           </form>
         </div>
       </div>
-      <div className="flex-grow bg-white py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {projects.slice(0, 9).map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                isFavorite={favorites[project.id] || false}
-                onToggleFavorite={() => toggleFavorite(project.id)}
-              />
-            ))}
-          </div>
-        </div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 p-10">
+        {projects.slice(0, 9).map((project, index) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: index * 0.1 }} // Egyenkénti megjelenés
+          >
+            <ProjectCard
+              project={project}
+              isFavorite={favorites[project.id] || false}
+              onToggleFavorite={() => toggleFavorite(project.id)}
+            />
+          </motion.div>
+        ))}
       </div>
+
       <Footer />
     </>
   );
