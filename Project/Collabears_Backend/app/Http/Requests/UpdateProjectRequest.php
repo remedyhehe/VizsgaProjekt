@@ -28,6 +28,7 @@ class UpdateProjectRequest extends FormRequest
             'member_number' => 'required|integer|min:1',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
+            'image_url' => 'nullable|url',
         ];
     }
 }

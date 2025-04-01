@@ -30,6 +30,7 @@ const ChatPage = () => {
   const [showGifPicker, setShowGifPicker] = useState(false);
   const [showModal, setShowModal] = useState(false); // Modal állapot
   const [messageToDelete, setMessageToDelete] = useState<number | null>(null);
+
   useEffect(() => {
     const storedMessages = localStorage.getItem(`messages_${id}`);
     if (storedMessages) {
@@ -106,6 +107,7 @@ const ChatPage = () => {
     setShowModal(false);
     setMessageToDelete(null);
   };
+
   // Minden üzenet frissítéskor újragörgeti
 
   if (!project)
@@ -309,7 +311,6 @@ const ChatPage = () => {
 
           <div className="bg-gray-800 p-4 rounded-lg mt-4 flex items-center gap-5 flex-wrap">
             <button
-              id="file_input"
               title="Add New"
               className="group cursor-pointer outline-none hover:rotate-90 duration-300"
             >

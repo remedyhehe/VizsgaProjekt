@@ -80,11 +80,9 @@ const MyProjects = () => {
         </ol>
       </nav>
       <div className="bg-white p-5">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Left-aligned content */}
-          <h1 className="text-2xl font-bold text-center lg:text-left">
-            My Projects
-          </h1>
+          <h1 className="text-2xl font-bold text-center">My Projects</h1>
 
           {/* Center-aligned dropdown */}
           <div className="relative group rounded-lg w-5/6 bg-gray-100 overflow-hidden before:absolute before:w-12 before:h-12 before:content['']  before:rounded-full before:blur-lg ]">
@@ -142,7 +140,7 @@ const MyProjects = () => {
         </div>
       </div>
 
-      <div className="flex-grow bg-white py-8">
+      <div className="flex-grow bg-white py-15 mx-auto">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {projects.slice(9, 100).map((project, index) => (
@@ -170,7 +168,6 @@ const MyProjects = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

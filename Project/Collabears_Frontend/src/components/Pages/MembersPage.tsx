@@ -20,7 +20,6 @@ const MembersPage = () => {
 
   const [project, setProject] = useState<Project | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
   const [open, setOpen] = React.useState(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,10 +42,8 @@ const MembersPage = () => {
     fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter(
-    (user) =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleOpen = () => setOpen(!open);
@@ -72,10 +69,6 @@ const MembersPage = () => {
   useEffect(() => {
     const storedName = localStorage.getItem("user_name");
     setUserName(storedName);
-  }, []);
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("email");
-    setEmail(storedEmail);
   }, []);
 
   if (!project)
@@ -252,16 +245,23 @@ const MembersPage = () => {
                       {open && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-50">
                           <div className="relative w-full max-w-lg p-6 bg-gray-700 rounded-lg shadow-lg">
+                            <button
+                              onClick={handleOpen} // Bezáráskor is meghívja a handleOpen-t
+                              className="px-4 py-2 text-white bg-slate-900 rounded-md flex justify-items-center absolute top-5 right-5"
+                            >
+                              <IoMdClose className="text-red-500" />
+                            </button>
                             <div className="flex justify-between p-5">
-                              <h2 className="text-xl font-semibold text-white">
-                                Add New Member
-                              </h2>
-                              <button
-                                onClick={handleOpen} // Bezáráskor is meghívja a handleOpen-t
-                                className="px-4 py-2 text-white bg-slate-900 rounded-md"
-                              >
-                                <IoMdClose className="text-red-500" />
-                              </button>
+                              <div className="flex flex-col gap-3">
+                                <h2 className="text-xl font-semibold text-white">
+                                  Add New Member
+                                </h2>
+                                <p>
+                                  Discover the right people for your team.
+                                  Invite members who match your project’s needs
+                                  and collaborate efficiently!"
+                                </p>
+                              </div>
                             </div>
 
                             <form className="max-w-md mx-auto mt-5">
@@ -313,7 +313,7 @@ const MembersPage = () => {
                                       src="../images/avatar.png"
                                       className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
                                     />
-                                    {user.name} ({user.email})
+                                    {user.name}
                                   </span>
                                   <button className="px-3 py-1 text-white bg-orange-600 rounded-md hover:bg-orange-700">
                                     Add

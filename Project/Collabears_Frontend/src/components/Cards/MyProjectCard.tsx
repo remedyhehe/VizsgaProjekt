@@ -12,7 +12,7 @@ interface MyProjectCardProps {
 
 const MyProjectCard = ({ project }: MyProjectCardProps) => {
   return (
-    <div className="bg-gray-800 text-white rounded-xl shadow-lg p-5 w-100 mx-auto transform transition-all duration-300 hover:scale-105">
+    <div className="bg-gray-800 text-white rounded-xl shadow-lg p-5 w-100 mx-auto transform transition-all duration-300 hover:scale-102">
       <div className="flex flex-row justify-between ">
         <h2 className="text-xl font-semibold mb-3 text-orange-500">
           {project.name}
