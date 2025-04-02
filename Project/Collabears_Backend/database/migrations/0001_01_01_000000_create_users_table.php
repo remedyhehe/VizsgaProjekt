@@ -16,14 +16,16 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->date('birth')->nullable();
             $table->string('bio')->nullable();
             $table->string('url')->nullable();
+            $table->integer('phone_number')->nullable();
             $table->string('company')->nullable();
             $table->string('country')->nullable();
             $table->string('profile_picture')->default("avatar.png");
-            $table->string('subscription')->default(0);
+            $table->string('subscription_id')->default(1);
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password_id');
             $table->rememberToken();
             $table->timestamps();
         });

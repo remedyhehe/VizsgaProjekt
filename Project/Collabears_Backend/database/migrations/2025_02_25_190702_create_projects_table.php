@@ -16,12 +16,16 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('category')->nullable();
-            $table->integer('member_number')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->boolean('is_favorite')->default(false);
-            $table->string('image_url')->nullable(); 
+            $table->string('image_url')->nullable();
+            $table->integer('number_of_columns')->nullable();
+            $table->integer('owner_id');
+            $table->integet('status_id')->defaultValue('1');
+            $table->boolean('looking_for')->default(false);
+            $table->integer('premium_id')->defaultValue('1');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
