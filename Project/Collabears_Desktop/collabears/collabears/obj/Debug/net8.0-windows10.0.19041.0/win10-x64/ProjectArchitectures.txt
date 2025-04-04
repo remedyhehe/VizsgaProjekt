@@ -1,0 +1,1 @@
+C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\collabears.csproj;x64
