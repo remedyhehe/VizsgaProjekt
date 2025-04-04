@@ -24,4 +24,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function password()
+{
+    return $this->belongsTo(Password::class);
+}
+
 }

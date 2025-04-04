@@ -10,26 +10,28 @@ return new class extends Migration {
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('email')->unique();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->date('birth')->nullable();
-            $table->string('bio')->nullable();
-            $table->string('url')->nullable();
-            $table->integer('phone_number')->nullable();
-            $table->string('company')->nullable();
-            $table->string('country')->nullable();
-            $table->string('profile_picture')->default("avatar.png");
-            $table->string('subscription_id')->default(1);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password_id');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->string('name');
+            $table->string('email');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->date('birth');
+            $table->longText('bio');
+            $table->string('url');
+            $table->bigInteger('phone_number');
+            $table->string('company');
+            $table->string('country');
+            $table->string('profile_picture');
+            $table->unsignedBigInteger('subscription_id');
+            $table->foreign('subscription_id')->references('id')->on('subscriptions');
+            $table->unsignedBigInteger('password_id');
+            $table->foreign('password_id')->references('id')->on('passwords');
         });
 
+        Schema::enableForeignKeyConstraints();
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');

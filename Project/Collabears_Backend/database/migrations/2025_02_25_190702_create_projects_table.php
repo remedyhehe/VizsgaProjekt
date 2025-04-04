@@ -11,22 +11,28 @@ return new class extends Migration
      */
     public function up(): void
     {
+       Schema::disableForeignKeyConstraints();
+
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->string('category')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->string('image_url')->nullable();
-            $table->integer('number_of_columns')->nullable();
-            $table->integer('owner_id');
-            $table->integet('status_id')->defaultValue('1');
-            $table->boolean('looking_for')->default(false);
-            $table->integer('premium_id')->defaultValue('1');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->longText('description');
+            $table->string('category');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('image_url');
+            $table->bigInteger('number_of_columns');
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade'); 
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->unsignedBigInteger('visibility_id');        
+            $table->boolean('looking_for');
+            $table->unsignedBigInteger('premium_id');
+            $table->foreign('premium_id')->references('id')->on('premiums');
         });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
