@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="collabears.DetailPage"
+             Title="DetailPage">
+    <VerticalStackLayout>
+        <HorizontalStackLayout
+            HorizontalOptions="Center">
+            <HorizontalStackLayout>
+                
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label 
+                    Text="Collaberas Admin Panel"
+                    FontSize="Header"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout
+                HorizontalOptions=>
+                
+                <Button
+                    Text="Exit" />
+                <Button
+                    Text="Profile" />
+                
+            </HorizontalStackLayout>
+        </HorizontalStackLayout>
+        
+
+
+        <HorizontalStackLayout
+            Spacing="100"
+            Padding="0,100,0,0"
+            HorizontalOptions="Center">
+
+            
+            
+            <VerticalStackLayout
+                Spacing="30"
+                BackgroundColor="Blue"
+                MinimumWidthRequest="600">
+
+                <Label
+                    Text="Users"
+                    FontSize="Large"/>
+
+
+            </VerticalStackLayout>
+                
+
+
+            <VerticalStackLayout
+                Spacing="30"
+                BackgroundColor="Red"
+                MinimumWidthRequest="600">
+                
+                <Label
+                    Text="Projects"
+                    FontSize="Large"/>
+
+
+            </VerticalStackLayout>
+            
+
+        </HorizontalStackLayout>
+        
+        
+    </VerticalStackLayout>
+</ContentPage>
