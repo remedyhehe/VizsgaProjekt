@@ -16,19 +16,24 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->date('birth');
-            $table->longText('bio');
-            $table->string('url');
-            $table->bigInteger('phone_number');
-            $table->string('company');
-            $table->string('country');
-            $table->string('profile_picture');
-            $table->unsignedBigInteger('subscription_id');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->date('birth')->nullable();
+            $table->longText('bio')->nullable();
+            $table->string('url')->nullable();
+            $table->bigInteger('phone_number')->nullable();
+            $table->string('company')->nullable();
+            $table->string('country')->nullable();
+            $table->string('profile_picture')->nullable();
+            $table->unsignedBigInteger('subscription_id')->nullable();
             $table->foreign('subscription_id')->references('id')->on('subscriptions');
-            $table->unsignedBigInteger('password_id');
+            $table->string('password')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
+            $table->unsignedBigInteger('password_id')->nullable();
             $table->foreign('password_id')->references('id')->on('passwords');
+            $table->timestamp('email_verified_at')->nullable();
+
         });
 
         Schema::enableForeignKeyConstraints();

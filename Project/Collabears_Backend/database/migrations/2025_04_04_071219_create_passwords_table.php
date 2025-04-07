@@ -15,7 +15,8 @@ return new class extends Migration
 
         Schema::create('passwords', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('hashed_password');
+            $table->string('hashed_password'); // vagy string('hashed_password', 255) ha explicit hossz kell
+
         });
 
         Schema::enableForeignKeyConstraints();

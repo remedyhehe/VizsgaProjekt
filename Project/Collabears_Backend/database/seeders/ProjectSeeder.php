@@ -24,7 +24,7 @@ class ProjectSeeder extends Seeder
         Project::factory()->create([
             "name" => "Webfejlesztés",
             "description" => "Fejlessz velünk egy weboldalt!",
-            "category" => "Programing",
+            "category" => "Programing", 
             "image_url" => "/images/programing.jpg"
         ]);
         Project::factory()->create([

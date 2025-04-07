@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('column_id')->references('id')->on('columns');
             $table->string('name');
             $table->longText('description');
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

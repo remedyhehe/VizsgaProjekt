@@ -25,7 +25,6 @@ class UpdateProjectRequest extends FormRequest
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category' => 'required|string|max:100',
-            'member_number' => 'required|integer|min:1',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'image_url' => 'nullable|url',

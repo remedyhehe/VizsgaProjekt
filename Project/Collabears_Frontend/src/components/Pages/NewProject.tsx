@@ -225,36 +225,6 @@ const NewProject = () => {
           )}
 
           {currentStep === 4 && (
-            <div id="step-4" className="step">
-              <h2 className="text-2xl font-bold m-4">Project Team</h2>
-              <p className="m-4">
-                Specify how many people will be working on this project.
-              </p>
-              <input
-                {...register("member_number")}
-                type="number"
-                id="teamSize"
-                className="w-full border border-gray-300 p-4 rounded-xl"
-                placeholder="Number of team members"
-              />
-              <button
-                type="button"
-                className="w-full mt-4 bg-orange-500 text-white p-4 rounded-xl hover:bg-orange-600"
-                onClick={nextStep}
-              >
-                Next <i className="fa-solid fa-arrow-right"></i>
-              </button>
-              <button
-                type="button"
-                className="w-full mt-4 text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 rounded-xl p-2 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700"
-                onClick={prevStep}
-              >
-                <i className="fa-solid fa-arrow-left"></i> Back
-              </button>
-            </div>
-          )}
-
-          {currentStep === 5 && (
             <div id="step-5" className="step">
               <h2 className="text-2xl font-bold m-4">Project Time</h2>
               <p className="m-4">
