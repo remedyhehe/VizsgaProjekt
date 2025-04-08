@@ -17,7 +17,7 @@
                     HorizontalOptions="Center" />
             </HorizontalStackLayout>
             <HorizontalStackLayout
-                HorizontalOptions=>
+                HorizontalOptions="Center">
                 
                 <Button
                     Text="Exit" />
@@ -34,25 +34,34 @@
             Padding="0,100,0,0"
             HorizontalOptions="Center">
 
-            
-            
-            <VerticalStackLayout
-                Spacing="30"
-                BackgroundColor="Blue"
-                MinimumWidthRequest="600">
 
-                <Label
-                    Text="Users"
-                    FontSize="Large"/>
+            <Frame
+                CornerRadius="20"
+                Padding="10"
+                HasShadow="True"
+                BackgroundColor="#404040"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">           
+
+                <VerticalStackLayout
+                    Spacing="30"
+                    BackgroundColor="Blue"
+                    MinimumWidthRequest="600">
+
+                    <Label
+                        Text="Users"
+                        FontSize="Large"/>
 
 
-            </VerticalStackLayout>
+                </VerticalStackLayout>
+                
+            </Frame>
                 
 
 
             <VerticalStackLayout
                 Spacing="30"
-                BackgroundColor="Red"
+                BackgroundColor="Green"
                 MinimumWidthRequest="600">
                 
                 <Label
