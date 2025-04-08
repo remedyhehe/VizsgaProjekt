@@ -23,7 +23,6 @@ public function getAllUsers()
             'password' => 'required|string|min:6|confirmed',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
             
         ]);
 
@@ -33,7 +32,6 @@ public function getAllUsers()
             'password' => Hash::make($request->password),
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'country' => $request->country,
 
         ]);
 

@@ -51,7 +51,7 @@ const RegisterPage: React.FC = () => {
     // Frissítjük a form adatokat, hogy a country a selectedCountry legyen
     const updatedForm = {
       ...form,
-      country: selectedCountry,
+      country: selectedCountry, // Itt beállítjuk a country-t
       birthdate: form.birthdate.toISOString(),
     };
 
@@ -94,7 +94,6 @@ const RegisterPage: React.FC = () => {
           icon: <GoCheck color="black" />,
         });
         navigate("/");
-        // Siker esetén visszaállunk az első lépésre
       } else {
         setMessage(data.message || "⚠️ Hiba történt a regisztráció során!");
       }
@@ -377,8 +376,8 @@ const RegisterPage: React.FC = () => {
                     Country
                   </label>
                   <select
-                    value={selectedCountry}
-                    onChange={(e) => setSelectedCountry(e.target.value)}
+                    value={selectedCountry} // Az aktuálisan kiválasztott országot tartja
+                    onChange={(e) => setSelectedCountry(e.target.value)} // A kiválasztott ország frissítése
                     className="border border-gray-300 text-gray-900 text-sm rounded-lg block w-full  p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black"
                   >
                     <option value="" disabled>

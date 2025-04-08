@@ -15,10 +15,13 @@ return new class extends Migration
 
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            
+            $table->unsignedBigInteger('project_id')->nullable(); 
+            $table->foreign('project_id')->references('id')->on('projects');
             $table->unsignedBigInteger('column_id');
             $table->foreign('column_id')->references('id')->on('columns');
             $table->string('name');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
 

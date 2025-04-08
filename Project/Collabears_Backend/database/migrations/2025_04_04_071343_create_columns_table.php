@@ -15,11 +15,11 @@ return new class extends Migration
 
         Schema::create('columns', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('project_id')->nullable();
             $table->foreign('project_id')->references('id')->on('projects');
             $table->string('name');
-            $table->bigInteger('number_of_tasks');
-            $table->timestamps(); 
+            $table->bigInteger('number_of_tasks')->nullable();
+            $table->timestamps();  
         });
 
         Schema::enableForeignKeyConstraints();

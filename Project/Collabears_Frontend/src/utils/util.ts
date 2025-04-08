@@ -24,7 +24,11 @@ export interface IColumn {
 }
 
 export interface ITask {
+  id: number;
   name: string;
   description: string;
   column_id: number;
+  start_date?: string;
+  end_date?: string;
+  assigned_user?: string;
 }

@@ -26,7 +26,6 @@ class ProjectController extends Controller
                     'name' => $project->name,
                     'description' => $project->description,
                     'category' => $project->category,
-                    'member_number' => $project->member_number,
                     'start_date' => $project->start_date,
                     'end_date' => $project->end_date,
                     'is_favorite' => $project->is_favorite,
@@ -88,7 +87,6 @@ class ProjectController extends Controller
             $project->name = $request->name;
             $project->description = $request->description;
             $project->category = $request->category;
-            $project->member_number = $request->member_number;
             $project->start_date = $request->start_date;
             $project->end_date = $request->end_date;
             $project->save();
@@ -153,7 +151,6 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'category' => 'required|string|max:100',
-            'member_number' => 'required|integer|min:1',
             'start_date' => 'required|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             "image_url" => 'nullable|url',
@@ -170,7 +167,6 @@ class ProjectController extends Controller
             $project->name = $request->name;
             $project->description = $request->description;
             $project->category = $request->category;
-            $project->member_number = $request->member_number;
             $project->start_date = $request->start_date;
             $project->end_date = $request->end_date;
             $project->image_url = $request->image_url;
