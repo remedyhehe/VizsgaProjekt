@@ -13,9 +13,17 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'password_id',
         'first_name',
         'last_name',
+        'birth',
+        'bio',
+        'url',
+        'phone_number',
+        'company',
+        'country',
+        'profile_picture',
+        'subscription_id'
     ];
 
     protected $hidden = [
@@ -24,8 +32,12 @@ class User extends Authenticatable
     ];
 
     public function password()
-{
-    return $this->belongsTo(Password::class);
-}
+    {
+        return $this->belongsTo(Password::class);
+    }
+    public function passwordRelation()
+    {
+        return $this->belongsTo(Password::class, 'password_id');
+    }
 
 }

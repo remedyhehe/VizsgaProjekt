@@ -5,7 +5,7 @@ const LogoutButton = () => {
 
   const handleLogout = async () => {
     try {
-      const token = localStorage.getItem("auth_token"); // Token lekérése
+      const token = localStorage.getItem("auth_token");
       if (!token) {
         console.error("Nincs bejelentkezett felhasználó.");
         return;
@@ -22,7 +22,7 @@ const LogoutButton = () => {
 
       if (res.ok) {
         localStorage.removeItem("auth_token");
-        localStorage.removeItem("user_name"); // ❗ Ezt töröld ki is
+        localStorage.removeItem("user_name");
         navigate("/");
       } else {
         console.error("Hiba a kijelentkezésnél.");
