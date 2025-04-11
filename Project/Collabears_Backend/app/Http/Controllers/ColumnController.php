@@ -38,6 +38,22 @@ class ColumnController extends Controller
             'project_id' => $column->project_id,
         ], 201);
     }
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+    ]);
+
+    $column = Column::findOrFail($id);
+    $column->name = $request->name;
+    $column->save();
+
+    return response()->json([
+        'message' => 'Column updated successfully',
+        'column' => $column,
+    ]);
+}
+
 
     public function destroy($id)
     {

@@ -80,7 +80,7 @@ const MyProjects = () => {
         </ol>
       </nav>
       <div className="bg-white p-5">
-        <div className="grid grid-cols-1 lg:grid-cols-3 mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 mx-auto  max-w-7xl px-4 sm:px-6 lg:px-8 gap-5 items-center justify-items-center">
           {/* Left-aligned content */}
           <h1 className="text-2xl font-bold text-center">My Projects</h1>
 

@@ -49,15 +49,18 @@ class TaskController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $task = Task::findOrFail($id);
+{
+    $task = Task::findOrFail($id);
 
-        $task->column_id = $request->input('column_id', $task->column_id);
-        $task->save();
+    $validatedData = $request->validate([
+        'name' => 'string|max:255',
+        'due_date' => 'nullable|date',
+    ]);
 
-        return response()->json($task);
-    }
+    $task->update($validatedData);
 
+    return response()->json($task);
+}
     public function destroy($id)
     {
         $task = Task::findOrFail($id);

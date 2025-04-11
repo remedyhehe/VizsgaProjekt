@@ -143,14 +143,14 @@ const ChatPage = () => {
     );
 
   return (
-    <div className="flex h-screen ml-32">
+    <div className="flex h-screen ">
       <Sidebar />
 
       <div className="flex-1 flex flex-col bg-gray-900 text-white">
         {/* Modal */}
         <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
           <nav
-            className="flex justify-start ml-5 bg-gray-900 text-white p-5"
+            className="flex justify-start ml-10 bg-gray-900 text-white p-5"
             aria-label="Breadcrumb"
           >
             <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">

@@ -31,4 +31,5 @@ export interface ITask {
   start_date?: string;
   end_date?: string;
   assigned_user?: string;
+  due_date?: string; 
 }

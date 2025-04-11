@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import { Editor } from "primereact/editor";
 import { GrTextAlignFull } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
+import { MdDateRange, MdDelete } from "react-icons/md";
 
 const Tasks = () => {
   const { id: projectIdParam } = useParams();
@@ -42,6 +43,9 @@ const Tasks = () => {
   const [confirmDeleteColumnId, setConfirmDeleteColumnId] = useState<
     number | null
   >(null);
+  const [editingColumnId, setEditingColumnId] = useState<number | null>(null);
+  const [editingColumnName, setEditingColumnName] = useState("");
+  const [editingTask, setEditingTask] = useState<ITask | null>(null);
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/columns?project_id=${projectId}`)
@@ -218,6 +222,94 @@ const Tasks = () => {
   const handleCloseModal = () => {
     setConfirmDeleteColumnId(null);
   };
+  const saveColumnName = async (columnId: number) => {
+    if (!editingColumnName.trim()) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/columns/${columnId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: editingColumnName }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Hiba történt a mentés során.");
+      }
+
+      // Frissítjük a columns state-et
+      setColumns((prev) => ({
+        ...prev,
+        [columnId]: {
+          ...prev[columnId],
+          name: editingColumnName,
+        },
+      }));
+
+      setEditingColumnId(null);
+      setEditingColumnName("");
+    } catch (error) {
+      console.error("Hiba a mentés során:", error);
+      alert("Nem sikerült menteni az oszlop nevét.");
+    }
+  };
+  const handleSaveTask = async () => {
+    if (!editingTask) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/tasks/${editingTask.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editingTask),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to save task.");
+      }
+
+      setTasks((prev) => ({
+        ...prev,
+        [editingTask.id]: editingTask,
+      }));
+      setShowTaskModal(null);
+      setEditingTask(null);
+    } catch (error) {
+      console.error("Error saving task:", error);
+    }
+  };
+
+  const handleDeleteTask = async (taskId: number) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/tasks/${taskId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete task.");
+      }
+
+      setTasks((prev) => {
+        const updatedTasks = { ...prev };
+        delete updatedTasks[taskId];
+        return updatedTasks;
+      });
+      setShowTaskModal(null);
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
 
   return (
     <div className="p-5 bg-gray-900 flex justify-start min-h-screen relative">
@@ -229,7 +321,7 @@ const Tasks = () => {
             : ""
         }`}`}
       >
-        <ol className="taskcols p-3 mt-2 min-w-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <ol className="taskcols p-3 mt-2 min-w-fit max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 justify-center">
           {Object.values(columns).map((column) => (
             <li
               key={column.id}
@@ -238,9 +330,37 @@ const Tasks = () => {
               onDrop={(event) => handleDrop(event, column.id)}
             >
               <div className="columnheader flex justify-between items-center p-2 pb-4">
-                <h2 className="text-lg font-semibold text-slate-100">
-                  {column.name}
-                </h2>
+                {editingColumnId === column.id ? (
+                  <div className="flex items-center gap-2">
+                    <input
+                      value={editingColumnName}
+                      onChange={(e) => setEditingColumnName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          saveColumnName(column.id);
+                        }
+                      }}
+                      onBlur={() => {
+                        saveColumnName(column.id);
+                        setEditingColumnId(null);
+                      }}
+                      autoFocus
+                      className="bg-slate-700 text-white rounded px-2 py-1"
+                    />
+                  </div>
+                ) : (
+                  <h2
+                    className="text-lg font-semibold text-slate-100 cursor-pointer"
+                    onClick={() => {
+                      setEditingColumnId(column.id);
+                      setEditingColumnName(column.name);
+                    }}
+                    title="Kattints a szerkesztéshez"
+                  >
+                    {column.name}
+                  </h2>
+                )}
+
                 <div className="relative">
                   <button
                     className="text-slate-400 hover:text-white"
@@ -278,8 +398,11 @@ const Tasks = () => {
                         {tasks[taskId].name}
                       </p>
                       <button
+                        onClick={() => {
+                          setShowTaskModal(taskId);
+                          setEditingTask(tasks[taskId]);
+                        }}
                         className="text-slate-300 hover:text-white"
-                        onClick={() => setShowTaskModal(taskId)}
                       >
                         <FaEdit />
                       </button>
@@ -372,21 +495,29 @@ const Tasks = () => {
       </div>
 
       {/* Modal */}
-      {showTaskModal !== null && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-transparent bg-opacity-40">
-          <div className="bg-gray-700 rounded-lg p-6 w-1/2 h-screen text-white relative">
+      {showTaskModal !== null && editingTask && (
+        <div className="fixed inset-0 flex items-center justify-center bg-transparent bg-opacity-40">
+          <div className="bg-gray-700 rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto text-white relative">
             <button
               className="absolute top-2 right-2 text-red-500 hover:text-red-700"
               onClick={() => setShowTaskModal(null)}
             >
               <FaTimes size={20} />
             </button>
-            <h1 className="text-2xl font-bold mb-4">
-              {tasks[showTaskModal].name}
-            </h1>
-            <h2>Column name: {columns[tasks[showTaskModal].column_id].name}</h2>
-            <div className="mt-10">
-              <h2 className="flex items-center text-lg font-semibold mb-2 gap-2">
+            <h1 className="text-2xl font-bold mb-4">Edit Task</h1>
+            <div className="mb-4">
+              <label className="block mb-2 font-semibold">Task Name:</label>
+              <input
+                type="text"
+                className="w-full p-2 rounded bg-gray-800 text-white"
+                value={editingTask.name}
+                onChange={(e) =>
+                  setEditingTask({ ...editingTask, name: e.target.value })
+                }
+              />
+            </div>
+            <div className="mt-5">
+              <h2 className="flex items-center text-md font-semibold mb-2 gap-2">
                 <GrTextAlignFull />
                 Description
               </h2>
@@ -400,10 +531,7 @@ const Tasks = () => {
                   />
                   <div className="mt-4 flex gap-4">
                     <button
-                      onClick={() => {
-                        // Itt történhetne egy mentés API hívás is, ha szükséges
-                        setIsEditingDescription(false);
-                      }}
+                      onClick={() => setIsEditingDescription(false)}
                       className="px-6 py-1 bg-orange-500 hover:bg-orange-600 rounded text-white"
                     >
                       Save
@@ -428,7 +556,7 @@ const Tasks = () => {
                 </div>
               )}
               <div className="mt-5">
-                <h2 className="flex items-center text-lg font-semibold mb-2 gap-2">
+                <h2 className="flex items-center text-md font-semibold mb-2 gap-2">
                   <FaUserAstronaut />
                   Assigned user
                 </h2>
@@ -436,8 +564,8 @@ const Tasks = () => {
                   {tasks[showTaskModal].assigned_user || "No user assigned"}
                 </p>
               </div>
-              <div className="mt-10">
-                <h2 className="flex items-center text-lg font-semibold mb-2 gap-2">
+              <div className="mt-5">
+                <h2 className="flex items-center text-md font-semibold mb-2 gap-2">
                   <RxActivityLog />
                   Activity
                 </h2>
@@ -447,15 +575,46 @@ const Tasks = () => {
                     alt="Profile"
                     className="w-10 h-10 rounded-full"
                   />
-
                   <input
                     type="text"
                     id="default-input"
                     placeholder="Add a comment..."
-                    className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   />
                   <button className="bg-orange-500 p-3 rounded-full hover:bg-orange-600 text-white">
                     <IoSend />
+                  </button>
+                </div>
+                <div className="mt-5">
+                  <h2 className="flex items-center text-md font-semibold mb-2 gap-2">
+                    <MdDateRange />
+                    Due Date
+                  </h2>
+
+                  <input
+                    type="date"
+                    className="w-full p-2 rounded bg-gray-800 text-white"
+                    value={editingTask.due_date || ""}
+                    onChange={(e) =>
+                      setEditingTask({
+                        ...editingTask,
+                        due_date: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="flex justify-between mt-5">
+                  <button
+                    onClick={handleSaveTask}
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg"
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={() => handleDeleteTask(editingTask.id)}
+                    className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-lg"
+                  >
+                    <MdDelete />
                   </button>
                 </div>
               </div>
@@ -463,7 +622,6 @@ const Tasks = () => {
           </div>
         </div>
       )}
-
       {/* Confirmation Modal */}
       {confirmDeleteColumnId !== null && (
         <div className="fixed inset-0 bg-transparent  flex items-center justify-center">
