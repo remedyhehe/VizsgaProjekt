@@ -14,6 +14,7 @@ import { Editor } from "primereact/editor";
 import { GrTextAlignFull } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
 import { MdDateRange, MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const Tasks = () => {
   const { id: projectIdParam } = useParams();
@@ -98,36 +99,63 @@ const Tasks = () => {
     event.preventDefault();
   };
 
-  const handleDrop = (event: DragEvent<HTMLLIElement>, columnId: number) => {
+  const handleDrop = async (
+    event: DragEvent<HTMLLIElement>,
+    newColumnId: number
+  ) => {
+    event.preventDefault();
+
     const taskId = parseInt(event.dataTransfer.getData("text/plain"), 10);
     const startColumn = Object.values(columns).find((column) =>
       column.taskIds.includes(taskId)
     );
 
-    if (startColumn && startColumn.id !== columnId) {
-      const newStartTaskIds = [...startColumn.taskIds].filter(
-        (id) => id !== taskId
-      );
-      const newEndTaskIds = [...columns[columnId].taskIds, taskId];
+    if (startColumn && startColumn.id !== newColumnId) {
+      // Frissítsd a kliensoldali állapotot
+      const newStartTaskIds = startColumn.taskIds.filter((id) => id !== taskId);
+      const newEndTaskIds = [...columns[newColumnId].taskIds, taskId];
 
       setColumns((prev) => ({
         ...prev,
-        [startColumn.id]: { ...startColumn, taskIds: newStartTaskIds },
-        [columnId]: { ...prev[columnId], taskIds: newEndTaskIds },
+        [startColumn.id]: {
+          ...startColumn,
+          taskIds: newStartTaskIds,
+          number_of_tasks: newStartTaskIds.length, // Oszlop frissítése
+        },
+        [newColumnId]: {
+          ...prev[newColumnId],
+          taskIds: newEndTaskIds,
+          number_of_tasks: newEndTaskIds.length, // Oszlop frissítése
+        },
       }));
 
       setTasks((prev) => ({
         ...prev,
-        [taskId]: { ...prev[taskId], column_id: columnId },
+        [taskId]: { ...prev[taskId], column_id: newColumnId },
       }));
 
-      fetch(`http://localhost:8000/api/tasks/${taskId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ column_id: columnId }),
-      });
+      // Frissítsd az adatbázist
+      try {
+        const response = await fetch(
+          `http://localhost:8000/api/tasks/${taskId}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ column_id: newColumnId }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to update task column");
+        }
+
+        // Ha szükséges, lekérheted az oszlopokat újra az adatbázisból
+      } catch (error) {
+        console.error("Error updating task column:", error);
+        toast.error("Error moving task. Please try again.");
+      }
     }
   };
 
@@ -185,38 +213,57 @@ const Tasks = () => {
   };
 
   const confirmAddTask = async () => {
-    if (!newTaskData.name.trim() || newTaskData.columnId === null) return;
+    if (!newTaskData.name.trim() || newTaskData.columnId === null) {
+      toast.error("Task name and column are required!");
+      return;
+    }
 
     const newTask = {
       name: newTaskData.name,
       column_id: newTaskData.columnId,
       project_id: projectId,
+      description: description,
+      due_date: editingTask?.due_date || null,
     };
 
-    const res = await fetch("http://localhost:8000/api/tasks", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTask),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setTasks((prev) => ({
-          ...prev,
-          [data.id]: data,
-        }));
-        setColumns((prev) => ({
-          ...prev,
-          [newTaskData.columnId!]: {
-            ...prev[newTaskData.columnId!],
-            taskIds: [...prev[newTaskData.columnId!].taskIds, data.id],
-          },
-        }));
+    try {
+      const response = await fetch("http://localhost:8000/api/tasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
 
-        setNewTaskData({ columnId: null, name: "" });
-      })
-      .catch((error) => console.error("Error adding task:", error));
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to add task");
+      }
+
+      const data = await response.json();
+
+      // Frissítsd a tasks és columns state-et
+      setTasks((prev) => ({
+        ...prev,
+        [data.task.id]: data.task, // Biztosítsuk, hogy az új task felkerül az állapotba
+      }));
+
+      setColumns((prev) => ({
+        ...prev,
+        [newTaskData.columnId!]: {
+          ...prev[newTaskData.columnId!],
+          taskIds: [...prev[newTaskData.columnId!].taskIds, data.task.id],
+        },
+      }));
+
+      setNewTaskData({ columnId: null, name: "" });
+      toast.success("Task added successfully!");
+    } catch (error) {
+      console.error("Error adding task:", error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      toast.error("Error adding task: " + errorMessage);
+    }
   };
 
   const handleCloseModal = () => {
@@ -268,7 +315,11 @@ const Tasks = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(editingTask),
+          body: JSON.stringify({
+            name: editingTask.name,
+            description: description, // Leírás hozzáadása
+            due_date: editingTask.due_date,
+          }),
         }
       );
 
@@ -278,10 +329,14 @@ const Tasks = () => {
 
       setTasks((prev) => ({
         ...prev,
-        [editingTask.id]: editingTask,
+        [editingTask.id]: {
+          ...editingTask,
+          description, // Frissítsük a leírást a state-ben
+        },
       }));
       setShowTaskModal(null);
       setEditingTask(null);
+      toast.success("Task saved successfully!");
     } catch (error) {
       console.error("Error saving task:", error);
     }
@@ -308,6 +363,36 @@ const Tasks = () => {
       setShowTaskModal(null);
     } catch (error) {
       console.error("Error deleting task:", error);
+    }
+  };
+  const toggleTaskStatus = async (taskId: number) => {
+    const currentStatus = tasks[taskId]?.status || "Nincs kész"; // "Nincs kész" alapértelmezett
+
+    const newStatus = currentStatus === "Kész" ? "Nincs kész" : "Kész"; // Állapot váltása
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/tasks/${taskId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: newStatus }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update task status");
+      }
+
+      setTasks((prev) => ({
+        ...prev,
+        [taskId]: { ...prev[taskId], status: newStatus },
+      }));
+    } catch (error) {
+      console.error("Error updating task status:", error);
+      toast.error("Error updating task status. Please try again.");
     }
   };
 
@@ -389,23 +474,39 @@ const Tasks = () => {
                 {column.taskIds.map((taskId) => (
                   <div
                     key={taskId}
-                    className="taskbox bg-slate-700 shadow-md my-2 p-3 rounded cursor-pointer border border-slate-600"
+                    className="taskbox"
                     draggable
                     onDragStart={(event) => handleDragStart(event, taskId)}
                   >
                     <div className="flex justify-between items-center">
-                      <p className="text-md font-medium text-slate-100">
-                        {tasks[taskId].name}
-                      </p>
-                      <button
-                        onClick={() => {
-                          setShowTaskModal(taskId);
-                          setEditingTask(tasks[taskId]);
-                        }}
-                        className="text-slate-300 hover:text-white"
-                      >
-                        <FaEdit />
-                      </button>
+                      <div className="flex items-center">
+                        <input
+                          className="checkbox"
+                          type="checkbox"
+                          checked={tasks[taskId]?.status === "Kész"}
+                          onChange={() => toggleTaskStatus(taskId)}
+                        />
+                        <p
+                          className={`text-md font-medium ${
+                            tasks[taskId]?.status === "Kész"
+                              ? " text-slate-100 line-through"
+                              : "text-slate-100"
+                          }`}
+                        >
+                          {tasks[taskId]?.name || "Task name missing"}
+                        </p>
+                      </div>
+                      <div className="task-actions">
+                        <button
+                          onClick={() => {
+                            setShowTaskModal(taskId);
+                            setEditingTask(tasks[taskId]);
+                          }}
+                          className="text-slate-300 hover:text-white"
+                        >
+                          <FaEdit />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -504,7 +605,7 @@ const Tasks = () => {
             >
               <FaTimes size={20} />
             </button>
-            <h1 className="text-2xl font-bold mb-4">Edit Task</h1>
+            <h1 className="text-2xl font-bold mb-4">Manage task</h1>
             <div className="mb-4">
               <label className="block mb-2 font-semibold">Task Name:</label>
               <input
@@ -515,6 +616,23 @@ const Tasks = () => {
                   setEditingTask({ ...editingTask, name: e.target.value })
                 }
               />
+            </div>
+            <div className="mt-5">
+              <h2 className="flex items-center text-md font-semibold mb-2 gap-2">
+                <RxActivityLog />
+                Status
+              </h2>
+              <p className="text-neutral-400 text-sm">
+                {editingTask?.status || "Nincs státusz"}
+              </p>
+              <button
+                onClick={() => toggleTaskStatus(editingTask!.id)}
+                className={`mt-2 px-4 py-2 rounded ${
+                  editingTask?.status === "Kész" ? "bg-green-500" : "bg-red-500"
+                } text-white`}
+              >
+                Állapot váltása
+              </button>
             </div>
             <div className="mt-5">
               <h2 className="flex items-center text-md font-semibold mb-2 gap-2">

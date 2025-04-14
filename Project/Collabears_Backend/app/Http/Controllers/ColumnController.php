@@ -10,6 +10,7 @@ class ColumnController extends Controller
 {
     public function index(Request $request)
     {
+        $columns = Column::withCount('tasks')->get();
         if ($request->has('project_id')) {
             $columns = Column::where('project_id', $request->project_id)->get();
         } else {

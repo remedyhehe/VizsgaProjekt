@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Task extends Model
 {
-    protected $fillable = ['column_id', 'name', 'description','project_id',];
+    use SoftDeletes;
+    protected $fillable = ['column_id', 'name', 'description','project_id', 'due_date', 'status_id', ];
 
     public function column()
     {
@@ -15,6 +17,10 @@ class Task extends Model
     public function project()
     {
         return $this->belongsTo(Project::class);
+    }
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
     }
 
 }

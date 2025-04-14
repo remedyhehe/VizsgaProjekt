@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Models\Column;
 
 class TaskController extends Controller
 {
@@ -22,50 +23,70 @@ class TaskController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
             'project_id' => 'required|integer|exists:projects,id',
             'column_id' => 'required|integer|exists:columns,id',
+            'due_date' => 'nullable|date',
+            'status_id' => 'nullable|integer|exists:statuses,id',
         ]);
-
-        try {
-            $task = Task::create([
-                'name' => $validatedData['name'],
-                'project_id' => $validatedData['project_id'],
-                'column_id' => $validatedData['column_id'],
-            ]);
-
-            return response()->json([
-                'message' => 'Task added successfully',
-                'id' => $task->id,
-                'name' => $task->name,
-                'project_id' => $task->project_id,
-                'column_id' => $task->column_id,
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error adding task',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+    
+        $task = Task::create($validatedData);
+    
+        // Frissítsük az oszlophoz tartozó feladatok számát
+        $column = Column::find($validatedData['column_id']);
+        $column->updateNumberOfTasks();
+    
+        return response()->json([
+            'message' => 'Task added successfully',
+            'task' => $task,
+        ], 201);
     }
 
     public function update(Request $request, $id)
-{
-    $task = Task::findOrFail($id);
-
-    $validatedData = $request->validate([
-        'name' => 'string|max:255',
-        'due_date' => 'nullable|date',
-    ]);
-
-    $task->update($validatedData);
-
-    return response()->json($task);
-}
+    {
+        $task = Task::findOrFail($id);
+        $validatedData = $request->validate([
+            'name' => 'string|max:255',
+            'description' => 'nullable|string|max:255',
+            'due_date' => 'nullable|date',
+            'column_id' => 'nullable|integer|exists:columns,id',
+            'status_id' => 'nullable|integer|exists:statuses,id',
+        ]);
+    
+        $oldColumnId = $task->column_id;
+        $task->update($validatedData);
+    
+        // Frissítsük a régi oszlop feladatainak számát
+        if ($oldColumnId !== $task->column_id) {
+            $oldColumn = Column::find($oldColumnId);
+            if ($oldColumn) {
+                $oldColumn->updateNumberOfTasks();
+            }
+    
+            // Frissítsük az új oszlop feladatainak számát
+            $newColumn = Column::find($task->column_id);
+            if ($newColumn) {
+                $newColumn->updateNumberOfTasks();
+            }
+        }
+    
+        return response()->json([
+            'message' => 'Task updated successfully',
+            'task' => $task,
+        ]);
+    }
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
+        $columnId = $task->column_id;
         $task->delete();
-
-        return response()->json(null, 204);
+    
+        // Frissítsük az oszlophoz tartozó feladatok számát
+        $column = Column::find($columnId);
+        if ($column) {
+            $column->updateNumberOfTasks();
+        }
+    
+        return response()->json(['message' => 'Task deleted successfully'], 204);
     }
 }

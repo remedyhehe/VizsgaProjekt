@@ -15,7 +15,8 @@ return new class extends Migration
 
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('name');
+            $table->string('name')->unique(); // Status neve (pl. 'Kész', 'Nincs kész')
+            $table->timestamps();
         });
 
         Schema::enableForeignKeyConstraints();

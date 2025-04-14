@@ -18,8 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('project_id')->nullable();
             $table->foreign('project_id')->references('id')->on('projects');
             $table->string('name');
-            $table->bigInteger('number_of_tasks')->nullable();
+            $table->unsignedBigInteger('number_of_tasks')->default(0);
+           
             $table->timestamps();  
+            $table->softDeletes();
         });
 
         Schema::enableForeignKeyConstraints();
