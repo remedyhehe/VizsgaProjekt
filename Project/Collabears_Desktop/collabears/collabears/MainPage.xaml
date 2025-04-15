@@ -27,10 +27,10 @@
                     SemanticProperties.HeadingLevel="Level2"
                     SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
 
-                <Label Text="Username" />
+                <Label Text="Email" />
                 <Entry
-                    x:Name="usernameEntry"
-                    Placeholder="Username"
+                    x:Name="emailEntry"
+                    Placeholder="Email"
                    />
                 <Label Text="Password" />
                 <Entry

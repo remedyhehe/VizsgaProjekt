@@ -25,13 +25,13 @@ namespace collabears
 
             SemanticScreenReader.Announce(CounterBtn.Text);
 
-            if (string.IsNullOrEmpty(usernameEntry.Text) || string.IsNullOrEmpty(passwordEntry.Text))
+            if (string.IsNullOrEmpty(emailEntry.Text) || string.IsNullOrEmpty(passwordEntry.Text))
             {
-                await DisplayAlert("Error", "Please enter username and password", "OK");
+                await DisplayAlert("Error", "Please enter email and password", "OK");
                 return;
             }
 
-            var loginResult = await LoginAsync(usernameEntry.Text, passwordEntry.Text);
+            var loginResult = await LoginAsync(emailEntry.Text, passwordEntry.Text);
 
             if (loginResult)
             {
@@ -66,6 +66,13 @@ namespace collabears
                         try
                         {
                             var data = JsonSerializer.Deserialize<LoginResponse>(responseContent);
+
+                            if (data?.User == null)
+                            {
+                                System.Diagnostics.Debug.WriteLine("Parsed Response: " + JsonSerializer.Serialize(data));
+                                await DisplayAlert("Error", "Invalid response from server: User data is missing", "OK");
+                                return false;
+                            }
 
                             // Store the token and user name as needed
                             Preferences.Set("auth_token", data.Token);
@@ -126,6 +133,7 @@ namespace collabears
 
     public class LoginResponse
     {
+        public string Message { get; set; }
         public string Token { get; set; }
         public User User { get; set; }
     }
@@ -133,6 +141,9 @@ namespace collabears
     public class User
     {
         public string Name { get; set; }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 
     public class ErrorResponse
