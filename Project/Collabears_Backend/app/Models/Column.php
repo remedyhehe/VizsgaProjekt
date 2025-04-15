@@ -12,6 +12,7 @@ class Column extends Model
         'name',
         'project_id',
         'number_of_tasks',
+        'order'
         
     
     ];

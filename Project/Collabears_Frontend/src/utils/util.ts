@@ -21,6 +21,7 @@ export interface IColumn {
   name: string;
   project_id: number;
   taskIds: number[];
+  order: number;
 }
 
 export interface ITask {

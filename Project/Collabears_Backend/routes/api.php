@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ColumnController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\FavoriteController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,3 +25,9 @@ Route::get('/users', [AuthController::class, 'getAllUsers']);
 
 Route::resource('columns', ColumnController::class);
 Route::resource('tasks', TaskController::class);
+
+Route::get('/tasks-with-due-dates', [TaskController::class, 'tasksWithDueDates']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/favorites/{projectId}/toggle', [FavoriteController::class, 'toggleFavorite']);
+});

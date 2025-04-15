@@ -70,4 +70,5 @@ class ColumnController extends Controller
             'message' => 'Column and its tasks deleted successfully'
         ], 204);
     }
+    
 }

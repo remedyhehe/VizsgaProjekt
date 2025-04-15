@@ -1,17 +1,14 @@
 /** @format */
 
 import { CgBoard } from "react-icons/cg";
-import { FaCalendar, FaList, FaShare, FaSort } from "react-icons/fa";
+import { FaCalendar } from "react-icons/fa";
 import { FaTableCellsLarge } from "react-icons/fa6";
-import { IoAddOutline, IoFilterSharp } from "react-icons/io5";
-import { DragEvent, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { CiViewTimeline } from "react-icons/ci";
-import { ITask, IColumn } from "../../utils/util";
 import Sidebar from "../Layouts/Sidebar";
 import Tasks from "./ProjectDetailsFolder/Tasks";
 import Calendar from "./ProjectDetailsFolder/Calendar";
-import Table from "./ProjectDetailsFolder/Table";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState<{ id: number; name: string } | null>(
@@ -154,7 +151,7 @@ const ProjectDetails = () => {
             </h1>
             <div className="max-w-screen-xl flex flex-row items-center p-5 ml-5 mt-5">
               <div className="w-full md:w-auto" id="navbar-default">
-                <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 text-md">
+                <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 text-md">
                   <li>
                     <button
                       onClick={() => setSmallSiteId(0)}
@@ -180,20 +177,6 @@ const ProjectDetails = () => {
 
                   <li>
                     <button
-                      onClick={() => setSmallSiteId(3)}
-                      className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
-                        ${
-                          smallSiteId === 3
-                            ? " text-orange-500"
-                            : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                        }`}
-                    >
-                      <FaTableCellsLarge />
-                      Table
-                    </button>
-                  </li>
-                  <li>
-                    <button
                       onClick={() => setSmallSiteId(4)}
                       className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
                         ${
@@ -214,7 +197,6 @@ const ProjectDetails = () => {
 
           {smallSiteId === 0 && <Tasks />}
           {smallSiteId === 1 && <div>Timeline Component</div>}
-          {smallSiteId === 3 && <Table />}
           {smallSiteId === 4 && <Calendar />}
         </div>
       </div>

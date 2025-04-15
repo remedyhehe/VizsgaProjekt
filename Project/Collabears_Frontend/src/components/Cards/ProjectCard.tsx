@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Project } from "../../utils/util";
+import { useState } from "react";
 
 interface ProjectCardProps {
   project: Project;
@@ -9,9 +10,31 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
-  isFavorite,
+  isFavorite: initialIsFavorite,
   onToggleFavorite,
 }) => {
+  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleToggleFavorite = async () => {
+    try {
+      await fetch(`http://localhost:8000/api/favorites/${project.id}/toggle`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, // If you are using token-based auth
+        },
+      });
+
+      setIsAnimating(true); // Start animation
+      setTimeout(() => setIsAnimating(false), 500); // End animation after 500ms
+      setIsFavorite(!isFavorite); // Update state
+      onToggleFavorite(); // Notify parent component
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
   return (
     <div className="border rounded-lg shadow-lg p-3 text-center transform transition duration-500 hover:scale-102 bg-gray-700 text-white h-[450px] hover:shadow-[0_0_30px_rgba(0,183,255,0.5)]">
       <div className="flex justify-start p-3">
@@ -20,8 +43,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             isFavorite ? "solid" : "regular"
           } fa-heart fa-xl py-5 cursor-pointer ${
             isFavorite ? "text-red-500" : "text-white"
-          }`}
-          onClick={onToggleFavorite}
+          } ${isAnimating ? "animate-pump" : ""}`}
+          onClick={handleToggleFavorite}
         ></i>
       </div>
       <img
@@ -34,7 +57,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       <p className="text-white">{project.description}</p>
 
       <div className="flex gap-6 mt-10 p-3 text-sm justify-center">
-        {" "}
         <Link to={`/browseProject/${project.id}`}>
           <div className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-gray-600 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
             <span className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-orange-600 group-hover:h-full"></span>
@@ -47,9 +69,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M14 5l7 7m0 0l-7 7m7-7H3"
                 ></path>
               </svg>
@@ -63,9 +85,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M14 5l7 7m0 0l-7 7m7-7H3"
                 ></path>
               </svg>

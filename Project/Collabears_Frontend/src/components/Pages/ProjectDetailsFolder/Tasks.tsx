@@ -5,6 +5,8 @@ import {
   FaTrash,
   FaTimes,
   FaUserAstronaut,
+  FaChevronUp,
+  FaChevronDown,
 } from "react-icons/fa";
 import { DragEvent, useState, useEffect } from "react";
 import { RxActivityLog } from "react-icons/rx";
@@ -47,6 +49,9 @@ const Tasks = () => {
   const [editingColumnId, setEditingColumnId] = useState<number | null>(null);
   const [editingColumnName, setEditingColumnName] = useState("");
   const [editingTask, setEditingTask] = useState<ITask | null>(null);
+  const [showNotificationPanel, setShowNotificationPanel] = useState(false);
+  const [notifications, setNotifications] = useState<string[]>([]);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/columns?project_id=${projectId}`)
@@ -158,6 +163,40 @@ const Tasks = () => {
       }
     }
   };
+  const addNotification = (message: string) => {
+    setNotifications((prev) => [...prev, message]);
+    setUnreadNotifications((prev) => prev + 1);
+  };
+  const toggleNotificationPanel = () => {
+    setShowNotificationPanel(!showNotificationPanel);
+    if (!showNotificationPanel) {
+      setUnreadNotifications(0);
+      // Reset unread count when panel is opened
+    }
+  };
+
+  useEffect(() => {
+    // Trigger deadline-related notifications
+    const interval = setInterval(() => {
+      const today = new Date();
+      Object.values(tasks).forEach((task) => {
+        if (task.due_date) {
+          const dueDate = new Date(task.due_date);
+          const daysLeft = Math.ceil(
+            (dueDate.getTime() - today.getTime()) / (1000 * 3600 * 24)
+          );
+          if (daysLeft >= 0 && daysLeft <= 2) {
+            const message = `Task "${task.name}" is due in ${daysLeft} day(s)!`;
+            if (!notifications.includes(message)) {
+              addNotification(message);
+            }
+          }
+        }
+      });
+    }, 2000); // Check every minute
+
+    return () => clearInterval(interval);
+  }, [tasks, notifications]);
 
   const confirmAddColumn = async () => {
     if (!newColumnName.trim()) return;
@@ -210,6 +249,10 @@ const Tasks = () => {
       },
       body: JSON.stringify({ taskIds: taskIdsToRemove }),
     }).catch((error) => console.error("Error deleting column:", error));
+    toast.success("Column deleted successfully!", {
+      className: "bg-red-500 text-white px-4 py-2 rounded shadow-lg",
+    });
+    setConfirmDeleteColumnId(null); // Close the confirmation modal
   };
 
   const confirmAddTask = async () => {
@@ -357,18 +400,41 @@ const Tasks = () => {
 
       setTasks((prev) => {
         const updatedTasks = { ...prev };
-        delete updatedTasks[taskId];
+        delete updatedTasks[taskId]; // Remove the task from the tasks state
         return updatedTasks;
       });
+
+      setColumns((prev) => {
+        const updatedColumns = { ...prev };
+        // Find the column that contains the taskId and remove it from taskIds
+        for (const columnId in updatedColumns) {
+          const column = updatedColumns[columnId];
+          if (column.taskIds.includes(taskId)) {
+            updatedColumns[columnId] = {
+              ...column,
+              taskIds: column.taskIds.filter((id) => id !== taskId),
+            };
+            break;
+          }
+        }
+        return updatedColumns;
+      });
+
       setShowTaskModal(null);
+
+      // Show a red toast notification
+      toast.success("Task deleted successfully!", {
+        className: "bg-red-500 text-white px-4 py-2 rounded shadow-lg",
+      });
     } catch (error) {
       console.error("Error deleting task:", error);
+      toast.error("Failed to delete task. Please try again.");
     }
   };
   const toggleTaskStatus = async (taskId: number) => {
-    const currentStatus = tasks[taskId]?.status || "Nincs kész"; // "Nincs kész" alapértelmezett
+    const currentStatus = tasks[taskId]?.status || "Nincs kész"; // Use the current status directly
 
-    const newStatus = currentStatus === "Kész" ? "Nincs kész" : "Kész"; // Állapot váltása
+    const newStatus = currentStatus === "Kész" ? "Nincs kész" : "Kész"; // Toggle status
 
     try {
       const response = await fetch(
@@ -378,7 +444,7 @@ const Tasks = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ status: newStatus }),
+          body: JSON.stringify({ status: newStatus }), // Send the new status name
         }
       );
 
@@ -386,14 +452,29 @@ const Tasks = () => {
         throw new Error("Failed to update task status");
       }
 
+      const updatedTask = await response.json();
+
+      // Update tasks state
       setTasks((prev) => ({
         ...prev,
-        [taskId]: { ...prev[taskId], status: newStatus },
+        [taskId]: { ...prev[taskId], status: newStatus }, // Update the status as a string
       }));
+
+      toast.success("Task status updated successfully!");
     } catch (error) {
       console.error("Error updating task status:", error);
       toast.error("Error updating task status. Please try again.");
     }
+  };
+  const calculateDaysLeft = (dueDate: string | null) => {
+    if (!dueDate) return null;
+
+    const today = new Date();
+    const due = new Date(dueDate);
+    const timeDiff = due.getTime() - today.getTime();
+    const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return daysLeft;
   };
 
   return (
@@ -471,45 +552,48 @@ const Tasks = () => {
               </div>
 
               <div className="task-list">
-                {column.taskIds.map((taskId) => (
-                  <div
-                    key={taskId}
-                    className="taskbox"
-                    draggable
-                    onDragStart={(event) => handleDragStart(event, taskId)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center">
-                        <input
-                          className="checkbox"
-                          type="checkbox"
-                          checked={tasks[taskId]?.status === "Kész"}
-                          onChange={() => toggleTaskStatus(taskId)}
-                        />
-                        <p
-                          className={`text-md font-medium ${
-                            tasks[taskId]?.status === "Kész"
-                              ? " text-slate-100 line-through"
-                              : "text-slate-100"
-                          }`}
-                        >
-                          {tasks[taskId]?.name || "Task name missing"}
-                        </p>
-                      </div>
-                      <div className="task-actions">
-                        <button
-                          onClick={() => {
-                            setShowTaskModal(taskId);
-                            setEditingTask(tasks[taskId]);
-                          }}
-                          className="text-slate-300 hover:text-white"
-                        >
-                          <FaEdit />
-                        </button>
+                {column.taskIds
+                  .filter((taskId) => tasks[taskId]) // Only include tasks that exist
+                  .map((taskId) => (
+                    <div
+                      key={taskId}
+                      className="taskbox"
+                      draggable
+                      onDragStart={(event) => handleDragStart(event, taskId)}
+                    >
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={tasks[taskId]?.status === "Kész"}
+                            onChange={() => toggleTaskStatus(taskId)}
+                            className="checkbox mr-3 appearance-none w-4 h-4 rounded-full border-2 border-gray-300 checked:bg-green-500 checked:border-green-500"
+                          />
+
+                          <p
+                            className={`text-md font-medium ${
+                              tasks[taskId]?.status === "Kész"
+                                ? " text-green-500"
+                                : "text-slate-100"
+                            }`}
+                          >
+                            {tasks[taskId]?.name}
+                          </p>
+                        </div>
+                        <div className="task-actions">
+                          <button
+                            onClick={() => {
+                              setShowTaskModal(taskId);
+                              setEditingTask(tasks[taskId]);
+                            }}
+                            className="text-slate-300 hover:text-white"
+                          >
+                            <FaEdit />
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
 
                 {newTaskData.columnId === column.id && (
                   <div className="mt-3">
@@ -594,6 +678,44 @@ const Tasks = () => {
           </li>
         </ol>
       </div>
+      <div
+        className={`fixed bottom-0 right-5 bg-gray-800 text-white rounded-t-xl shadow-lg w-80 ${
+          showNotificationPanel ? "h-64" : "h-12"
+        } overflow-hidden transition-all duration-300`}
+      >
+        <div
+          className="bg-gray-700 p-3 cursor-pointer flex justify-between items-center"
+          onClick={() => setShowNotificationPanel(!showNotificationPanel)}
+        >
+          <div className="flex items-center gap-2">
+            <span>Notifications</span>
+            {unreadNotifications > 0 && !showNotificationPanel && (
+              <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {unreadNotifications}
+              </span>
+            )}
+          </div>
+          <span className="text-orange-500">
+            {showNotificationPanel ? <FaChevronDown /> : <FaChevronUp />}
+          </span>
+        </div>
+        {showNotificationPanel && (
+          <div className="p-3 space-y-2">
+            {notifications.length > 0 ? (
+              notifications.map((notification, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-600 px-3 py-2 rounded text-sm shadow-sm"
+                >
+                  {notification}
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-400 text-sm">No notifications</p>
+            )}
+          </div>
+        )}
+      </div>
 
       {/* Modal */}
       {showTaskModal !== null && editingTask && (
@@ -622,17 +744,9 @@ const Tasks = () => {
                 <RxActivityLog />
                 Status
               </h2>
-              <p className="text-neutral-400 text-sm">
+              <p className="text-neutral-400 text-md">
                 {editingTask?.status || "Nincs státusz"}
               </p>
-              <button
-                onClick={() => toggleTaskStatus(editingTask!.id)}
-                className={`mt-2 px-4 py-2 rounded ${
-                  editingTask?.status === "Kész" ? "bg-green-500" : "bg-red-500"
-                } text-white`}
-              >
-                Állapot váltása
-              </button>
             </div>
             <div className="mt-5">
               <h2 className="flex items-center text-md font-semibold mb-2 gap-2">
@@ -708,10 +822,12 @@ const Tasks = () => {
                     <MdDateRange />
                     Due Date
                   </h2>
-
+                  <p className="text-neutral-400 text-sm">
+                    {tasks[showTaskModal]?.due_date || "No due date set"}
+                  </p>
                   <input
                     type="date"
-                    className="w-full p-2 rounded bg-gray-800 text-white"
+                    className="w-full p-2 rounded bg-gray-800 text-white mt-2"
                     value={editingTask.due_date || ""}
                     onChange={(e) =>
                       setEditingTask({
@@ -767,7 +883,7 @@ const Tasks = () => {
               </div>
               <div className="p-2 mt-2 text-center space-x-1 md:block">
                 <button
-                  className="mb-2 md:mb-0 bg-gray-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider  rounded-xl"
+                  className="mb-2 md:mb-0 bg-gray-700 text-slate-200 px-5 py-2 text-sm shadow-sm font-medium tracking-wider  rounded-xl"
                   onClick={handleCloseModal}
                 >
                   Cancel
