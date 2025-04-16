@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ColumnController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\UserController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -32,3 +33,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/favorites/{projectId}/toggle', [FavoriteController::class, 'toggleFavorite']);
 });
 
+<<<<<<< Updated upstream
+=======
+Route::middleware('auth:sanctum')->put('/user', [UserController::class, 'update']);
+>>>>>>> Stashed changes

@@ -5,18 +5,42 @@ import UserMenu from "../Function/UserMenu";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotDropdownOpen, setIsNotDropdownOpen] = useState(false);
 
   // USER MEGJELENÍTÉS
-  const [userName, setUserName] = useState<string | null>(null);
+  const [user, setUser] = useState({
+    name: "",
+    profile_picture: ""
+  });
 
   useEffect(() => {
-    const storedName = localStorage.getItem("user_name");
-    setUserName(storedName);
-  }, []); // ❗ Figyeljük a változást!
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/user", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
+        });
+
+        if (!response.ok) throw new Error("User fetch failed");
+
+        const data = await response.json();
+        setUser({
+          name: data.name || "",
+          profile_picture: data.profile_picture || "",
+        });
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []); // Üres lista biztosítja, hogy csak egyszer fusson le
 
   // LOGIN
 
@@ -136,7 +160,7 @@ const Navbar = () => {
             >
               <img
                 className="w-9 h-9 border-2 border-white rounded-full dark:border-gray-800"
-                src="/images/avatar.png"
+                src={ user.profile_picture || "/images/avatar.png"}
                 alt=""
               />
             </button>
@@ -167,10 +191,10 @@ const Navbar = () => {
               className="absolute right-0 mt-7 w-75 bg-white text-black rounded-lg shadow-lg p-2 z-10"
             >
               {/* HA BE VAN JELENTKEZVE */}
-              {userName && (
+              {user.name && (
                 <div className="text-left">
                   <h2 className="text-center p-2 rounded-lg font-semibold">
-                    Welcome, {userName}!
+                    Welcome, {user.name}!
                   </h2>
                   <div className="my-2 text-center mx-auto w-2/3 h-[2px] bg-gray-200"></div>
                   <a href="/account">
@@ -193,7 +217,7 @@ const Navbar = () => {
                 </div>
               )}
               {/* HA NINCS BEJELENTKEZVE */}
-              {!userName && (
+              {!user.name && (
                 <div>
                   <h3 className="text-center text-lg mb-1">Have an account?</h3>
                   <form onSubmit={handleLogin}>
@@ -272,10 +296,10 @@ const Navbar = () => {
               className="absolute right-0 mt-7 w-75 bg-white text-black rounded-lg shadow-lg p-2 z-10"
             >
               {/* HA BE VAN JELENTKEZVE */}
-              {userName && (
+              {user.name && (
                 <div className="text-left">
                   <h2 className="text-center p-2 rounded-lg font-semibold">
-                    Welcome, {userName}!
+                    Welcome, {user.name}!
                   </h2>
                   <div className="my-2 text-center mx-auto w-2/3 h-[2px] bg-gray-200"></div>
                   <a href="/account">
@@ -298,7 +322,7 @@ const Navbar = () => {
                 </div>
               )}
               {/* HA NINCS BEJELENTKEZVE */}
-              {!userName && (
+              {!user.name && (
                 <div>
                   <h3 className="text-center text-lg mb-1">Have an account?</h3>
                   <form onSubmit={handleLogin}>
@@ -429,9 +453,9 @@ const Navbar = () => {
             </li>
           </ul>
           {/* HA BE VAN JELENTKEZVE */}
-          {userName && <UserMenu />}
+          {user.name && <UserMenu />}
           {/* HA NINCS BEJELENTKEZVE */}
-          {!userName && (
+          {!user.name && (
             <div
               id="userDropdown"
               className="absolute m-auto mt-2 bg-slate-100 text-black rounded-lg shadow-lg p-4 z-10 mr-5"

@@ -13,6 +13,11 @@ export interface Project {
 export interface IUser{
   name: string;
   email: string;
+  bio: string;
+  url: string;
+  company: string;
+  country: string;
+  profilepicture: string;
 }
 
 

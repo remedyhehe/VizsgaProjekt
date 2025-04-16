@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+
 
 const useLogin = () => {
   const [message, setMessage] = useState<string | null>(null);
@@ -16,15 +18,17 @@ const useLogin = () => {
 
       const data = await res.json();
       if (res.ok) {
-        setMessage("✅ Sikeres bejelentkezés!");
+        toast.success("Sikeres bejelentkezés!", {
+                className: "bg-red-500 text-white px-4 py-2 rounded shadow-lg",
+              });
         localStorage.setItem("auth_token", data.token);
         localStorage.setItem("user_name", data.user.name);
         window.location.reload(); // Frissítjük az oldalt, hogy frissüljön a navbar
       } else {
-        setMessage(data.message || "⚠️ Hibás email vagy jelszó!");
+        toast.error(data.message || "⚠️ Hibás email vagy jelszó!");
       }
     } catch (error) {
-      setMessage("❌ Hálózati hiba!");
+      (error || "❌ Hálózati hiba!");
     }
   };
 
