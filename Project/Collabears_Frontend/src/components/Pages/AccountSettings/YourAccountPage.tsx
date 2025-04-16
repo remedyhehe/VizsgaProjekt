@@ -9,19 +9,6 @@ import { toast } from "react-toastify";
 
 const YourAccountPage = () => {
   const [countries, setCountries] = useState<{ name: string }[]>([]);
-<<<<<<< Updated upstream
-  const [user, setUser] = useState({
-    name: "",
-    bio: "",
-    url: "",
-    company: "",
-    country: "",
-    profile_picture: "",
-  });
-
-  const [selectedCountry, setSelectedCountry] = useState<string>("");
-=======
->>>>>>> Stashed changes
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
   const [hover, setHover] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -37,27 +24,12 @@ const YourAccountPage = () => {
   });
 
   useEffect(() => {
-<<<<<<< Updated upstream
-=======
     console.log("useEffect triggered");
->>>>>>> Stashed changes
     const fetchUser = async () => {
       try {
         const response = await fetch("http://localhost:8000/api/user", {
           headers: {
             Accept: "application/json",
-<<<<<<< Updated upstream
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`, // ha szükséges
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("User fetch failed");
-        }
-
-        const data = await response.json();
-        setUser({ ...user, name: data.name }); // feltételezve, hogy a válaszban van 'name'
-=======
             Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
           },
         });
@@ -80,17 +52,11 @@ const YourAccountPage = () => {
         if (data.profile_picture && data.profile_picture !== selectedAvatar) {
           setSelectedAvatar(data.profile_picture);
         }
->>>>>>> Stashed changes
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
 
-<<<<<<< Updated upstream
-    fetchUser();
-    // API hívás az országok lekérésére
-=======
->>>>>>> Stashed changes
     const fetchCountries = async () => {
       try {
         const response = await fetch("https://restcountries.com/v3.1/all");
@@ -195,16 +161,8 @@ const YourAccountPage = () => {
                       <input
                         type="text"
                         className="bg-gray-700 text-white text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
-<<<<<<< Updated upstream
-                        required
-                        value={user.name}
-                        onChange={(e) =>
-                          setUser({ ...user, name: e.target.value })
-                        }
-=======
                         value={user.name}
                         onChange={(e) => setUser({ ...user, name: e.target.value })}
->>>>>>> Stashed changes
                       />
                       <p className="text-sm pl-1 text-gray-400 mb-4">
                         It's a nickname, better not to include your full name

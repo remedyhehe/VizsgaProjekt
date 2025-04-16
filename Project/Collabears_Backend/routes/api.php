@@ -33,7 +33,4 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/favorites/{projectId}/toggle', [FavoriteController::class, 'toggleFavorite']);
 });
 
-<<<<<<< Updated upstream
-=======
 Route::middleware('auth:sanctum')->put('/user', [UserController::class, 'update']);
->>>>>>> Stashed changes
