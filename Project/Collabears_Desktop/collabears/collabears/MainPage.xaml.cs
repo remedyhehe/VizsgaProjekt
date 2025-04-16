@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace collabears
@@ -58,23 +59,27 @@ namespace collabears
 
                     var responseContent = await response.Content.ReadAsStringAsync();
 
-                    // Log the raw response for debugging purposes
                     System.Diagnostics.Debug.WriteLine("Raw Response: " + responseContent);
 
                     if (response.IsSuccessStatusCode)
                     {
                         try
                         {
-                            var data = JsonSerializer.Deserialize<LoginResponse>(responseContent);
+                            var options = new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            };
+
+                            var data = JsonSerializer.Deserialize<LoginResponse>(responseContent, options);
+
+                            System.Diagnostics.Debug.WriteLine("Parsed Response: " + JsonSerializer.Serialize(data));
 
                             if (data?.User == null)
                             {
-                                System.Diagnostics.Debug.WriteLine("Parsed Response: " + JsonSerializer.Serialize(data));
                                 await DisplayAlert("Error", "Invalid response from server: User data is missing", "OK");
                                 return false;
                             }
 
-                            // Store the token and user name as needed
                             Preferences.Set("auth_token", data.Token);
                             Preferences.Set("user_name", data.User.Name);
 
@@ -92,22 +97,19 @@ namespace collabears
                         {
                             try
                             {
-                                var data = JsonSerializer.Deserialize<ErrorResponse>(responseContent);
-                                await DisplayAlert("Error", data.Message, "OK");
+                                var errorData = JsonSerializer.Deserialize<ErrorResponse>(responseContent);
+                                await DisplayAlert("Error", errorData?.Message ?? "Unknown error", "OK");
                             }
                             catch (JsonException jsonEx)
                             {
                                 await DisplayAlert("Error", "Failed to parse error response: " + jsonEx.Message, "OK");
                             }
                         }
-                        else if (response.Content.Headers.ContentType.MediaType == "text/html")
-                        {
-                            await DisplayAlert("Error", "Server returned an HTML response: " + responseContent, "OK");
-                        }
                         else
                         {
                             await DisplayAlert("Error", "Unexpected response from server: " + responseContent, "OK");
                         }
+
                         return false;
                     }
                 }
@@ -123,12 +125,6 @@ namespace collabears
                 return false;
             }
         }
-
-        private bool IsJson(string input)
-        {
-            input = input.Trim();
-            return (input.StartsWith("{") && input.EndsWith("}")) || (input.StartsWith("[") && input.EndsWith("]"));
-        }
     }
 
     public class LoginResponse
@@ -140,10 +136,22 @@ namespace collabears
 
     public class User
     {
+        [JsonPropertyName("id")]
+        public int Id { get; set; }
+
+        [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        [JsonPropertyName("email")]
         public string Email { get; set; }
+
+        [JsonPropertyName("first_name")]
         public string FirstName { get; set; }
+
+        [JsonPropertyName("last_name")]
         public string LastName { get; set; }
+
+        // Add more fields if needed later
     }
 
     public class ErrorResponse
