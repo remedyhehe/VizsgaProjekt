@@ -44,8 +44,13 @@ const Calendar = () => {
       return;
     }
 
-    // Convert the dragged event's date to UTC before sending it to the backend
-    const formattedDate = new Date(start).toISOString().split("T")[0];
+    const localDate = new Date(start);
+    const formattedDate =
+      localDate.getFullYear() +
+      "-" +
+      String(localDate.getMonth() + 1).padStart(2, "0") +
+      "-" +
+      String(localDate.getDate()).padStart(2, "0");
 
     try {
       const response = await fetch(`http://localhost:8000/api/tasks/${id}`, {
@@ -80,6 +85,7 @@ const Calendar = () => {
             initialView="dayGridMonth"
             events={events}
             editable={true}
+            timeZone="local"
             droppable={true}
             eventDrop={handleEventDrop}
             height={700}

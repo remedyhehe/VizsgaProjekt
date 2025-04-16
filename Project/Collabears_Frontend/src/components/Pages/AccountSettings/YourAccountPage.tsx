@@ -7,6 +7,15 @@ import { Pencil } from "lucide-react";
 
 const YourAccountPage = () => {
   const [countries, setCountries] = useState<{ name: string }[]>([]);
+  const [user, setUser] = useState({
+    name: "",
+    bio: "",
+    url: "",
+    company: "",
+    country: "",
+    profile_picture: "",
+  });
+
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
   const [hover, setHover] = useState(false);
@@ -14,6 +23,27 @@ const YourAccountPage = () => {
   const [newUrl, setNewUrl] = useState("");
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/user", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`, // ha szükséges
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("User fetch failed");
+        }
+
+        const data = await response.json();
+        setUser({ ...user, name: data.name }); // feltételezve, hogy a válaszban van 'name'
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
     // API hívás az országok lekérésére
     const fetchCountries = async () => {
       try {
@@ -59,7 +89,7 @@ const YourAccountPage = () => {
         {/* Bal oldalsó látható sáv (Menü opciók) */}
         <div className="bg-gray-800 w-full sm:w-2/6 md:w-1/4 text-white">
           <h2 className="text-2xl font-semibold text-center sm:text-left">
-            username
+            {user.name || "username"}
           </h2>
           <h2 className="text-lg text-gray-500 text-center sm:text-left">
             Free subscription
@@ -103,6 +133,10 @@ const YourAccountPage = () => {
                         type="text"
                         className="bg-gray-700 text-white text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
                         required
+                        value={user.name}
+                        onChange={(e) =>
+                          setUser({ ...user, name: e.target.value })
+                        }
                       />
                       <p className="text-sm pl-1 text-gray-400 mb-4">
                         It's a nickname, better not to include your full name

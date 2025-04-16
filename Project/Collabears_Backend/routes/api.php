@@ -31,3 +31,4 @@ Route::get('/tasks-with-due-dates', [TaskController::class, 'tasksWithDueDates']
 Route::middleware('auth:api')->group(function () {
     Route::post('/favorites/{projectId}/toggle', [FavoriteController::class, 'toggleFavorite']);
 });
+

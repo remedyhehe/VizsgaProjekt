@@ -2,13 +2,14 @@
 
 import { CgBoard } from "react-icons/cg";
 import { FaCalendar } from "react-icons/fa";
-import { FaTableCellsLarge } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CiViewTimeline } from "react-icons/ci";
 import Sidebar from "../Layouts/Sidebar";
 import Tasks from "./ProjectDetailsFolder/Tasks";
 import Calendar from "./ProjectDetailsFolder/Calendar";
+import { BsClipboard2DataFill } from "react-icons/bs";
+import Diagram from "./ProjectDetailsFolder/Diagram";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState<{ id: number; name: string } | null>(
@@ -189,6 +190,20 @@ const ProjectDetails = () => {
                       Calendar
                     </button>
                   </li>
+                  <li>
+                    <button
+                      onClick={() => setSmallSiteId(5)}
+                      className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
+                        ${
+                          smallSiteId === 5
+                            ? " text-orange-500"
+                            : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                        }`}
+                    >
+                      <BsClipboard2DataFill />
+                      Diagram
+                    </button>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -198,6 +213,7 @@ const ProjectDetails = () => {
           {smallSiteId === 0 && <Tasks />}
           {smallSiteId === 1 && <div>Timeline Component</div>}
           {smallSiteId === 4 && <Calendar />}
+          {smallSiteId === 5 && <Diagram />}
         </div>
       </div>
     </>

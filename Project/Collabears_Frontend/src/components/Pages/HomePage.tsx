@@ -150,7 +150,7 @@ const HomePage = () => {
     <>
       <Navbar />
       <div className="bg-gray-300 min-h-screen">
-        <section className="flex flex-col md:flex-row items-center text-white px-6 py-10 md:px-20 bg-gradient-to-r from-orange-500 to-orange-700">
+        <section className="flex flex-col md:flex-row items-center text-white px-6 py-20 md:px-20 bg-gradient-to-r from-orange-500 to-orange-700">
           <motion.div
             className="w-full md:w-1/2 pr-0 md:pr-10 text-center md:text-left"
             initial={{ opacity: 0, y: 50 }} // Kezdőállapot: teljesen áttetsző és lentebb
