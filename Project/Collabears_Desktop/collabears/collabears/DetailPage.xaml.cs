@@ -1,9 +1,10 @@
-namespace collabears;
-
-public partial class DetailPage : ContentPage
+namespace collabears.Views
 {
-	public DetailPage()
-	{
-		InitializeComponent();
-	}
+    public partial class DetailPage : ContentPage
+    {
+        public DetailPage()
+        {
+            InitializeComponent();
+        }
+    }
 }
