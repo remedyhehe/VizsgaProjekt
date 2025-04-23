@@ -105,4 +105,53 @@ class TaskController extends Controller
 
     return response()->json($tasks);
 }
+public function addComment(Request $request, $taskId)
+{
+    $task = Task::findOrFail($taskId);
+
+    $validatedData = $request->validate([
+        'comment_text' => 'required|string|max:1000',
+    ]);
+
+    $comments = $task->comments ?? []; // Get existing comments or initialize as empty array
+    $comments[] = ['id' => uniqid(), 'text' => $validatedData['comment_text'], 'created_at' => now()];
+
+    $task->update(['comments' => $comments]);
+
+    return response()->json($task->comments, 201);
+}
+
+public function updateComment(Request $request, $taskId, $commentId)
+{
+    $task = Task::findOrFail($taskId);
+
+    $validatedData = $request->validate([
+        'comment_text' => 'required|string|max:1000',
+    ]);
+
+    $comments = $task->comments ?? [];
+    foreach ($comments as &$comment) {
+        if ($comment['id'] === $commentId) {
+            $comment['text'] = $validatedData['comment_text'];
+            $comment['updated_at'] = now();
+            break;
+        }
+    }
+
+    $task->update(['comments' => $comments]);
+
+    return response()->json($task->comments);
+}
+
+public function deleteComment($taskId, $commentId)
+{
+    $task = Task::findOrFail($taskId);
+
+    $comments = $task->comments ?? [];
+    $comments = array_filter($comments, fn($comment) => $comment['id'] !== $commentId);
+
+    $task->update(['comments' => $comments]);
+
+    return response()->json(['message' => 'Comment deleted successfully'], 204);
+}
 }

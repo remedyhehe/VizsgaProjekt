@@ -56,8 +56,8 @@ const PremiumPage = () => {
           animate={{ opacity: 1, y: 0 }} // Animáció: fokozatosan jelenjen meg és mozogjon felfelé
           transition={{ duration: 1, ease: "easeOut" }} // Lassú, sima megjelenés
         >
-          <section className="text-gray-700 body-font overflow-hidden border-t border-gray-200">
-            <div className="p-5 mt-10 flex flex-col justify-center items-center gap-10">
+          <section className="text-gray-700 body-font overflow-hidden border-t border-gray-200 bg-white">
+            <div className="p-5 mt-10 flex flex-col justify-center items-center gap-6">
               <h1 className="text-5xl font-bold">
                 Choose the right plan for you
               </h1>
@@ -68,158 +68,97 @@ const PremiumPage = () => {
                 sales.
               </p>
             </div>
-            <div className="container px-5 py-15 mx-auto flex flex-wrap">
-              <div className="lg:w-1/4 mt-48 hidden lg:block">
-                <div className="mt-px border-t border-gray-300 border-b border-l rounded-tl-lg rounded-bl-lg overflow-hidden">
-                  <p className="bg-gray-100 text-gray-900 h-12 text-center px-4 flex items-center justify-start -mt-px">
-                    Number of active projects
-                  </p>
-                  <p className="text-gray-900 h-12 text-center px-4 flex items-center justify-start">
-                    TODO List
-                  </p>
-                  <p className="bg-gray-100 text-gray-900 h-12 text-center px-4 flex items-center justify-start">
-                    Promotional coin
-                  </p>
-                  <p className="text-gray-900 h-12 text-center px-4 flex items-center justify-start">
-                    Chat
-                  </p>
-                </div>
-              </div>
-              <div className="flex lg:w-3/4 w-full flex-wrap lg:border border-gray-300 rounded-lg">
-                {/* Free */}
-                <div className="lg:w-1/3 lg:mt-px w-full mb-10 lg:mb-0 border-2 border-gray-300 lg:border-none rounded-lg lg:rounded-none">
-                  <div className="px-2 text-center h-48 flex flex-col items-center justify-center">
-                    <h3 className="tracking-widest">BEGINNER</h3>
-                    <h2 className="text-5xl text-gray-900 font-medium leading-none mb-4 mt-2">
-                      Free
-                    </h2>
-                    <span className="text-sm text-gray-600">
-                      For unlimited time
-                    </span>
+
+            <div className="container px-5 py-16 mx-auto">
+              <div className="flex flex-wrap justify-center gap-10">
+                {/* Plan Card */}
+                {[
+                  {
+                    name: "Free",
+                    price: "0",
+                    features: {
+                      Tasks: true,
+                    },
+                    description: "Basic tools for individuals starting out.",
+                    buttonText: "Owned",
+                  },
+                  {
+                    name: "Plus",
+                    price: "12",
+                    features: {
+                      Tasks: true,
+                      Timeline: true,
+                      Calendar: true,
+                    },
+                    description:
+                      "For professionals managing multiple projects.",
+                    buttonText: "Choose Plan",
+                    popular: true,
+                  },
+                  {
+                    name: "Pro",
+                    price: "25",
+                    features: {
+                      Tasks: true,
+                      Timeline: true,
+                      Calendar: true,
+                      Files: true,
+                      Chat: true,
+                      Notifications: true,
+                    },
+                    description: "Best for teams that need everything.",
+                    buttonText: "Choose Plan",
+                  },
+                ].map((plan, idx) => (
+                  <div
+                    key={idx}
+                    className={`w-full md:w-80 border-2 rounded-xl shadow-lg relative ${
+                      plan.popular ? "border-orange-500" : "border-gray-200"
+                    }`}
+                  >
+                    {plan.popular && (
+                      <div className="absolute top-0 right-0 bg-orange-500 text-white text-xs px-3 py-1 rounded-bl-lg">
+                        MOST POPULAR
+                      </div>
+                    )}
+
+                    <div className="p-6 text-center">
+                      <h3 className="text-lg font-semibold tracking-wide mb-2">
+                        {plan.name}
+                      </h3>
+                      <div className="text-4xl font-bold text-gray-900 mb-1">
+                        {plan.price === "0" ? "Free" : `$${plan.price}/mo`}
+                      </div>
+                      <p className="text-sm text-gray-500 mb-6">
+                        {plan.description}
+                      </p>
+
+                      <ul className="text-sm text-left space-y-2 mb-6">
+                        {Object.entries(plan.features).map(
+                          ([feature, isEnabled]) => (
+                            <li
+                              key={feature}
+                              className="flex items-center gap-2"
+                            >
+                              <i
+                                className={`fa-solid ${
+                                  isEnabled
+                                    ? "fa-circle-check text-green-500"
+                                    : "fa-x text-red-400"
+                                }`}
+                              ></i>
+                              {feature}
+                            </li>
+                          )
+                        )}
+                      </ul>
+
+                      <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded transition">
+                        {plan.buttonText}
+                      </button>
+                    </div>
                   </div>
-                  <p className="bg-gray-100 text-gray-600 h-12 text-center px-2 flex items-center -mt-px justify-center border-t border-gray-300 text-lg font-semibold">
-                    5
-                  </p>
-                  <p className="text-gray-600 text-center h-12 flex items-center justify-center text-2xl font-semibold">
-                    <i className="fa-solid fa-circle-check"></i>
-                  </p>
-                  <p className="bg-gray-100 text-gray-600 text-center h-12 flex items-center justify-center font-semibold">
-                    <i className="fa-solid fa-x"></i>
-                  </p>
-                  <p className="text-gray-600 text-center h-12 flex items-center justify-center text-2xl font-semibold">
-                    <i className="fa-solid fa-circle-check"></i>
-                  </p>
-                  <div className="border-t border-gray-300 p-6 text-center rounded-bl-lg">
-                    <button className="flex items-center mt-auto text-white bg-orange-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-orange-600 rounded">
-                      Owned
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-4 h-4 ml-auto"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                      </svg>
-                    </button>
-                    <p className="text-xs text-gray-500 mt-3">
-                      Literally you probably haven't heard of them jean shorts.
-                    </p>
-                  </div>
-                </div>
-                {/* Pro */}
-                <div className="lg:w-1/3 lg:-mt-px w-full mb-10 lg:mb-0 border-2 rounded-lg border-orange-500 relative">
-                  <span className="bg-orange-500 text-white px-3 py-1 tracking-widest text-xs absolute right-0 top-0 rounded-bl">
-                    POPULAR
-                  </span>
-                  <div className="px-2 text-center h-48 flex flex-col items-center justify-center">
-                    <h3 className="tracking-widest">PRO</h3>
-                    <h2 className="text-5xl text-gray-900 font-medium flex items-center justify-center leading-none mb-4 mt-2">
-                      $38
-                      <span className="text-gray-600 text-base ml-1">/mo</span>
-                    </h2>
-                    <span className="text-sm text-gray-600">
-                      Charging $456 per year
-                    </span>
-                  </div>
-                  <p className="bg-gray-100 text-gray-600 h-12 text-center px-2 flex items-center -mt-px justify-center border-t border-gray-300 text-lg font-semibold">
-                    Unlimited
-                  </p>
-                  <p className="text-gray-600 text-center h-12 flex items-center justify-center text-2xl">
-                    <i className="fa-solid fa-circle-check"></i>
-                  </p>
-                  <p className="bg-gray-100 text-gray-600 text-center h-12 flex items-center justify-center ">
-                    <i className="fa-solid fa-x"></i>
-                  </p>
-                  <p className="text-gray-600 text-center h-12 flex items-center justify-center text-2xl">
-                    <i className="fa-solid fa-circle-check"></i>
-                  </p>
-                  <div className="border-t border-gray-300 p-6 text-center rounded-bl-lg">
-                    <button className="flex items-center mt-auto text-white bg-orange-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-orange-600 rounded">
-                      Choose Plan
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-4 h-4 ml-auto"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                      </svg>
-                    </button>
-                    <p className="text-xs text-gray-500 mt-3">
-                      Literally you probably haven't heard of them jean shorts.
-                    </p>
-                  </div>
-                </div>
-                {/* BUSINESS */}
-                <div className="lg:w-1/3 lg:mt-px w-full mb-10 lg:mb-0 border-2 border-gray-300 lg:border-none rounded-lg lg:rounded-none">
-                  <div className="px-2 text-center h-48 flex flex-col items-center justify-center">
-                    <h3 className="tracking-widest">BUSINESS</h3>
-                    <h2 className="text-5xl text-gray-900 font-medium flex items-center justify-center leading-none mb-4 mt-2">
-                      $56
-                      <span className="text-gray-600 text-base ml-1">/mo</span>
-                    </h2>
-                    <span className="text-sm text-gray-600">
-                      Charging $672 per year
-                    </span>
-                  </div>
-                  <p className="bg-gray-100 text-gray-600 h-12 text-center px-2 flex items-center -mt-px justify-center border-t border-gray-300 text-lg font-semibold">
-                    Unlimited
-                  </p>
-                  <p className="text-gray-600 text-center h-12 flex items-center justify-center text-2xl font-semibold">
-                    1
-                  </p>
-                  <p className="bg-gray-100 text-gray-600 text-center h-12 flex items-center justify-center ">
-                    <i className="fa-solid fa-x"></i>
-                  </p>
-                  <p className="text-gray-600 text-center h-12 flex items-center justify-center text-2xl">
-                    <i className="fa-solid fa-circle-check"></i>
-                  </p>
-                  <div className="border-t border-gray-300 p-6 text-center rounded-bl-lg">
-                    <button className="flex items-center mt-auto text-white bg-orange-500 border-0 py-2 px-4 w-full focus:outline-none hover:bg-orange-600 rounded">
-                      Choose Plan
-                      <svg
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        className="w-4 h-4 ml-auto"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M5 12h14M12 5l7 7-7 7"></path>
-                      </svg>
-                    </button>
-                    <p className="text-xs text-gray-500 mt-3">
-                      Literally you probably haven't heard of them jean shorts.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </section>

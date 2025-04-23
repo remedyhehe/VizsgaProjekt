@@ -19,6 +19,10 @@ class Project extends Model
         'image_url', // Add this line
     ];
 
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'workers', 'project_id', 'user_id');
+}
     
     
 }

@@ -1,6 +1,7 @@
 export interface Project {
   id: number;
   name: string;
+  user_id: number;
   description: string;
   category?: string; // Ha van ilyen mező az API-ban
   member_number?: number;

@@ -1,6 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { Project } from "../../utils/util";
+import { useEffect, useState } from "react";
 
 interface MyProjectCardProps {
   project: Project;
@@ -9,8 +10,37 @@ interface MyProjectCardProps {
   setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
   onEdit: (project: Project) => void;
 }
-
 const MyProjectCard = ({ project }: MyProjectCardProps) => {
+  const [user, setUser] = useState({
+    name: "",
+    profile_picture: "",
+  });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/user", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
+        });
+
+        if (!response.ok) throw new Error("User fetch failed");
+
+        const data = await response.json();
+        setUser({
+          name: data.name || "",
+          profile_picture: data.profile_picture || "",
+        });
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []); // Üres lista biztosítja, hogy csak egyszer fusson le
+
   return (
     <div className="bg-gray-800 text-white rounded-xl shadow-lg p-5 w-100 mx-auto transform transition-all duration-300 hover:scale-102">
       <div className="flex flex-row justify-between ">
@@ -20,7 +50,7 @@ const MyProjectCard = ({ project }: MyProjectCardProps) => {
         <div className="flex -space-x-4 rtl:space-x-reverse">
           <img
             className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
-            src="../images/avatar.png"
+            src={user.profile_picture || "/images/avatar.png"}
             alt=""
           />
         </div>

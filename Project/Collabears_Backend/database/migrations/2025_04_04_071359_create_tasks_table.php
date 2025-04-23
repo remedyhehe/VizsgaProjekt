@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreign('column_id')->references('id')->on('columns');
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->json('comments')->nullable();
             $table->date('due_date')->nullable();
             $table->unsignedBigInteger('status_id')->nullable(); // Status ID (külső kulcs)
             $table->foreign('status_id')->references('id')->on('statuses'); // Status külső kulcs

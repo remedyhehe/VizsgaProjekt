@@ -39,5 +39,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Password::class, 'password_id');
     }
+    public function projects()
+{
+    return $this->belongsToMany(Project::class, 'workers', 'user_id', 'project_id');
+}
 
 }

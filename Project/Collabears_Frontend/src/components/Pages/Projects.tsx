@@ -16,22 +16,36 @@ const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [favorites, setFavorites] = useState<{ [key: number]: boolean }>({});
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
-    fetchProjects(selectedCategory);
-    loadFavorites();
+    const fetchData = async () => {
+      setLoading(true);
+      await fetchProjects(selectedCategory);
+      loadFavorites();
+      setLoading(false);
+    };
+
+    fetchData();
   }, [selectedCategory]);
 
   const fetchProjects = async (category: string) => {
     try {
       const res = await fetch("http://localhost:8000/api/projects");
       const result = await res.json();
-      const filteredProjects =
-        category === "All"
-          ? result.data
-          : result.data.filter(
-              (project: Project) => project.category === category
-            );
+
+      // Feltételezve, hogy van bejelentkezett user ID-d
+      const loggedInUserId = localStorage.getItem("user_id"); // vagy máshonnan
+
+      const filteredProjects = result.data.filter((project: Project) => {
+        const isCreatedByUser = project.user_id === Number(loggedInUserId);
+        const categoryMatch =
+          category === "All" || project.category === category;
+        return !isCreatedByUser && categoryMatch; // csak nem saját + kategória alapján
+      });
+
       setProjects(filteredProjects || []);
     } catch (error) {
       console.error("Failed to fetch projects", error);
@@ -61,7 +75,6 @@ const Projects = () => {
     { name: "Movies", icon: <MdMovieCreation /> },
     { name: "Fashion", icon: <FaShirt /> },
   ];
-  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -117,87 +130,69 @@ const Projects = () => {
           </li>
         </ol>
       </nav>
-      <div className="bg-gray-100 py-5">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-12">
-          <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 sm:flex sm:gap-0 justify-center">
-            {categories.map((category) => (
-              <a
-                href="#"
-                key={category.name}
-                className={`px-3 py-2 flex items-center ${
-                  selectedCategory === category.name
-                    ? "text-orange-500"
-                    : "hover:text-orange-500"
-                }`}
-                onClick={() => setSelectedCategory(category.name)}
+
+      {loading ? (
+        <div className="text-center mt-20 flex flex-col items-center">
+          <div className="w-10 h-10 border-4 border-t-orange-500 border-gray-300 rounded-full animate-spin"></div>
+        </div>
+      ) : !isAuthenticated ? (
+        <div className="text-center mt-20 flex flex-col items-center">
+          <h2 className="text-xl font-bold">
+            Please log in to view your projects.
+          </h2>
+          <img
+            className="h-40"
+            src="/images/sleepBear.png"
+            alt="Sleeping Bear"
+          />
+        </div>
+      ) : (
+        <>
+          <div className="bg-gray-100 py-5">
+            <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-12">
+              <div className="grid grid-cols-3 gap-4 text-sm font-medium text-gray-700 sm:flex sm:gap-0 justify-center">
+                {categories.map((category) => (
+                  <a
+                    href="#"
+                    key={category.name}
+                    className={`px-3 py-2 flex items-center ${
+                      selectedCategory === category.name
+                        ? "text-orange-500"
+                        : "hover:text-orange-500"
+                    }`}
+                    onClick={() => setSelectedCategory(category.name)}
+                  >
+                    {category.icon && (
+                      <span className="mr-1">{category.icon}</span>
+                    )}
+                    {category.name}
+                  </a>
+                ))}
+              </div>
+              <form className="max-w-md mx-auto pt-4" onSubmit={handleSearch}>
+                {/* Search input */}
+              </form>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 p-10">
+            {projects.slice(0, 9).map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: index * 0.1 }}
               >
-                {category.icon && <span className="mr-1">{category.icon}</span>}
-                {category.name}
-              </a>
+                <ProjectCard
+                  project={project}
+                  isFavorite={favorites[project.id] || false}
+                  onToggleFavorite={() => toggleFavorite(project.id)}
+                />
+              </motion.div>
             ))}
           </div>
-          <form className="max-w-md mx-auto pt-4" onSubmit={handleSearch}>
-            <label
-              htmlFor="default-search"
-              className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-            >
-              Search
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  className="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                id="default-search"
-                className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search Categories..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                required
-              />
-              <button
-                type="submit"
-                className="text-white absolute end-2.5 bottom-2.5 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
-              >
-                Search
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 p-10">
-        {projects.slice(0, 9).map((project, index) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: index * 0.1 }} // Egyenkénti megjelenés
-          >
-            <ProjectCard
-              project={project}
-              isFavorite={favorites[project.id] || false}
-              onToggleFavorite={() => toggleFavorite(project.id)}
-            />
-          </motion.div>
-        ))}
-      </div>
-
-      <Footer />
+        </>
+      )}
     </>
   );
 };

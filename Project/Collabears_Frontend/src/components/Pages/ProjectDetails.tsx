@@ -10,6 +10,7 @@ import Tasks from "./ProjectDetailsFolder/Tasks";
 import Calendar from "./ProjectDetailsFolder/Calendar";
 import { BsClipboard2DataFill } from "react-icons/bs";
 import Diagram from "./ProjectDetailsFolder/Diagram";
+import TimeLine from "./ProjectDetailsFolder/TimeLine";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState<{ id: number; name: string } | null>(
@@ -168,12 +169,18 @@ const ProjectDetails = () => {
                     </button>
                   </li>
                   <li>
-                    <a
-                      href="#"
-                      className="flex items-center p-5 gap-2 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    <button
+                      onClick={() => setSmallSiteId(1)}
+                      className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
+    ${
+      smallSiteId === 1
+        ? " text-orange-500"
+        : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+    }`}
                     >
-                      <CiViewTimeline /> Timeline
-                    </a>
+                      <CiViewTimeline />
+                      TimeLine
+                    </button>
                   </li>
 
                   <li>
@@ -211,7 +218,7 @@ const ProjectDetails = () => {
           {/* Változó tartalom innen -------------------------------------------------------------------------------------------- */}
 
           {smallSiteId === 0 && <Tasks />}
-          {smallSiteId === 1 && <div>Timeline Component</div>}
+          {smallSiteId === 1 && <TimeLine tasks={[]} />}
           {smallSiteId === 4 && <Calendar />}
           {smallSiteId === 5 && <Diagram />}
         </div>

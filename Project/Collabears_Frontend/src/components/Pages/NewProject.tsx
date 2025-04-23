@@ -33,27 +33,40 @@ const NewProject = () => {
   } = useForm();
 
   const formSubmit: SubmitHandler<any> = async (data) => {
+    const token = localStorage.getItem("auth_token"); // Retrieve token from localStorage
+    if (!token) {
+      console.error("No authentication token found. Please log in again.");
+      alert("You are not logged in. Please log in to create a project.");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:8000/api/projects", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Send the token in Authorization header
         },
         body: JSON.stringify(data),
       });
 
       if (response.ok) {
         setCurrentStep(totalSteps + 1);
-        setCurrentStep(totalSteps + 1);
-        setShowConfetti(true); // C // Navigate to the success screen
+        setShowConfetti(true); // Show success screen
       } else {
         const errorData = await response.json();
         console.error("Error:", errorData);
-        // Handle errors (show an error message to the user)
+        alert(
+          errorData.message || "Failed to create the project. Please try again."
+        );
       }
     } catch (error) {
-      console.error("Error:", error);
-      // Handle network or other errors
+      if (error instanceof Error) {
+        console.error("Error:", error.message);
+      } else {
+        console.error("An unknown error occurred:", error);
+      }
+      alert("An error occurred while creating the project. Please try again.");
     }
   };
   const handleGoToProjects = () => {

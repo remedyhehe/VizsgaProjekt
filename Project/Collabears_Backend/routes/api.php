@@ -34,3 +34,13 @@ Route::middleware('auth:api')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->put('/user', [UserController::class, 'update']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/projects', [ProjectController::class, 'store']);
+    Route::get('/my-projects', [ProjectController::class, 'myProjects']);
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/projects/{id}/invite', [ProjectController::class, 'inviteToProject']);
+    Route::get('/invitations/accept/{token}', [ProjectController::class, 'acceptInvitation']);
+});

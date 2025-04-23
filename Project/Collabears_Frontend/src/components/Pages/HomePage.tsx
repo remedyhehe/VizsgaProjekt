@@ -173,7 +173,7 @@ const HomePage = () => {
             <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 items-center">
               <a
                 href="myprojects"
-                className="px-6 py-3 bg-orange-300 border-b-4 text-black font-medium rounded-lg shadow-md hover:bg-orange-200"
+                className="px-6 py-3 bg-slate-100 border-b-4 text-black font-medium rounded-lg shadow-md hover:bg-slate-200"
               >
                 <i className="fa-solid fa-folder-plus"></i> My Projects
               </a>
@@ -190,7 +190,7 @@ const HomePage = () => {
             <motion.img
               src="/images/hatterke.png"
               alt="Web development illustration"
-              className="rounded-lg w-full md:w-auto max-w-xs md:max-w-md"
+              className="rounded-lg w-full md:w-auto max-w-md md:max-w-lg"
               animate={{ scale: [1, 1.05, 1], rotate: [0, 2, -2, 0] }}
               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
             />
@@ -199,19 +199,14 @@ const HomePage = () => {
 
         <section className="bg-white py-10">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 text-center gap-10 mb-12 fade-in-element">
+            <div className="grid grid-cols-1 md:grid-cols-3 text-center gap-10 mb-12 fade-in-element">
               <div>
                 <Counter targetNumber={projectsCount} />
                 <p className="text-gray-600">
                   <i className="fa-solid fa-play"></i> Started Projects
                 </p>
               </div>
-              <div>
-                <Counter targetNumber={projectsCount} />
-                <p className="text-gray-600">
-                  <i className="fa-solid fa-flag-checkered"></i> Projects done
-                </p>
-              </div>
+
               <div>
                 <Counter targetNumber={projectsCount} />
                 <p className="text-gray-600">

@@ -30,6 +30,7 @@ return new class extends Migration
             $table->boolean('looking_for')->nullable();
             $table->unsignedBigInteger('premium_id')->nullable();
             $table->foreign('premium_id')->references('id')->on('premiums');
+            
             $table->timestamps();
         });
 

@@ -23,24 +23,37 @@ const MembersPage = () => {
   const [open, setOpen] = React.useState(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [inviteEmail, setInviteEmail] = useState("");
 
-  const fetchUsers = async () => {
-    try {
-      const res = await fetch("http://localhost:8000/api/users");
-      const result = await res.json();
-      if (result.status) {
-        setUsers(result.data); // Frissíti a users állapotot
-      } else {
-        console.error("Error fetching users:", result.message);
-      }
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
+  const [user, setUser] = useState({
+    name: "",
+    profile_picture: "",
+  });
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/user", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
+        });
+
+        if (!response.ok) throw new Error("User fetch failed");
+
+        const data = await response.json();
+        setUser({
+          name: data.name || "",
+          profile_picture: data.profile_picture || "",
+        });
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []); // Üres lista biztosítja, hogy csak egyszer fusson le
 
   const filteredUsers = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -70,6 +83,30 @@ const MembersPage = () => {
     const storedName = localStorage.getItem("user_name");
     setUserName(storedName);
   }, []);
+  const handleInvite = async (email: string) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/projects/${id}/invite`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.status) {
+        alert("Invitation sent successfully.");
+      } else {
+        alert(result.message || "Failed to send invitation.");
+      }
+    } catch (error) {
+      console.error("Error sending invitation:", error);
+    }
+  };
 
   if (!project)
     return (
@@ -321,6 +358,19 @@ const MembersPage = () => {
                                 </div>
                               ))}
                             </div>
+                            <input
+                              type="email"
+                              placeholder="Enter email to invite"
+                              value={inviteEmail}
+                              onChange={(e) => setInviteEmail(e.target.value)}
+                              className="block w-full p-4 ps-10 text-sm text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-100 dark:text-black"
+                            />
+                            <button
+                              onClick={() => handleInvite(inviteEmail)}
+                              className="px-3 py-1 text-white bg-orange-600 rounded-md hover:bg-orange-700"
+                            >
+                              Send Invite
+                            </button>
                           </div>
                         </div>
                       )}
@@ -404,13 +454,12 @@ const MembersPage = () => {
                         <td className="p-4 border-b border-blue-gray-50">
                           <div className="flex items-center gap-3">
                             <img
-                              src="../images/avatar.png"
-                              alt="John Michael"
+                              src={user.profile_picture || "/images/avatar.png"}
                               className="relative inline-block h-9 w-9 !rounded-full object-cover object-center"
                             />
                             <div className="flex flex-col">
                               <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                                {userName}
+                                {user.name}
                               </p>
                             </div>
                           </div>
