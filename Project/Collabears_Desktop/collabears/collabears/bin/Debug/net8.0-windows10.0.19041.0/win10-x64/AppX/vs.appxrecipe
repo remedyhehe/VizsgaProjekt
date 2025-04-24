@@ -29,25 +29,25 @@
     <AppXManifest Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2025-04-22T06:03:57.352</Modified>
+      <Modified>2025-04-24T08:34:50.212</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2025-04-07T05:44:35.089</Modified>
+      <Modified>2025-04-24T08:25:33.770</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.runtimeconfig.json">
       <PackagePath>collabears.runtimeconfig.json</PackagePath>
-      <Modified>2025-04-04T08:14:45.665</Modified>
+      <Modified>2025-04-24T08:09:50.870</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.dll">
       <PackagePath>collabears.dll</PackagePath>
-      <Modified>2025-04-22T06:03:57.129</Modified>
+      <Modified>2025-04-24T08:34:49.948</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>collabears.exe</PackagePath>
-      <Modified>2025-04-22T06:03:57.132</Modified>
+      <Modified>2025-04-24T08:34:49.951</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -55,23 +55,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-100.png">
       <PackagePath>splashSplashScreen.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:14:19.327</Modified>
+      <Modified>2025-04-24T08:07:42.718</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-125.png">
       <PackagePath>splashSplashScreen.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:14:19.336</Modified>
+      <Modified>2025-04-24T08:07:42.726</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-150.png">
       <PackagePath>splashSplashScreen.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:14:19.348</Modified>
+      <Modified>2025-04-24T08:07:42.736</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-200.png">
       <PackagePath>splashSplashScreen.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:14:19.366</Modified>
+      <Modified>2025-04-24T08:07:42.755</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\sp\splashSplashScreen.scale-400.png">
       <PackagePath>splashSplashScreen.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:14:19.436</Modified>
+      <Modified>2025-04-24T08:07:42.823</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\f\OpenSans-Regular.ttf">
       <PackagePath>OpenSans-Regular.ttf</PackagePath>
@@ -83,215 +83,215 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appicon.ico">
       <PackagePath>appicon.ico</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-100.png">
       <PackagePath>appiconLargeTile.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-125.png">
       <PackagePath>appiconLargeTile.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-150.png">
       <PackagePath>appiconLargeTile.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.778</Modified>
+      <Modified>2025-04-24T08:07:43.680</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-200.png">
       <PackagePath>appiconLargeTile.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.778</Modified>
+      <Modified>2025-04-24T08:07:43.680</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLargeTile.scale-400.png">
       <PackagePath>appiconLargeTile.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.778</Modified>
+      <Modified>2025-04-24T08:07:43.680</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-16.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-24.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-256.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-32.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-lightunplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-lightunplated_targetsize-48.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-16.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-16.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-24.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-24.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-256.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-256.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-32.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-32.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.altform-unplated_targetsize-48.png">
       <PackagePath>appiconLogo.altform-unplated_targetsize-48.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.782</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-100.png">
       <PackagePath>appiconLogo.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-125.png">
       <PackagePath>appiconLogo.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-150.png">
       <PackagePath>appiconLogo.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-200.png">
       <PackagePath>appiconLogo.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.scale-400.png">
       <PackagePath>appiconLogo.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-16.png">
       <PackagePath>appiconLogo.targetsize-16.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-24.png">
       <PackagePath>appiconLogo.targetsize-24.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-256.png">
       <PackagePath>appiconLogo.targetsize-256.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-32.png">
       <PackagePath>appiconLogo.targetsize-32.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconLogo.targetsize-48.png">
       <PackagePath>appiconLogo.targetsize-48.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.783</Modified>
+      <Modified>2025-04-24T08:07:43.685</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-100.png">
       <PackagePath>appiconMediumTile.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.682</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-125.png">
       <PackagePath>appiconMediumTile.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.682</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-150.png">
       <PackagePath>appiconMediumTile.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.682</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-200.png">
       <PackagePath>appiconMediumTile.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.682</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconMediumTile.scale-400.png">
       <PackagePath>appiconMediumTile.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-100.png">
       <PackagePath>appiconSmallTile.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-125.png">
       <PackagePath>appiconSmallTile.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-150.png">
       <PackagePath>appiconSmallTile.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-200.png">
       <PackagePath>appiconSmallTile.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.682</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconSmallTile.scale-400.png">
       <PackagePath>appiconSmallTile.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.780</Modified>
+      <Modified>2025-04-24T08:07:43.682</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-100.png">
       <PackagePath>appiconStoreLogo.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.684</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-125.png">
       <PackagePath>appiconStoreLogo.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-150.png">
       <PackagePath>appiconStoreLogo.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-200.png">
       <PackagePath>appiconStoreLogo.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconStoreLogo.scale-400.png">
       <PackagePath>appiconStoreLogo.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.781</Modified>
+      <Modified>2025-04-24T08:07:43.683</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-100.png">
       <PackagePath>appiconWideTile.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-125.png">
       <PackagePath>appiconWideTile.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-150.png">
       <PackagePath>appiconWideTile.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-200.png">
       <PackagePath>appiconWideTile.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
       <PackagePath>appiconWideTile.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.779</Modified>
+      <Modified>2025-04-24T08:07:43.681</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-100.png">
       <PackagePath>dotnet_bot.scale-100.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.687</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-125.png">
       <PackagePath>dotnet_bot.scale-125.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.687</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png">
       <PackagePath>dotnet_bot.scale-150.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.687</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png">
       <PackagePath>dotnet_bot.scale-200.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png">
       <PackagePath>dotnet_bot.scale-400.png</PackagePath>
-      <Modified>2025-04-04T08:16:45.784</Modified>
+      <Modified>2025-04-24T08:07:43.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\maci.scale-100.PNG">
       <PackagePath>maci.scale-100.PNG</PackagePath>
-      <Modified>2025-04-04T08:16:45.778</Modified>
+      <Modified>2025-04-24T08:07:43.680</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.deps.json">
       <PackagePath>collabears.deps.json</PackagePath>
-      <Modified>2025-04-07T05:44:34.912</Modified>
+      <Modified>2025-04-24T08:25:33.628</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\petiv\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.54\lib\net8.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>

@@ -1,3 +1,5 @@
+using collabears.ViewModel;
+
 namespace collabears.Views
 {
     public partial class DetailPage : ContentPage
@@ -5,6 +7,7 @@ namespace collabears.Views
         public DetailPage()
         {
             InitializeComponent();
+            BindingContext = new UserViewModel();
         }
     }
 }

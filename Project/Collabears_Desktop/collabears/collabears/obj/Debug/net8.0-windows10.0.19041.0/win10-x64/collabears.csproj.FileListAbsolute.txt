@@ -149,6 +149,7 @@ C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collab
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-150.png
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-200.png
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\dotnet_bot.scale-400.png
+C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\maci.scale-100.PNG
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\mauiimage.stamp
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\mauiimage.outputs
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.AssemblyInfoInputs.cache
@@ -178,4 +179,3 @@ C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collab
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
 C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\ProjectArchitectures.txt
-C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\resizetizer\r\maci.scale-100.PNG

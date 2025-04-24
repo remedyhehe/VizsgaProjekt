@@ -3,24 +3,28 @@
   "WorkspaceRootPath": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\detailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\detailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\viewmodel\\userviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\viewmodel\\userviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\models\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\models\\userresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\detailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\detailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\detailpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\detailpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\viewmodel\\detailviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\viewmodel\\detailviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\viewmodel\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|solutionrelative:collabears\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1D2C89D0-B00B-4E02-A7E9-89CBE28FE43E}|collabears\\collabears.csproj|c:\\programs\\xampp\\program\\htdocs\\vizsgaprojekt\\project\\collabears_desktop\\collabears\\collabears\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -38,17 +42,56 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserResponse.cs",
+              "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\Models\\UserResponse.cs",
+              "RelativeDocumentMoniker": "collabears\\Models\\UserResponse.cs",
+              "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\Models\\UserResponse.cs",
+              "RelativeToolTip": "collabears\\Models\\UserResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T08:27:39.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\Models\\User.cs",
+              "RelativeDocumentMoniker": "collabears\\Models\\User.cs",
+              "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\Models\\User.cs",
+              "RelativeToolTip": "collabears\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T08:23:52.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "UserViewModel.cs",
+              "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\ViewModel\\UserViewModel.cs",
+              "RelativeDocumentMoniker": "collabears\\ViewModel\\UserViewModel.cs",
+              "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\ViewModel\\UserViewModel.cs",
+              "RelativeToolTip": "collabears\\ViewModel\\UserViewModel.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAwwCAAAABwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T08:23:10.9Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "DetailPage.xaml.cs",
               "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\DetailPage.xaml.cs",
               "RelativeDocumentMoniker": "collabears\\DetailPage.xaml.cs",
               "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\DetailPage.xaml.cs",
               "RelativeToolTip": "collabears\\DetailPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-22T05:34:59.238Z",
               "EditorCaption": ""
@@ -56,45 +99,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "DetailViewModel.cs",
-              "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\ViewModel\\DetailViewModel.cs",
-              "RelativeDocumentMoniker": "collabears\\ViewModel\\DetailViewModel.cs",
-              "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\ViewModel\\DetailViewModel.cs",
-              "RelativeToolTip": "collabears\\ViewModel\\DetailViewModel.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAApwFkAAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T05:42:33.452Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainViewModel.cs",
-              "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\ViewModel\\MainViewModel.cs",
-              "RelativeDocumentMoniker": "collabears\\ViewModel\\MainViewModel.cs",
-              "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\ViewModel\\MainViewModel.cs",
-              "RelativeToolTip": "collabears\\ViewModel\\MainViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T05:42:20.312Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "DetailPage.xaml",
               "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\DetailPage.xaml",
               "RelativeDocumentMoniker": "collabears\\DetailPage.xaml",
               "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\DetailPage.xaml",
               "RelativeToolTip": "collabears\\DetailPage.xaml",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-04-07T05:41:18.147Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Colors.xaml",
               "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\Resources\\Styles\\Colors.xaml",
               "RelativeDocumentMoniker": "collabears\\Resources\\Styles\\Colors.xaml",
@@ -106,26 +123,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "MainPage.xaml",
               "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\MainPage.xaml",
               "RelativeDocumentMoniker": "collabears\\MainPage.xaml",
               "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\MainPage.xaml",
               "RelativeToolTip": "collabears\\MainPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAkwDcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-04-04T08:16:05.139Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "MainPage.xaml.cs",
               "DocumentMoniker": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\MainPage.xaml.cs",
               "RelativeDocumentMoniker": "collabears\\MainPage.xaml.cs",
               "ToolTip": "C:\\Programs\\Xampp\\program\\htdocs\\VizsgaProjekt\\Project\\Collabears_Desktop\\collabears\\collabears\\MainPage.xaml.cs",
               "RelativeToolTip": "collabears\\MainPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAIwKIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-04T08:15:59.821Z",
               "EditorCaption": ""
