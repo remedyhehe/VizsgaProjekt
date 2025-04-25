@@ -57,3 +57,9 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = collabears.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Programs/Xampp/program/htdocs/VizsgaProjekt/Project/Collabears_Desktop/collabears/collabears/UserDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = collabears.UserDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = UserDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = UserDetailPage.xaml

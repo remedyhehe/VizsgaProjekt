@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="collabears.UserDetailPage"
+             Title="UserDetailPage">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <Label Text="{Binding Name}" FontSize="24" FontAttributes="Bold"/>
+            <Label Text="{Binding Email}" />
+            <Label Text="{Binding First_Name}" />
+            <Label Text="{Binding Last_Name}" />
+            <Label Text="{Binding Bio}" />
+            <Label Text="{Binding Company}" />
+            <Label Text="{Binding Country}" />
+            <Label Text="{Binding Phone_Number}" />
+            <Image Source="{Binding Profile_Picture}" HeightRequest="100" WidthRequest="100"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

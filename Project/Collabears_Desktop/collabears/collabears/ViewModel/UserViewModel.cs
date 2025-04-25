@@ -57,9 +57,23 @@ namespace collabears.ViewModel
             }
         }
 
-        private void OnUserAction(collabears.Models.User user) // Fully qualify the User type
+        private async void OnUserAction(collabears.Models.User user)
         {
+            if (user == null)
+            {
+                Debug.WriteLine(">> User is null, cannot navigate to details page.");
+                return;
+            }
+
             Debug.WriteLine($">> Action triggered for user: {user.Name}");
+
+            if (Application.Current?.MainPage == null)
+            {
+                Debug.WriteLine(">> MainPage is null, cannot navigate.");
+                return;
+            }
+
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.UserDetailPage(user));
         }
     }
 }
