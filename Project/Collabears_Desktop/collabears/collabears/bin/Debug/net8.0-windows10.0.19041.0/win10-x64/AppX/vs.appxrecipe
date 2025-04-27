@@ -29,13 +29,13 @@
     <AppXManifest Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2025-04-25T07:19:52.658</Modified>
+      <Modified>2025-04-27T07:18:18.285</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2025-04-25T07:19:52.543</Modified>
+      <Modified>2025-04-27T07:03:02.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.runtimeconfig.json">
       <PackagePath>collabears.runtimeconfig.json</PackagePath>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.dll">
       <PackagePath>collabears.dll</PackagePath>
-      <Modified>2025-04-25T07:19:51.682</Modified>
+      <Modified>2025-04-27T07:18:18.094</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>collabears.exe</PackagePath>
-      <Modified>2025-04-25T07:19:51.712</Modified>
+      <Modified>2025-04-27T07:18:18.096</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -291,7 +291,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.deps.json">
       <PackagePath>collabears.deps.json</PackagePath>
-      <Modified>2025-04-25T07:19:52.362</Modified>
+      <Modified>2025-04-27T07:03:01.975</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\petiv\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.54\lib\net8.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>

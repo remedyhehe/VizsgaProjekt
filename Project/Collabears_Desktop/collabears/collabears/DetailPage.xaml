@@ -45,24 +45,33 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center">           
 
+                <ScrollView>
                 <VerticalStackLayout
                     Spacing="30"
-                    BackgroundColor="Blue"
+                    BackgroundColor="#404040"
                     MinimumWidthRequest="600">
-
+                    
                     <Label
                         Text="Users"
-                        FontSize="Large"/>
+                        FontSize="Large"
+                        HorizontalOptions="Center"/>
 
                     <!-- CollectionView to display users -->
+                        
                     <CollectionView ItemsSource="{Binding Users}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Orientation="Horizontal" Padding="10">
-                                    <Label Text="{Binding Name}" VerticalOptions="Center" />
-                                    <Button Text="Action"
+                                    <HorizontalStackLayout HorizontalOptions="Fill" Spacing="30">
+                                        
+                                    <Label Text="{Binding Id}" VerticalOptions="Center" HorizontalOptions="Start" />
+                                    <Label Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Start" />
+                                        
+                                    <Button Text="View"
                                             Command="{Binding BindingContext.UserActionCommand, Source={x:Reference Name=Page}}"
-                                            CommandParameter="{Binding .}" />
+                                            CommandParameter="{Binding .}"/>
+                                    </HorizontalStackLayout>
+                                    
                                 </StackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
@@ -70,6 +79,7 @@
 
 
                 </VerticalStackLayout>
+                </ScrollView>
                 
             </Frame>
                 
