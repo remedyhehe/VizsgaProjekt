@@ -44,3 +44,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/projects/{id}/invite', [ProjectController::class, 'inviteToProject']);
     Route::get('/invitations/accept/{token}', [ProjectController::class, 'acceptInvitation']);
 });
+
+Route::post('/projects/{id}/add-member', [ProjectController::class, 'addMember']);
+Route::get('/projects/{id}/members', [ProjectController::class, 'getMembers']);

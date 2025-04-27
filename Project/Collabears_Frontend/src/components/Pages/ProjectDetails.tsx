@@ -9,8 +9,10 @@ import Sidebar from "../Layouts/Sidebar";
 import Tasks from "./ProjectDetailsFolder/Tasks";
 import Calendar from "./ProjectDetailsFolder/Calendar";
 import { BsClipboard2DataFill } from "react-icons/bs";
+import { FiLock } from "react-icons/fi";
 import Diagram from "./ProjectDetailsFolder/Diagram";
 import TimeLine from "./ProjectDetailsFolder/TimeLine";
+import { toast } from "react-toastify";
 
 const ProjectDetails = () => {
   const [project, setProject] = useState<{ id: number; name: string } | null>(
@@ -168,20 +170,6 @@ const ProjectDetails = () => {
                       Board
                     </button>
                   </li>
-                  <li>
-                    <button
-                      onClick={() => setSmallSiteId(1)}
-                      className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
-    ${
-      smallSiteId === 1
-        ? " text-orange-500"
-        : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-    }`}
-                    >
-                      <CiViewTimeline />
-                      TimeLine
-                    </button>
-                  </li>
 
                   <li>
                     <button
@@ -199,16 +187,28 @@ const ProjectDetails = () => {
                   </li>
                   <li>
                     <button
-                      onClick={() => setSmallSiteId(5)}
-                      className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
-                        ${
-                          smallSiteId === 5
-                            ? " text-orange-500"
-                            : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                        }`}
+                      onClick={() => {
+                        toast.error(
+                          "The diagram feature is only available in the PRO version."
+                        );
+                      }}
+                      className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0 text-gray-400 hover:text-gray-600`}
                     >
-                      <BsClipboard2DataFill />
+                      <FiLock />
                       Diagram
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        toast.error(
+                          "The timeline feature is only available in the PRO version."
+                        );
+                      }}
+                      className="flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0 text-gray-400 hover:text-gray-600"
+                    >
+                      <FiLock />
+                      TimeLine
                     </button>
                   </li>
                 </ul>

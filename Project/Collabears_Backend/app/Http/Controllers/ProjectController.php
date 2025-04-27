@@ -21,62 +21,40 @@ class ProjectController extends Controller
      * Display a listing of the resource.
      */
 
-     public function inviteToProject(Request $request, $projectId)
-{
-    try {
-        $user = Auth::user(); // Get the logged-in user
-        if (!$user) {
-            return response()->json(['status' => false, 'message' => 'User is not authenticated.'], 401);
-        }
+      public function getMembers($id)
+    {
+        $project = Project::find($id);
 
-        $project = Project::find($projectId);
         if (!$project) {
-            return response()->json(['status' => false, 'message' => 'Project not found.'], 404);
+            return response()->json(['status' => false, 'message' => 'Project not found'], 404);
         }
 
-        $request->validate(['email' => 'required|email']);
+        $members = $project->users()->get(); // Fetch users associated with the project
 
-        $token = uniqid(); // Generate a unique token for the invitation
-        DB::table('invitations')->insert([
-            'project_id' => $project->id,
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => now(),
-        ]);
-
-        // Send email invitation
-        Mail::to($request->email)->send(new ProjectInvitation($project, $token));
-
-        return response()->json(['status' => true, 'message' => 'Invitation sent successfully.']);
-    } catch (\Throwable $e) {
-        // Log the exact error
-        Log::error('Error inviting user to project: ' . $e->getMessage());
-        return response()->json(['status' => false, 'message' => 'Failed to send invitation.'], 500);
+        return response()->json(['status' => true, 'data' => $members]);
     }
-}
-     public function acceptInvitation($token)
-     {
-         $invitation = DB::table('invitations')->where('token', $token)->first();
-         if (!$invitation || $invitation->status !== 'pending') {
-             return redirect('/')->with('error', 'Invalid or expired invitation.');
-         }
- 
-         $user = Auth::user();
-         if (!$user) {
-             return redirect('/register')->with('message', 'Please register before accepting the invitation.');
-         }
- 
-         // Add user to the project
-         DB::table('workers')->insert([
-             'user_id' => $user->id,
-             'project_id' => $invitation->project_id,
-         ]);
- 
-         // Mark the invitation as accepted
-         DB::table('invitations')->where('id', $invitation->id)->update(['status' => 'accepted']);
- 
-         return redirect('/projects/' . $invitation->project_id)->with('message', 'You have joined the project.');
-     }
+
+
+     public function addMember(Request $request, $id)
+    {
+        $project = Project::find($id);
+
+        if (!$project) {
+            return response()->json(['status' => false, 'message' => 'Project not found'], 404);
+        }
+
+        $userId = $request->input('user_id');
+
+        if (!$userId || !User::find($userId)) {
+            return response()->json(['status' => false, 'message' => 'Invalid user ID'], 400);
+        }
+
+        // Attach the user to the project
+        $project->users()->syncWithoutDetaching([$userId]);
+
+        return response()->json(['status' => true, 'message' => 'User added to the project successfully']);
+    }
+   
     public function index()
     {
         $projects = Project::all(); // `get()` helyett `all()`, így biztosan tömböt kapunk

@@ -39,5 +39,6 @@ export interface ITask {
   end_date?: string;
   assigned_user?: string;
   due_date?: string; 
-  status?: string; // Ha van ilyen mező az API-ban
+  status?: string;
+  comments?: string[];  // Ha van ilyen mező az API-ban
 }

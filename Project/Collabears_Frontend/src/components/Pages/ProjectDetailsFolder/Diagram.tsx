@@ -14,7 +14,7 @@ const Diagram = () => {
   const totalTasks = taskData.todo + taskData.inProgress + taskData.done;
 
   const chartData = {
-    labels: ["To do", "In progress", "Done"],
+    labels: ["Done", "Not Done"],
     datasets: [
       {
         label: "Tasks",
@@ -51,7 +51,7 @@ const Diagram = () => {
                   {taskData.todo}
                 </dt>
                 <dd className="text-orange-600 dark:text-orange-300 text-sm font-medium">
-                  To do
+                  Done
                 </dd>
               </dl>
               <dl className="bg-teal-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
@@ -59,15 +59,7 @@ const Diagram = () => {
                   {taskData.inProgress}
                 </dt>
                 <dd className="text-teal-600 dark:text-teal-300 text-sm font-medium">
-                  In progress
-                </dd>
-              </dl>
-              <dl className="bg-blue-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
-                <dt className="w-8 h-8 rounded-full bg-blue-100 dark:bg-gray-500 text-blue-600 dark:text-blue-300 text-sm font-medium flex items-center justify-center mb-1">
-                  {taskData.done}
-                </dt>
-                <dd className="text-blue-600 dark:text-blue-300 text-sm font-medium">
-                  Done
+                  Not done
                 </dd>
               </dl>
             </div>

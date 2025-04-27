@@ -11,39 +11,59 @@ interface TimeLineProps {
 }
 
 const TimeLine: React.FC<TimeLineProps> = ({ tasks }) => {
-  // Rendezés határidő szerint
-  const sortedTasks = tasks
-    .filter((task) => task.due_date) // Csak azok a feladatok, amelyeknek van határideje
-    .sort((a, b) => {
-      const dateA = new Date(a.due_date as string);
-      const dateB = new Date(b.due_date as string);
-      return dateA.getTime() - dateB.getTime();
-    });
+  // Csak azok a feladatok, amelyeknek van határideje
+  const tasksWithDueDates = tasks.filter((task) => task.due_date);
+
+  // Feladatok csoportosítása dátum szerint
+  const groupedTasks = tasksWithDueDates.reduce(
+    (acc: Record<string, ITask[]>, task) => {
+      const date = task.due_date as string;
+      if (!acc[date]) {
+        acc[date] = [];
+      }
+      acc[date].push(task);
+      return acc;
+    },
+    {}
+  );
+
+  // A dátumok rendezése
+  const sortedDates = Object.keys(groupedTasks).sort(
+    (a, b) => new Date(a).getTime() - new Date(b).getTime()
+  );
 
   return (
     <div className="p-5 bg-gray-900 text-white flex justify-center min-h-screen">
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-7xl">
         <h2 className="text-2xl font-bold mb-6 text-center">Task Timeline</h2>
-        <div className="relative border-l border-gray-700">
-          {sortedTasks.map((task, index) => (
-            <div key={task.id} className="mb-10 ml-6">
-              <span className="absolute flex items-center justify-center w-8 h-8 bg-blue-500 rounded-full -left-4 ring-8 ring-gray-900">
-                {index + 1}
-              </span>
-              <div className="p-4 bg-gray-800 rounded-lg shadow-md">
-                <h3 className="text-lg font-semibold">{task.name}</h3>
-                <time className="block mb-2 text-sm text-gray-400">
-                  Due: {task.due_date}
-                </time>
-                <p className="text-sm text-gray-300">
-                  This task is scheduled to be completed by the due date.
-                </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sortedDates.map((date) => (
+            <div key={date} className="bg-gray-800 p-4 rounded-lg shadow-md">
+              <h3 className="text-lg font-semibold mb-2">
+                {new Date(date).toLocaleDateString("hu-HU", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </h3>
+              <div className="space-y-2">
+                {groupedTasks[date].map((task) => (
+                  <div
+                    key={task.id}
+                    className="bg-gray-700 p-3 rounded-md shadow-sm"
+                  >
+                    <h4 className="text-md font-medium">{task.name}</h4>
+                    <p className="text-sm text-gray-400">
+                      Határidő: {task.due_date}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
-          {sortedTasks.length === 0 && (
+          {sortedDates.length === 0 && (
             <p className="text-center text-gray-400">
-              No tasks with due dates available.
+              Nincs határidővel rendelkező feladat.
             </p>
           )}
         </div>

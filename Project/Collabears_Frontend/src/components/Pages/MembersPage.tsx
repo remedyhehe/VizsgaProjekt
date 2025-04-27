@@ -1,5 +1,3 @@
-/** @format */
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
@@ -7,9 +5,13 @@ import ReactCountryFlag from "react-country-flag";
 import { FaRegEdit } from "react-icons/fa";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
+
 interface IUser {
+  id: number; // Added id property
   name: string;
   email: string;
+  profile_picture?: string; // Optional property for profile picture
+  country?: string; // Optional property for country
 }
 
 const MembersPage = () => {
@@ -20,43 +22,50 @@ const MembersPage = () => {
 
   const [project, setProject] = useState<Project | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [open, setOpen] = React.useState(false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [inviteEmail, setInviteEmail] = useState("");
+  const [projectMembers, setProjectMembers] = useState<IUser[]>([]);
 
-  const [user, setUser] = useState({
-    name: "",
-    profile_picture: "",
-  });
+  const fetchUsers = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/users");
+      const result = await res.json();
+      if (result.status) {
+        setUsers(result.data); // Fetch all users from the database
+      } else {
+        console.error("Error fetching users:", result.message);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+  const fetchProjectMembers = async () => {
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/projects/${id}/members`
+      );
+      const result = await res.json();
+      if (result.status) {
+        setProjectMembers(result.data); // Set only project members
+      } else {
+        console.error("Error fetching project members:", result.message);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch("http://localhost:8000/api/user", {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          },
-        });
+    fetchUsers();
+    fetchProjectMembers(); // Fetch project members when the component mounts
+  }, []);
 
-        if (!response.ok) throw new Error("User fetch failed");
-
-        const data = await response.json();
-        setUser({
-          name: data.name || "",
-          profile_picture: data.profile_picture || "",
-        });
-      } catch (error) {
-        console.error("Error fetching user:", error);
-      }
-    };
-
-    fetchUser();
-  }, []); // Üres lista biztosítja, hogy csak egyszer fusson le
-
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleOpen = () => setOpen(!open);
@@ -79,32 +88,41 @@ const MembersPage = () => {
 
     fetchProjects();
   }, [id]);
+
   useEffect(() => {
     const storedName = localStorage.getItem("user_name");
     setUserName(storedName);
   }, []);
-  const handleInvite = async (email: string) => {
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    setEmail(storedEmail);
+  }, []);
+
+  const handleAddMember = async (userId: number) => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/projects/${id}/invite`,
+      const res = await fetch(
+        `http://localhost:8000/api/projects/${id}/add-member`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ user_id: userId }),
         }
       );
 
-      const result = await response.json();
+      const result = await res.json();
+
       if (result.status) {
-        alert("Invitation sent successfully.");
+        alert("User added to the project successfully!");
+        setOpen(false); // Close the modal
+        fetchUsers(); // Refresh the user list if necessary
       } else {
-        alert(result.message || "Failed to send invitation.");
+        console.error("Error adding user to project:", result.message);
       }
     } catch (error) {
-      console.error("Error sending invitation:", error);
+      console.error("Error:", error);
     }
   };
 
@@ -139,7 +157,6 @@ const MembersPage = () => {
         </div>
       </div>
     );
-
   return (
     <>
       <div className="flex h-screen">
@@ -147,11 +164,11 @@ const MembersPage = () => {
         <Sidebar />
 
         {/* Main Content */}
-        <div className="flex-1 overflow-auto ">
+        <div className="flex-1 overflow-auto">
           {/* Navbar */}
           <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
             <nav
-              className="flex justify-start ml-10 bg-gray-900 text-white p-5"
+              className="flex justify-start ml-5 bg-gray-900 text-white p-5"
               aria-label="Breadcrumb"
             >
               <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -249,7 +266,7 @@ const MembersPage = () => {
 
               <div className="relative flex flex-col w-full h-full text-white p-5 mt-5 bg-gray-800 shadow-md rounded-xl bg-clip-border">
                 <div className="relative mx-4 mt-4 overflow-hidden text-white bg-gray-800 rounded-none bg-clip-border">
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
+                  <div className="flex items-center justify-between gap-8 mb-8">
                     <div>
                       <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                         Members list
@@ -258,7 +275,7 @@ const MembersPage = () => {
                         See information about all members
                       </p>
                     </div>
-                    <div className="flex flex-col gap-2 sm:flex-row">
+                    <div className="flex flex-col gap-2 shrink-0 sm:flex-row">
                       <button className="text-zinc-500 hover:text-orange-600 backdrop-blur-lg bg-gradient-to-tr from-transparent via-[rgba(121,121,121,0.16)] to-transparent rounded-md py-2 px-6 shadow hover:shadow-orange-600 duration-700">
                         View All
                       </button>
@@ -281,24 +298,17 @@ const MembersPage = () => {
                       </button>
                       {open && (
                         <div className="fixed inset-0 z-50 flex items-center justify-center bg-transparent bg-opacity-50">
-                          <div className="relative w-full max-w-lg p-6 bg-gray-700 rounded-lg shadow-lg">
-                            <button
-                              onClick={handleOpen} // Bezáráskor is meghívja a handleOpen-t
-                              className="px-4 py-2 text-white bg-slate-900 rounded-md flex justify-items-center absolute top-5 right-5"
-                            >
-                              <IoMdClose className="text-red-500" />
-                            </button>
+                          <div className="relative w-2/5 p-6 bg-gray-700 rounded-lg shadow-lg">
                             <div className="flex justify-between p-5">
-                              <div className="flex flex-col gap-3">
-                                <h2 className="text-xl font-semibold text-white">
-                                  Add New Member
-                                </h2>
-                                <p>
-                                  Discover the right people for your team.
-                                  Invite members who match your project’s needs
-                                  and collaborate efficiently!"
-                                </p>
-                              </div>
+                              <h2 className="text-xl font-semibold text-white">
+                                Add New Member
+                              </h2>
+                              <button
+                                onClick={handleOpen} // Bezáráskor is meghívja a handleOpen-t
+                                className="px-4 py-2 text-white bg-slate-900 rounded-md"
+                              >
+                                <IoMdClose className="text-red-500" />
+                              </button>
                             </div>
 
                             <form className="max-w-md mx-auto mt-5">
@@ -337,40 +347,39 @@ const MembersPage = () => {
                                   }
                                   required
                                 />
+                                <button
+                                  type="submit"
+                                  className="text-white absolute end-2.5 bottom-2.5 bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                                >
+                                  Search
+                                </button>
                               </div>
                             </form>
                             <div className="mt-4 max-h-60 overflow-y-auto">
                               {filteredUsers.map((user) => (
                                 <div
                                   key={user.email}
-                                  className="p-3 border-b border-gray-600 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center"
+                                  className="p-3 border-b border-gray-600 text-white flex justify-between items-center"
                                 >
-                                  <span className="flex items-center gap-3 mb-2 sm:mb-0">
+                                  <span className="flex items-center gap-3">
                                     <img
-                                      src="../images/avatar.png"
-                                      className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800"
+                                      src={
+                                        user.profile_picture ||
+                                        "/images/avatar.png"
+                                      }
+                                      className="h-10"
                                     />
-                                    {user.name}
+                                    {user.name} ({user.email})
                                   </span>
-                                  <button className="px-3 py-1 text-white bg-orange-600 rounded-md hover:bg-orange-700">
+                                  <button
+                                    onClick={() => handleAddMember(user.id)} // Pass the user's ID
+                                    className="px-3 py-1 text-white bg-orange-600 rounded-md hover:bg-orange-700"
+                                  >
                                     Add
                                   </button>
                                 </div>
                               ))}
                             </div>
-                            <input
-                              type="email"
-                              placeholder="Enter email to invite"
-                              value={inviteEmail}
-                              onChange={(e) => setInviteEmail(e.target.value)}
-                              className="block w-full p-4 ps-10 text-sm text-gray-900 rounded-lg bg-gray-50 dark:bg-gray-100 dark:text-black"
-                            />
-                            <button
-                              onClick={() => handleInvite(inviteEmail)}
-                              className="px-3 py-1 text-white bg-orange-600 rounded-md hover:bg-orange-700"
-                            >
-                              Send Invite
-                            </button>
                           </div>
                         </div>
                       )}
@@ -450,52 +459,44 @@ const MembersPage = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <div className="flex items-center gap-3">
-                            <img
-                              src={user.profile_picture || "/images/avatar.png"}
-                              className="relative inline-block h-9 w-9 !rounded-full object-cover object-center"
-                            />
-                            <div className="flex flex-col">
-                              <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                                {user.name}
-                              </p>
+                      {projectMembers.map((member) => (
+                        <tr key={member.id}>
+                          <td className="p-4 border-b border-blue-gray-50">
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={
+                                  member.profile_picture || "/images/avatar.png"
+                                }
+                                alt={member.name}
+                                className="h-9 w-9 rounded-full object-cover"
+                              />
+                              <div>
+                                <p className="text-sm">{member.name}</p>
+                                <p className="text-sm text-gray-500">
+                                  {member.email}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <div className="w-max">
+                          </td>
+                          <td className="p-4 border-b border-blue-gray-50">
                             <ReactCountryFlag
-                              countryCode="HU"
+                              countryCode={member.country || "HU"}
                               svg
                               style={{
                                 width: "2em",
                                 height: "2em",
                               }}
-                              title="HU"
+                              title={member.country || "Unknown"}
                             />
-                          </div>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <div className="flex flex-col">
-                            <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                              Owner
-                            </p>
-                          </div>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <p className="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
+                          </td>
+                          <td className="p-4 border-b border-blue-gray-50">
+                            Member
+                          </td>
+                          <td className="p-4 border-b border-blue-gray-50">
                             -
-                          </p>
-                        </td>
-                        <td className="p-4 border-b border-blue-gray-50">
-                          <a href="#">
-                            <FaRegEdit className="text-xl text-yellow-500" />
-                          </a>
-                        </td>
-                      </tr>
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

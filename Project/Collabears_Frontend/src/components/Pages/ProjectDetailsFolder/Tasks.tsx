@@ -52,6 +52,39 @@ const Tasks = () => {
   const [showNotificationPanel, setShowNotificationPanel] = useState(false);
   const [notifications, setNotifications] = useState<string[]>([]);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [user, setUser] = useState({
+    name: "",
+    profile_picture: "",
+  });
+
+  const [comments, setComments] = useState<{
+    [key: number]: { profile_picture: string; name: string; text: string }[];
+  }>({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/user", {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
+        });
+
+        if (!response.ok) throw new Error("User fetch failed");
+
+        const data = await response.json();
+        setUser({
+          name: data.name || "",
+          profile_picture: data.profile_picture || "",
+        });
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/columns?project_id=${projectId}`)
@@ -431,6 +464,21 @@ const Tasks = () => {
       toast.error("Failed to delete task. Please try again.");
     }
   };
+  const handleAddComment = (taskId: number, comment: string) => {
+    if (!comment.trim()) return;
+
+    // Assuming you have a comments state to store comments for each task
+    setTasks((prev) => ({
+      ...prev,
+      [taskId]: {
+        ...prev[taskId],
+        comments: [...(prev[taskId].comments || []), comment],
+      },
+    }));
+
+    toast.success("Comment added successfully!");
+  };
+
   const toggleTaskStatus = async (taskId: number) => {
     const currentStatus = tasks[taskId]?.status || "Nincs kész"; // Use the current status directly
 
@@ -803,19 +851,64 @@ const Tasks = () => {
                 </h2>
                 <div className="flex items-center gap-2 mt-5">
                   <img
-                    src="../images/avatar.png"
+                    src={user.profile_picture || "/images/avatar.png"}
                     alt="Profile"
                     className="w-10 h-10 rounded-full"
                   />
                   <input
                     type="text"
-                    id="default-input"
+                    id="comment-input"
                     placeholder="Add a comment..."
                     className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleAddComment(showTaskModal, e.currentTarget.value);
+                        e.currentTarget.value = ""; // Clear the input field
+                      }
+                    }}
                   />
-                  <button className="bg-orange-500 p-3 rounded-full hover:bg-orange-600 text-white">
+                  <button
+                    className="bg-orange-500 p-3 rounded-full hover:bg-orange-600 text-white"
+                    onClick={() => {
+                      const input = document.getElementById(
+                        "comment-input"
+                      ) as HTMLInputElement;
+                      if (input) {
+                        handleAddComment(showTaskModal, input.value);
+                        input.value = ""; // Clear the input field
+                      }
+                    }}
+                  >
                     <IoSend />
                   </button>
+                </div>
+                <div className="mt-5">
+                  {comments[showTaskModal]?.map(
+                    (
+                      comment: {
+                        profile_picture: string;
+                        name: string;
+                        text: string;
+                      },
+                      index
+                    ) => (
+                      <div key={index} className="flex items-start gap-3 mb-3">
+                        <img
+                          src={comment.profile_picture || "/images/avatar.png"}
+                          alt="Profile"
+                          className="w-8 h-8 rounded-full"
+                        />
+                        <div>
+                          <p className="text-slate-100 font-semibold">
+                            {comment.name}
+                          </p>
+                          <p className="text-slate-300 text-sm">
+                            {comment.text}
+                          </p>
+                        </div>
+                      </div>
+                    )
+                  )}
                 </div>
                 <div className="mt-5">
                   <h2 className="flex items-center text-md font-semibold mb-2 gap-2">
