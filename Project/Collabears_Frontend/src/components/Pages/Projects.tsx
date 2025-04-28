@@ -92,7 +92,7 @@ const Projects = () => {
           <li className="inline-flex items-center">
             <a
               href="/"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-orange-500"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500"
             >
               <svg
                 className="w-3 h-3 me-2.5"
@@ -133,7 +133,7 @@ const Projects = () => {
 
       {loading ? (
         <div className="text-center mt-20 flex flex-col items-center">
-          <div className="w-10 h-10 border-4 border-t-orange-500 border-gray-300 rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
         </div>
       ) : !isAuthenticated ? (
         <div className="text-center mt-20 flex flex-col items-center">
@@ -157,8 +157,8 @@ const Projects = () => {
                     key={category.name}
                     className={`px-3 py-2 flex items-center ${
                       selectedCategory === category.name
-                        ? "text-orange-500"
-                        : "hover:text-orange-500"
+                        ? "text-blue-500"
+                        : "hover:text-blue-500"
                     }`}
                     onClick={() => setSelectedCategory(category.name)}
                   >

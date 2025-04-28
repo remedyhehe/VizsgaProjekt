@@ -90,7 +90,7 @@ const ProjectDetails = () => {
                 <li className="inline-flex items-center">
                   <a
                     href="/"
-                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-orange-500"
+                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500"
                   >
                     <svg
                       className="w-3 h-3 me-2.5"
@@ -162,8 +162,8 @@ const ProjectDetails = () => {
                       className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
     ${
       smallSiteId === 0
-        ? " text-orange-500"
-        : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+        ? " text-blue-500"
+        : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
     }`}
                     >
                       <CgBoard />
@@ -177,8 +177,8 @@ const ProjectDetails = () => {
                       className={`flex items-center p-5 gap-2 rounded-sm md:border-0 md:p-0
                         ${
                           smallSiteId === 4
-                            ? " text-orange-500"
-                            : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-orange-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                            ? " text-blue-500"
+                            : "text-gray-900 hover:bg-gray-100 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                         }`}
                     >
                       <FaCalendar />

@@ -44,7 +44,7 @@ const MyProjectCard = ({ project }: MyProjectCardProps) => {
   return (
     <div className="bg-gray-800 text-white rounded-xl shadow-lg p-5 w-100 mx-auto transform transition-all duration-300 hover:scale-102">
       <div className="flex flex-row justify-between ">
-        <h2 className="text-xl font-semibold mb-3 text-orange-500">
+        <h2 className="text-xl font-semibold mb-3 text-gray-300">
           {project.name}
         </h2>
         <div className="flex -space-x-4 rtl:space-x-reverse">
@@ -60,7 +60,7 @@ const MyProjectCard = ({ project }: MyProjectCardProps) => {
       <div className="flex justify-between items-center mt-5">
         <Link
           to={`/projectDetails/${project.id}`}
-          className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-black font-medium px-4 py-2 rounded-lg transition-all"
+          className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-black font-medium px-4 py-2 rounded-lg transition-all"
         >
           <i className="fa-solid fa-eye"></i> View
         </Link>

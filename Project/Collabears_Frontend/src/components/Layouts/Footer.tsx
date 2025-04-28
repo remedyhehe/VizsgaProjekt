@@ -1,23 +1,25 @@
 import { FaDiscord } from "react-icons/fa";
 import { MdContactSupport, MdPolicy } from "react-icons/md";
 import { GiUpgrade } from "react-icons/gi";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const [showToast, setShowToast] = useState(false);
+
+  const handleSubscribe = () => {
+    if (email.trim() !== "") {
+      toast.success("You're successfully subscribed to our newsletter!");
+      setEmail(""); // opcionális: üríti az inputot sikeres feliratkozás után
+      setTimeout(() => {}, 3000); // toast automatikusan eltűnik 3 másodperc múlva
+    }
+  };
+
   return (
     <footer className="bg-white shadow-sm dark:bg-gray-900">
       <div className="w-full max-w-screen-xl mx-auto p-2">
         <div className="sm:flex sm:items-center sm:justify-between">
-          <a
-            href="https://flowbite.com/"
-            className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
-          >
-            <img
-              src="../images/maci.PNG"
-              className="h-20"
-              alt="Collabears Logo"
-            />
-          </a>
-
           <ul className="flex items-center mb-6 text-md font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <a
@@ -65,10 +67,15 @@ const Footer = () => {
             <div className="mt-4 flex justify-center">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="p-2 bg-gray-700 rounded-l-md text-white focus:outline-none"
                 placeholder="Your email address..."
               />
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-r-md">
+              <button
+                onClick={handleSubscribe}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-r-md"
+              >
                 Subscribe
               </button>
             </div>
@@ -81,8 +88,6 @@ const Footer = () => {
             </p>
           </div>
         </div>
-
-        {/* Feliratkozási rész */}
 
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">

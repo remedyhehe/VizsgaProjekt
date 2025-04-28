@@ -656,7 +656,7 @@ const Tasks = () => {
                     <div className="flex gap-2">
                       <button
                         onClick={confirmAddTask}
-                        className="text-md text-white bg-orange-600 hover:bg-orange-700 px-3 py-2 rounded"
+                        className="text-md text-white bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded"
                       >
                         Add task
                       </button>
@@ -700,7 +700,7 @@ const Tasks = () => {
                 />
                 <button
                   onClick={confirmAddColumn}
-                  className="text-md text-white bg-orange-600 hover:bg-orange-700 px-3 py-2 rounded"
+                  className="text-md text-white bg-blue-600 hover:bg-blue-700 px-3 py-2 rounded"
                 >
                   Add column
                 </button>
@@ -743,7 +743,7 @@ const Tasks = () => {
               </span>
             )}
           </div>
-          <span className="text-orange-500">
+          <span className="text-blue-500">
             {showNotificationPanel ? <FaChevronDown /> : <FaChevronUp />}
           </span>
         </div>
@@ -812,7 +812,7 @@ const Tasks = () => {
                   <div className="mt-4 flex gap-4">
                     <button
                       onClick={() => setIsEditingDescription(false)}
-                      className="px-6 py-1 bg-orange-500 hover:bg-orange-600 rounded text-white"
+                      className="px-6 py-1 bg-blue-500 hover:bg-blue-600 rounded text-white"
                     >
                       Save
                     </button>
@@ -868,7 +868,7 @@ const Tasks = () => {
                     }}
                   />
                   <button
-                    className="bg-orange-500 p-3 rounded-full hover:bg-orange-600 text-white"
+                    className="bg-blue-500 p-3 rounded-full hover:bg-blue-600 text-white"
                     onClick={() => {
                       const input = document.getElementById(
                         "comment-input"

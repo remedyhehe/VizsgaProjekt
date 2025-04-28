@@ -3,7 +3,8 @@ import LogoutButton from "../Function/LogoutButton";
 import useLogin from "../Function/LoginFunction";
 import UserMenu from "../Function/UserMenu";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoDiamond, IoNotifications } from "react-icons/io5";
+import { TbWorldSearch } from "react-icons/tb";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -143,38 +144,39 @@ const Navbar = () => {
         <div
           className={`lg:flex ${
             isMenuOpen ? "hidden" : ""
-          } hidden lg:items-center lg:space-x-6`}
+          } hidden lg:items-center lg:space-x-10`}
         >
           <a
             href="/"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
+            className="px-3 py-2 text-md font-medium text-white hover:bg-gray-700 rounded"
           >
             <i className="fa-solid fa-house"></i> Home
           </a>
           <a
             href="/myprojects"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
+            className="px-3 py-2 text-md font-medium text-white hover:bg-gray-700 rounded"
           >
             <i className="fa-solid fa-plus"></i> My Projects
           </a>
           <a
             href="/projects"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
+            className="flex items-center gap-1 px-3 py-2 text-md font-medium text-white hover:bg-gray-700 rounded"
           >
-            <i className="fa-solid fa-globe"></i> Browse
-          </a>
-          <a
-            href="/premium"
-            className="px-3 py-2 text-sm font-medium text-white hover:bg-gray-700 rounded"
-          >
-            <i className="fa-solid fa-shield"></i> Premium
+            <TbWorldSearch className="text-xl" />
+            Browse
           </a>
         </div>
 
         <div className="hidden lg:inline-block relative text-white">
           <div className="flex gap-5 items-center">
+            <a
+              href="/premium"
+              className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-white hover:bg-blue-500 rounded border-2"
+            >
+              <IoDiamond className="text-lg" /> See Plans
+            </a>
             <a href="#">
-              <IoMdNotificationsOutline
+              <IoNotifications
                 id="notIcon"
                 onClick={notificationDropdown}
                 className="text-2xl"
@@ -475,13 +477,20 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              <a className="block p-4 hover:text-orange-500" href="/projects">
-                <i className="fa-solid fa-globe"></i> Browse
+              <a
+                href="/projects"
+                className="flex items-center gap-2 p-4 hover:text-orange-500"
+              >
+                <TbWorldSearch className="text-xl" />
+                Browse
               </a>
             </li>
             <li>
-              <a className="block p-4 hover:text-orange-500" href="/premium">
-                <i className="fa-solid fa-shield"></i> Premium
+              <a
+                className="flex items-center gap-2 p-4 hover:text-orange-500"
+                href="/premium"
+              >
+                <IoDiamond className="text-lg" /> See Plans
               </a>
             </li>
           </ul>

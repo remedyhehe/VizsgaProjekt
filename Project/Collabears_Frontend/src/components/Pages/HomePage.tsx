@@ -30,7 +30,7 @@ const Counter = ({ targetNumber }: { targetNumber: number }) => {
 
   return (
     <motion.h3
-      className="text-5xl font-bold text-orange-500"
+      className="text-5xl font-bold text-blue-500"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 2 }}
@@ -150,7 +150,7 @@ const HomePage = () => {
     <>
       <Navbar />
       <div className="bg-gray-300 min-h-screen">
-        <section className="flex flex-col md:flex-row items-center text-white px-6 py-20 md:px-20 bg-gradient-to-r from-orange-500 to-orange-700">
+        <section className="flex flex-col md:flex-row items-center text-white px-6 py-20 md:px-20 bg-gradient-to-r from-blue-200 to-blue-900">
           <motion.div
             className="w-full md:w-1/2 pr-0 md:pr-10 text-center md:text-left"
             initial={{ opacity: 0, y: 50 }} // Kezdőállapot: teljesen áttetsző és lentebb
@@ -170,7 +170,7 @@ const HomePage = () => {
             <p className="text-xl md:text-2xl mb-6">
               Start your own project or join others to do great things together.
             </p>
-            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 items-center">
+            <div className="flex flex-row  md:space-x-4 justify-center gap-10 md:gap-2 md:justify-start">
               <a
                 href="myprojects"
                 className="px-6 py-3 bg-slate-100 border-b-4 text-black font-medium rounded-lg shadow-md hover:bg-slate-200"
@@ -179,7 +179,7 @@ const HomePage = () => {
               </a>
               <a
                 href="projects"
-                className="relative px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg border-2 border-orange-700 hover:border-orange-500 transition-all duration-300 hover:shadow-[0_0_20px_10px_rgba(255,165,0,0.6)] active:scale-95"
+                className="relative px-8 py-3 bg-gray-800 text-white font-semibold rounded-lg border-2 border-blue-700 hover:border-blue-500 transition-all duration-300  active:scale-95"
               >
                 Browse projects
               </a>
@@ -199,7 +199,7 @@ const HomePage = () => {
 
         <section className="bg-white py-10">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 text-center gap-10 mb-12 fade-in-element">
+            <div className="grid grid-cols-2 md:grid-cols-2 text-center gap-10 mb-12 fade-in-element">
               <div>
                 <Counter targetNumber={projectsCount} />
                 <p className="text-gray-600 text-xl">
@@ -221,29 +221,29 @@ const HomePage = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="group bg-gray-100 p-6 rounded-lg shadow-md">
-                  <h3 className="text-lg font-semibold mb-3 text-orange-500 group-hover:stroke-white">
+                  <h3 className="text-lg font-semibold mb-3 text-blue-500 group-hover:stroke-white">
                     <i className="fa-solid fa-bolt"></i> Fast recruitment
                   </h3>
-                  <p className="text-gray-600 group-hover:text-orange-500">
+                  <p className="text-gray-600 group-hover:text-blue-500">
                     Find the right team members for your project quickly and
                     easily.
                   </p>
                 </div>
                 <div className="group bg-gray-100 p-6 rounded-lg shadow-md">
-                  <h3 className="text-lg font-semibold mb-3 text-orange-500">
+                  <h3 className="text-lg font-semibold mb-3 text-blue-500">
                     <i className="fa-solid fa-magnifying-glass"></i> Easy
                     searching
                   </h3>
-                  <p className="text-gray-600 group-hover:text-orange-500">
+                  <p className="text-gray-600 group-hover:text-blue-500">
                     Filter by projects and skills to easily find what you're
                     looking for.
                   </p>
                 </div>
                 <div className="group bg-gray-100 p-6 rounded-lg shadow-md">
-                  <h3 className="text-lg font-semibold mb-3 text-orange-500">
+                  <h3 className="text-lg font-semibold mb-3 text-blue-500">
                     <i className="fa-solid fa-earth-europe"></i> Wide community
                   </h3>
-                  <p className="text-gray-600 group-hover:text-orange-500">
+                  <p className="text-gray-600 group-hover:text-blue-500">
                     Join an active and inspiring community where everyone works
                     together to succeed.
                   </p>
@@ -284,17 +284,17 @@ const HomePage = () => {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-orange-500 text-4xl mb-4">1</div>
+                <div className="text-blue-500 text-4xl mb-4">1</div>
                 <p className="text-gray-600">
                   Create a project or browse existing ones.
                 </p>
               </div>
               <div>
-                <div className="text-orange-500 text-4xl mb-4">2</div>
+                <div className="text-blue-500 text-4xl mb-4">2</div>
                 <p className="text-gray-600">Add roles and skills.</p>
               </div>
               <div>
-                <div className="text-orange-500 text-4xl mb-4">3</div>
+                <div className="text-blue-500 text-4xl mb-4">3</div>
                 <p className="text-gray-600">
                   Find team members or join a project.
                 </p>

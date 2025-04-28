@@ -65,7 +65,7 @@ const MyProjects = () => {
       <div className="flex-grow">
         {loading ? (
           <div className="text-center mt-20 flex flex-col items-center">
-            <div className="w-10 h-10 border-4 border-t-orange-500 border-gray-300 rounded-full animate-spin"></div>
+            <div className="w-10 h-10 border-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div>
           </div>
         ) : !isAuthenticated ? (
           <div className="text-center mt-20 flex flex-col items-center space-y-6 px-4">
@@ -89,7 +89,7 @@ const MyProjects = () => {
                 <li className="inline-flex items-center">
                   <a
                     href="/"
-                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-orange-500"
+                    className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-500"
                   >
                     <svg
                       className="w-3 h-3 me-2.5"
@@ -140,7 +140,7 @@ const MyProjects = () => {
                     viewBox="0 0 100 100"
                     preserveAspectRatio="xMidYMid meet"
                     height="100"
-                    className="w-8 h-8 absolute right-0 -rotate-45 stroke-orange-500 top-1.5 group-hover:rotate-0 duration-300"
+                    className="w-8 h-8 absolute right-0 -rotate-45 stroke-blue-500 top-1.5 group-hover:rotate-0 duration-300"
                   >
                     <path
                       stroke-width="4"
@@ -159,11 +159,11 @@ const MyProjects = () => {
                 </div>
 
                 <a href="/newproject">
-                  <button className="rounded-lg relative w-43 h-10 cursor-pointer flex items-center border border-orange-500 bg-orange-500 group hover:bg-orange-500 active:bg-orange-500 active:border-orange-500">
+                  <button className="rounded-lg relative w-43 h-10 cursor-pointer flex items-center border border-blue-500 bg-blue-500 group hover:bg-blue-500 active:bg-blue-500 active:border-blue-500">
                     <span className="text-white font-semibold ml-8 transform group-hover:translate-x-20 transition-all duration-300">
                       New Project
                     </span>
-                    <span className="absolute right-0 h-full w-10 rounded-lg bg-orange-500 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300">
+                    <span className="absolute right-0 h-full w-10 rounded-lg bg-blue-500 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300">
                       <svg
                         className="svg w-8 text-white"
                         fill="none"
