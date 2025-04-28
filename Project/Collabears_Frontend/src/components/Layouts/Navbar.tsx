@@ -5,16 +5,43 @@ import UserMenu from "../Function/UserMenu";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { IoMdNotificationsOutline } from "react-icons/io";
 
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isNotDropdownOpen, setIsNotDropdownOpen] = useState(false);
+  const [notifications, setNotifications] = useState<
+    { id: number; message: string }[]
+  >([]);
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/notifications", {
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch notifications");
+
+      const data = await response.json();
+      setNotifications(data.data);
+    } catch (error) {
+      console.error("Error fetching notifications:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
+  const toggleNotifications = () => {
+    setIsNotDropdownOpen((prev) => !prev);
+  };
 
   // USER MEGJELENÍTÉS
   const [user, setUser] = useState({
     name: "",
-    profile_picture: ""
+    profile_picture: "",
   });
 
   useEffect(() => {
@@ -160,29 +187,35 @@ const Navbar = () => {
             >
               <img
                 className="w-9 h-9 border-2 border-white rounded-full dark:border-gray-800"
-                src={ user.profile_picture || "/images/avatar.png"}
+                src={user.profile_picture || "/images/avatar.png"}
                 alt=""
               />
             </button>
           </div>
           {isNotDropdownOpen && (
-            <div
-              id="notDropDown"
-              className="absolute right-0 mt-7 w-lg bg-white text-black rounded-lg shadow-lg p-5 z-10"
-            >
+            <div className="absolute right-0 mt-7 w-lg bg-white text-black rounded-lg shadow-lg p-5 z-10">
               <h3 className="text-xl font-semibold mb-5">Notifications</h3>
-              <hr className="text-gray-300" />
-              <div className="flex flex-col p-10 my-10 items-center">
-                <img
-                  className="p-5 h-40 w-40"
-                  src="/images/sleepBear.png"
-                  alt="Sleep Bear"
-                />
+              <ul>
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
+                    <li key={notification.id} className="mb-2">
+                      {notification.message}
+                    </li>
+                  ))
+                ) : (
+                  <div className="flex flex-col p-10 my-10 items-center">
+                    <img
+                      className="p-5 h-40 w-40"
+                      src="/images/sleepBear.png"
+                      alt="Sleep Bear"
+                    />
 
-                <p className="text-lg font-semibold">
-                  You do not have any notification
-                </p>
-              </div>
+                    <p className="text-lg font-semibold">
+                      You do not have any notification
+                    </p>
+                  </div>
+                )}
+              </ul>
             </div>
           )}
           {isDropdownOpen && (

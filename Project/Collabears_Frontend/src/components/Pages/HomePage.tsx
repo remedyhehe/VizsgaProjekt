@@ -30,7 +30,7 @@ const Counter = ({ targetNumber }: { targetNumber: number }) => {
 
   return (
     <motion.h3
-      className="text-4xl font-bold text-orange-500"
+      className="text-5xl font-bold text-orange-500"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 2 }}
@@ -199,23 +199,17 @@ const HomePage = () => {
 
         <section className="bg-white py-10">
           <div className="container mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 text-center gap-10 mb-12 fade-in-element">
+            <div className="grid grid-cols-1 md:grid-cols-2 text-center gap-10 mb-12 fade-in-element">
               <div>
                 <Counter targetNumber={projectsCount} />
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-xl">
                   <i className="fa-solid fa-play"></i> Started Projects
                 </p>
               </div>
 
               <div>
-                <Counter targetNumber={projectsCount} />
-                <p className="text-gray-600">
-                  <i className="fa-solid fa-user-plus"></i> Subscribed members
-                </p>
-              </div>
-              <div>
                 <Counter targetNumber={membersCount} />
-                <p className="text-gray-600">
+                <p className="text-gray-600 text-xl">
                   <i className="fa-solid fa-users"></i> Joined Members
                 </p>
               </div>

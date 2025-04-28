@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { CgMenuGridR } from "react-icons/cg";
 import { FaRegFolder } from "react-icons/fa6";
-import { IoPeopleOutline, IoSettingsOutline } from "react-icons/io5";
+import {
+  IoPeopleOutline,
+  IoSettingsOutline,
+  IoSettingsSharp,
+} from "react-icons/io5";
 import { PiChats } from "react-icons/pi";
 import { AiOutlineHome } from "react-icons/ai";
-import { FaDoorOpen } from "react-icons/fa";
+import { FaDoorOpen, FaFolderOpen } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { MdHome } from "react-icons/md";
+import { HiUsers } from "react-icons/hi";
+import { IoIosSettings, IoMdChatboxes } from "react-icons/io";
 
 const Sidebar = () => {
   const { id } = useParams();
@@ -37,7 +44,7 @@ const Sidebar = () => {
               href="/"
               className="flex items-center hover:text-orange-500 text-2xl"
             >
-              <AiOutlineHome />
+              <MdHome />
               <span className="absolute -top-8 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-medium shadow-md transition-all duration-300 ease-in-out group-hover:scale-100">
                 Home
               </span>
@@ -56,7 +63,7 @@ const Sidebar = () => {
               href={`/projectFiles/${id || ""}`}
               className="flex items-center hover:text-orange-500 text-2xl"
             >
-              <FaRegFolder />
+              <FaFolderOpen />
             </a>
           </li>
           <li>
@@ -64,7 +71,7 @@ const Sidebar = () => {
               href={`/projectMembers/${id || ""}`}
               className="flex items-center hover:text-orange-500 text-2xl"
             >
-              <IoPeopleOutline />
+              <HiUsers />
             </a>
           </li>
           <li>
@@ -72,7 +79,7 @@ const Sidebar = () => {
               href={`/projectChat/${id || ""}`}
               className="flex items-center hover:text-orange-500 text-2xl"
             >
-              <PiChats />
+              <IoMdChatboxes />
             </a>
           </li>
           <li>
@@ -80,7 +87,7 @@ const Sidebar = () => {
               href={`/projectSettings/${id || ""}`}
               className="flex items-center hover:text-orange-500 text-2xl"
             >
-              <IoSettingsOutline />
+              <IoSettingsSharp />
             </a>
           </li>
           <li>

@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
 import ReactCountryFlag from "react-country-flag";
-import { FaRegEdit } from "react-icons/fa";
+import { FaFlag, FaRegEdit, FaUser } from "react-icons/fa";
 import React from "react";
 import { IoMdClose } from "react-icons/io";
+import { toast } from "react-toastify";
+import { MdDelete, MdEdit, MdOutlineAdminPanelSettings } from "react-icons/md";
+import { RiUserSettingsFill } from "react-icons/ri";
+import { GiPlayButton } from "react-icons/gi";
 
 interface IUser {
   id: number; // Added id property
@@ -12,6 +16,7 @@ interface IUser {
   email: string;
   profile_picture?: string; // Optional property for profile picture
   country?: string; // Optional property for country
+  role?: string; // Optional property for role
 }
 
 const MembersPage = () => {
@@ -27,6 +32,10 @@ const MembersPage = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [projectMembers, setProjectMembers] = useState<IUser[]>([]);
+  const [newRole, setNewRole] = useState<string>("");
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<IUser | null>(null);
 
   const fetchUsers = async () => {
     try {
@@ -115,14 +124,98 @@ const MembersPage = () => {
       const result = await res.json();
 
       if (result.status) {
-        alert("User added to the project successfully!");
-        setOpen(false); // Close the modal
-        fetchUsers(); // Refresh the user list if necessary
+        toast.success("User added to project successfully!");
+        setOpen(false);
+        fetchUsers();
       } else {
         console.error("Error adding user to project:", result.message);
       }
     } catch (error) {
       console.error("Error:", error);
+    }
+  };
+  const handleEditClick = (member: IUser) => {
+    setSelectedMember(member);
+    setNewRole(member.role || "member");
+    setIsEditModalOpen(true);
+  };
+
+  const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setNewRole(event.target.value);
+  };
+
+  const handleSaveRole = async () => {
+    if (!selectedMember) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/projects/${id}/update-role`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: selectedMember.id, role: newRole }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.status) {
+        toast.success("Role updated successfully!");
+        setIsEditModalOpen(false);
+        setProjectMembers((prevMembers) =>
+          prevMembers.map((member) =>
+            member.id === selectedMember.id
+              ? { ...member, role: newRole }
+              : member
+          )
+        );
+      } else {
+        toast.error("Failed to update role.");
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error("Error updating role:", error);
+    }
+  };
+  const handleDeleteClick = (member: IUser) => {
+    setSelectedMember(member);
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedMember(null);
+  };
+  const handleDeleteMember = async () => {
+    if (!selectedMember) return;
+
+    try {
+      const res = await fetch(
+        `http://localhost:8000/api/projects/${id}/remove-member`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ user_id: selectedMember.id }),
+        }
+      );
+
+      const result = await res.json();
+
+      if (result.status) {
+        toast.success("Member deleted successfully!");
+        setProjectMembers((prevMembers) =>
+          prevMembers.filter((member) => member.id !== selectedMember.id)
+        );
+        setShowModal(false);
+      } else {
+        toast.error("Failed to delete member.");
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting member:", error);
     }
   };
 
@@ -367,7 +460,7 @@ const MembersPage = () => {
                                         user.profile_picture ||
                                         "/images/avatar.png"
                                       }
-                                      className="h-10"
+                                      className="w-10 h-10 rounded-full object-cover"
                                     />
                                     {user.name} ({user.email})
                                   </span>
@@ -392,39 +485,29 @@ const MembersPage = () => {
                           role="tablist"
                           className="relative flex flex-row p-1 rounded-lg bg-blue-gray-50 bg-opacity-60"
                         >
-                          <li
-                            role="tab"
-                            className="relative flex items-center justify-center w-full h-full px-2 py-1 font-sans text-base antialiased font-normal leading-relaxed text-center bg-transparent cursor-pointer select-none text-blue-gray-900"
-                            data-value="all"
-                          >
-                            <div className="z-20 text-inherit">
-                              &nbsp;&nbsp;All&nbsp;&nbsp;
+                          <div className="w-full md:w-70">
+                            <div className="p-5 overflow-hidden w-[60px] h-[30px] hover:w-[270px] bg-orange-500 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
+                              <div className="flex items-center justify-center fill-white">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  id="Isolation_Mode"
+                                  data-name="Isolation Mode"
+                                  viewBox="0 0 24 24"
+                                  width="22"
+                                  height="17"
+                                >
+                                  <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"></path>
+                                </svg>
+                              </div>
+                              <input
+                                type="text"
+                                placeholder="Search"
+                                className="outline-none text-md bg-transparent w-full text-white font-normal px-4"
+                              />
                             </div>
-                            <div className="absolute inset-0 z-10 h-full bg-gray-700 rounded-md shadow"></div>
-                          </li>
+                          </div>
                         </ul>
                       </nav>
-                    </div>
-                    <div className="w-full md:w-72">
-                      <div className="p-5 overflow-hidden w-[60px] h-[30px] hover:w-[270px] bg-orange-500 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
-                        <div className="flex items-center justify-center fill-white">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            id="Isolation_Mode"
-                            data-name="Isolation Mode"
-                            viewBox="0 0 24 24"
-                            width="22"
-                            height="17"
-                          >
-                            <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"></path>
-                          </svg>
-                        </div>
-                        <input
-                          type="text"
-                          placeholder="Search"
-                          className="outline-none text-md bg-transparent w-full text-white font-normal px-4"
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -433,26 +516,26 @@ const MembersPage = () => {
                     <thead>
                       <tr>
                         <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                            Member
+                          <p className="flex gap-1 items-center font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Member <FaUser />
                           </p>
                         </th>
                         <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                            Country
+                          <p className="flex gap-1 items-center font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Country <FaFlag />
                           </p>
                         </th>
                         <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                            Role
+                          <p className="flex gap-1 items-center font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Role <RiUserSettingsFill />
+                          </p>
+                        </th>
+                        <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
+                          <p className="flex gap-1 items-center font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
+                            Actions <GiPlayButton />
                           </p>
                         </th>
 
-                        <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                          <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">
-                            Added
-                          </p>
-                        </th>
                         <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                           <p className="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70"></p>
                         </th>
@@ -493,13 +576,104 @@ const MembersPage = () => {
                             Member
                           </td>
                           <td className="p-4 border-b border-blue-gray-50">
-                            -
+                            <button
+                              type="button"
+                              onClick={() => handleEditClick(member)}
+                              className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+                            >
+                              <MdEdit />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteClick(member)}
+                              className="focus:outline-none text-black bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                            >
+                              <MdDelete />
+                            </button>
                           </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
+                {isEditModalOpen && (
+                  <div className="fixed inset-0 bg-transparent bg-opacity-50 flex items-center justify-center">
+                    <div className="bg-gray-600 text-white p-6 rounded-lg shadow-lg w-1/3">
+                      <div className="flex justify-between items-center">
+                        <h2>Edit Role</h2>
+                        <button onClick={() => setIsEditModalOpen(false)}>
+                          <IoMdClose className="text-red-500 h-10" />
+                        </button>
+                      </div>
+                      <div className="mt-4">
+                        <label htmlFor="role" className="block mb-2">
+                          Select Role:
+                        </label>
+                        <select
+                          id="role"
+                          value={newRole}
+                          onChange={handleRoleChange}
+                          className="w-full p-2 border rounded text-black bg-white"
+                        >
+                          <option value="member">Member</option>
+                          <option value="owner">Owner</option>
+                          <option value="admin">Admin</option>
+                        </select>
+                      </div>
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          onClick={handleSaveRole}
+                          className="bg-blue-500 text-white px-4 py-2 rounded"
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {showModal && (
+                  <div className="fixed inset-0 bg-transparent  flex items-center justify-center">
+                    <div className="group select-none w-[250px] flex flex-col p-4 relative items-center justify-center bg-gray-700 border border-gray-800 shadow-lg rounded-2xl">
+                      <div className="">
+                        <div className="text-center p-3 flex-auto justify-center">
+                          <svg
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            className="group-hover:animate-bounce w-12 h-12 flex items-center text-gray-500 fill-red-500 mx-auto"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              clip-rule="evenodd"
+                              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                              fill-rule="evenodd"
+                            ></path>
+                          </svg>
+                          <h2 className="text-xl font-bold py-4 text-gray-200">
+                            Are you sure?
+                          </h2>
+                          <p className="font-bold text-sm text-gray-500 px-2">
+                            Do you really want to continue? This process cannot
+                            be undone.
+                          </p>
+                        </div>
+                        <div className="p-2 mt-2 text-center space-x-1 md:block">
+                          <button
+                            className="mb-2 md:mb-0 bg-gray-700 px-5 py-2 text-sm shadow-sm font-medium tracking-wider  rounded-xl"
+                            onClick={handleCloseModal}
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            className="bg-red-600 px-5 py-2 text-sm shadow-sm font-medium tracking-wider rounded-xl"
+                            onClick={handleDeleteMember}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

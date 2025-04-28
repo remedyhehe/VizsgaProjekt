@@ -35,25 +35,69 @@ class ProjectController extends Controller
     }
 
 
-     public function addMember(Request $request, $id)
+    public function addMember(Request $request, $id)
     {
         $project = Project::find($id);
-
+    
         if (!$project) {
             return response()->json(['status' => false, 'message' => 'Project not found'], 404);
         }
-
+    
         $userId = $request->input('user_id');
-
+    
         if (!$userId || !User::find($userId)) {
             return response()->json(['status' => false, 'message' => 'Invalid user ID'], 400);
         }
-
+    
         // Attach the user to the project
         $project->users()->syncWithoutDetaching([$userId]);
-
+    
+        // Create a notification for the added user
+        DB::table('notifications')->insert([
+            'user_id' => $userId,
+            'message' => "You have been added to the project: {$project->name}",
+            'is_read' => false,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    
         return response()->json(['status' => true, 'message' => 'User added to the project successfully']);
     }
+    public function removeMember(Request $request, $id)
+{
+    $project = Project::find($id);
+
+    if (!$project) {
+        return response()->json(['status' => false, 'message' => 'Project not found'], 404);
+    }
+
+    $userId = $request->input('user_id');
+
+    if (!$userId || !User::find($userId)) {
+        return response()->json(['status' => false, 'message' => 'Invalid user ID'], 400);
+    }
+
+    // Detach the user from the project
+    $project->users()->detach($userId);
+
+    return response()->json(['status' => true, 'message' => 'User removed from the project successfully']);
+}
+
+public function getNotifications()
+{
+    $user = Auth::user();
+    if (!$user) {
+        return response()->json(['status' => false, 'message' => 'User is not authenticated'], 401);
+    }
+
+    $notifications = DB::table('notifications')
+        ->where('user_id', $user->id)
+        ->where('is_read', false)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return response()->json(['status' => true, 'data' => $notifications]);
+}
    
     public function index()
     {

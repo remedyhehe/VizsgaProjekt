@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects');
             $table->unsignedBigInteger('role_id')->nullable();
-            $table->foreign('role_id')->references('id')->on('role');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
 
         Schema::enableForeignKeyConstraints();

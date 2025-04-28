@@ -47,3 +47,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/projects/{id}/add-member', [ProjectController::class, 'addMember']);
 Route::get('/projects/{id}/members', [ProjectController::class, 'getMembers']);
+Route::post('/projects/{id}/update-role', [ProjectController::class, 'updateRole']);
+Route::delete('/projects/{id}/remove-member', [ProjectController::class, 'removeMember']);
+Route::get('/notifications', [ProjectController::class, 'getNotifications']);
