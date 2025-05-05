@@ -2,19 +2,53 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="collabears.Views.UserDetailPage"
-             Title="UserDetailPage">
+             Title="User Details"
+             >
+
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="10">
-            <Label Text="{Binding Name}" FontSize="24" FontAttributes="Bold"/>
-            <Label Text="{Binding Id}" />
-            <Label Text="{Binding Email}" />
-            <Label Text="{Binding First_Name}" />
-            <Label Text="{Binding Last_Name}" />
-            <Label Text="{Binding Bio}" />
-            <Label Text="{Binding Company}" />
-            <Label Text="{Binding Country}" />
-            <Label Text="{Binding Phone_Number}" />
-            <Image Source="{Binding Profile_Picture}" HeightRequest="100" WidthRequest="100"/>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Profil kép -->
+            <Frame HasShadow="True" Padding="10" BackgroundColor="Gray" CornerRadius="100" HorizontalOptions="Center">
+                <Image Source="{Binding Profile_Picture}" HeightRequest="120" WidthRequest="120" Aspect="AspectFill"/>
+            </Frame>
+
+            <!-- Név -->
+            <Label Text="{Binding Name}" 
+                   FontSize="28" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center"
+                   TextColor="#ff6900"/>
+
+            <!-- Részletek kártyák -->
+            <Frame Padding="15" BackgroundColor="#1d293d" CornerRadius="12" MaximumWidthRequest="900" HasShadow="True">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="ID:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding Id}" TextColor="#f1f1f1" />
+
+                    <Label Text="Email:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding Email}" TextColor="#f1f1f1" />
+
+                    <Label Text="First Name:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding First_Name}" TextColor="#f1f1f1" />
+
+                    <Label Text="Last Name:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding Last_Name}" TextColor="#f1f1f1" />
+
+                    <Label Text="Bio:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding Bio}" TextColor="#f1f1f1" />
+
+                    <Label Text="Company:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding Company}" TextColor="#f1f1f1" />
+
+                    <Label Text="Country:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding Country}" TextColor="#f1f1f1" />
+
+                    <Label Text="Phone Number:" FontAttributes="Bold" TextColor="#ff6900"/>
+                    <Label Text="{Binding Phone_Number}" TextColor="#f1f1f1" />
+                </VerticalStackLayout>
+            </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

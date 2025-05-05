@@ -4,102 +4,100 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="collabears.Views.DetailPage">
 
+    <VerticalStackLayout Spacing="20" Padding="20">
 
-    <VerticalStackLayout>
-        <HorizontalStackLayout
-            HorizontalOptions="Center">
-            <HorizontalStackLayout>
-                
-            </HorizontalStackLayout>
-            <HorizontalStackLayout>
+        <!-- Fejléc -->
+        <Grid ColumnDefinitions="*,Auto,*" Padding="0,10">
+            <!-- Bal oldal üres (későbbre) -->
+            <StackLayout Orientation="Horizontal" Grid.Column="0" />
+
+            <!-- Középső: Cím -->
+            <StackLayout Orientation="Horizontal" Grid.Column="1" HorizontalOptions="Center">
                 <Label 
-                    Text="Collaberas Admin Panel"
-                    FontSize="Header"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center" />
+                    Text="Collabears Admin Panel"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    TextColor="#ff6900"
+                    VerticalOptions="Center" />
+                <Label 
+                    Text=" [BETA]"
+                    FontSize="24"
+                    FontAttributes="Bold"
+                    TextColor="Red"
+                    VerticalOptions="Center" />
+            </StackLayout>
+
+            <!-- Jobb oldal: Gombok -->
+            <StackLayout Orientation="Horizontal" Grid.Column="2" HorizontalOptions="End" Spacing="10">
+                <Button Text="Profile" BackgroundColor="#ff6900" TextColor="White" CornerRadius="8" />
+                <Button Text="Exit" BackgroundColor="#cc0000" TextColor="White" CornerRadius="8" />
+            </StackLayout>
+        </Grid>
+
+        <!-- Tartalom -->
+        <ScrollView>
+            <HorizontalStackLayout Spacing="30" HorizontalOptions="Center" Padding="0,40,0,0">
+
+                <!-- Bal oszlop: Felhasználók -->
+                <Frame CornerRadius="20"
+                       Padding="20"
+                       HasShadow="True"
+                       BackgroundColor="#1d293d"
+                       MinimumWidthRequest="500">
+
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="Users"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="#ff6900"/>
+
+                        <CollectionView ItemsSource="{Binding Users}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="10">
+                                        <Label Text="{Binding Id}"
+                                               VerticalOptions="Center"
+                                               TextColor="#f1f1f1"
+                                               Grid.Column="0"/>
+
+                                        <Label Text="{Binding Name}"
+                                               VerticalOptions="Center"
+                                               TextColor="#f1f1f1"
+                                               Grid.Column="1"
+                                               Margin="10,0"/>
+
+                                        <Button Text="View"
+                                                BackgroundColor="#ff6900"
+                                                TextColor="White"
+                                                CornerRadius="8"
+                                                Command="{Binding BindingContext.UserActionCommand, Source={x:Reference Name=Page}}"
+                                                CommandParameter="{Binding .}"
+                                                Grid.Column="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Jobb oszlop: Projektek -->
+                <Frame CornerRadius="20"
+                       Padding="20"
+                       HasShadow="True"
+                       BackgroundColor="#1d293d"
+                       MinimumWidthRequest="500">
+                    <VerticalStackLayout Spacing="20">
+                        <Label Text="Projects"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               TextColor="#ff6900" />
+                        <!-- Ide jöhet majd a Project lista -->
+                    </VerticalStackLayout>
+                </Frame>
+
             </HorizontalStackLayout>
-            <HorizontalStackLayout
-                HorizontalOptions="Center">
-                
-                <Button
-                    Text="Exit" />
-                <Button
-                    Text="Profile" />
-                
-            </HorizontalStackLayout>
-        </HorizontalStackLayout>
-        
-
-
-        <HorizontalStackLayout
-            Spacing="100"
-            Padding="0,100,0,0"
-            HorizontalOptions="Center">
-
-
-            <Frame
-                CornerRadius="20"
-                Padding="10"
-                HasShadow="True"
-                BackgroundColor="#404040"
-                HorizontalOptions="Center"
-                VerticalOptions="Center">           
-
-                <ScrollView>
-                <VerticalStackLayout
-                    Spacing="30"
-                    BackgroundColor="#404040"
-                    MinimumWidthRequest="600">
-                    
-                    <Label
-                        Text="Users"
-                        FontSize="Large"
-                        HorizontalOptions="Center"/>
-
-                    <!-- CollectionView to display users -->
-                        
-                    <CollectionView ItemsSource="{Binding Users}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <StackLayout Orientation="Horizontal" Padding="10">
-                                    <HorizontalStackLayout HorizontalOptions="Fill" Spacing="30">
-                                        
-                                    <Label Text="{Binding Id}" VerticalOptions="Center" HorizontalOptions="Start" />
-                                    <Label Text="{Binding Name}" VerticalOptions="Center" HorizontalOptions="Start" />
-                                        
-                                    <Button Text="View"
-                                            Command="{Binding BindingContext.UserActionCommand, Source={x:Reference Name=Page}}"
-                                            CommandParameter="{Binding .}"/>
-                                    </HorizontalStackLayout>
-                                    
-                                </StackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-
-                </VerticalStackLayout>
-                </ScrollView>
-                
-            </Frame>
-                
-
-
-            <VerticalStackLayout
-                Spacing="30"
-                BackgroundColor="Green"
-                MinimumWidthRequest="600">
-                
-                <Label
-                    Text="Projects"
-                    FontSize="Large"/>
-
-
-            </VerticalStackLayout>
-            
-
-        </HorizontalStackLayout>
-        
-        
+        </ScrollView>
     </VerticalStackLayout>
 </ContentPage>
