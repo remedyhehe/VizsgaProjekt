@@ -124,7 +124,7 @@ const SettingsPage = () => {
       <div className="flex-1 overflow-auto">
         <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
           <nav
-            className="flex justify-start ml-10 bg-gray-900 text-white p-5"
+            className="flex justify-center bg-gray-900 text-white p-5"
             aria-label="Breadcrumb"
           >
             <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -215,7 +215,7 @@ const SettingsPage = () => {
           </nav>
         </nav>
         <div className="bg-gray-900 p-6 sm:p-4">
-          <h1 className="text-2xl font-bold text-white mb-6 mx-10">
+          <h1 className="text-2xl font-bold text-white mx-10">
             Project Settings
           </h1>
 
@@ -392,12 +392,23 @@ const SettingsPage = () => {
               </button>
             </div>
           </div>
-          <button
-            className="bg-red-600 px-4 py-2 mt-10 text-white rounded-lg"
-            onClick={() => setShowModal(true)}
-          >
-            Delete Project
-          </button>
+          <div className="m-10 flex flex-col items-center gap-4">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-3 rounded-xl shadow-md text-center max-w-md">
+              <h2 className="text-lg font-semibold mb-1">⚠️ Warning!</h2>
+              <p className="text-sm">
+                Deleting this project is permanent and cannot be undone. If
+                you're sure, click the button below.
+              </p>
+            </div>
+
+            <button
+              className="bg-red-600 hover:bg-red-700 transition-colors duration-300 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl active:scale-95"
+              onClick={() => setShowModal(true)}
+            >
+              🗑️ Delete Project
+            </button>
+          </div>
+
           {showModal && (
             <div className="fixed inset-0 bg-transparent bg-opacity-50 flex items-center justify-center">
               <div className="group select-none w-[300px] flex flex-col p-5 relative items-center justify-center bg-gray-900 border border-gray-800 shadow-lg rounded-2xl">
@@ -429,12 +440,14 @@ const SettingsPage = () => {
                   >
                     Cancel
                   </button>
-                  <button
-                    className="bg-red-600 px-5 py-2 text-sm text-white rounded-xl"
-                    onClick={handleDelete}
-                  >
-                    Delete project
-                  </button>
+                  <div className="ml-10">
+                    <button
+                      className="bg-red-600 px-5 py-10 text-sm text-white rounded-xl"
+                      onClick={handleDelete}
+                    >
+                      Delete project
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

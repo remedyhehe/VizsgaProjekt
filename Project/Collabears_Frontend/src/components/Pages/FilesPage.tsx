@@ -1,10 +1,8 @@
-/** @format */
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../Layouts/Sidebar";
 import { AiOutlineFileAdd } from "react-icons/ai";
-import { BsCloudUpload } from "react-icons/bs";
+import { toast } from "react-toastify";
 
 interface File {
   name: string;
@@ -14,24 +12,30 @@ interface File {
 
 interface Project {
   name: string;
-  files: File[] | null;
+  files: File[];
+  notes: string;
 }
 
 const FilesPage = () => {
-  const [project, setProject] = useState<Project | null>(null);
   const { id } = useParams();
-  const [activeTab, setActiveTab] = useState("Files");
+  const [project, setProject] = useState<Project>({
+    name: "",
+    files: [],
+    notes: "",
+  });
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    // Fetch project information from the database
+    const fetchProject = async () => {
       try {
         const res = await fetch(`http://localhost:8000/api/projects/${id}`);
         const result = await res.json();
-        if (result.status) {
-          setProject({
-            name: result.data.name,
-            files: result.data.files || [], // Ensure files is initialized as an empty array if undefined
-          });
+
+        if (result.status && result.data) {
+          setProject((prev) => ({
+            ...prev,
+            name: result.data.name, // Set the project name from the database
+          }));
         } else {
           console.error("Error fetching project:", result.message);
         }
@@ -40,42 +44,39 @@ const FilesPage = () => {
       }
     };
 
-    fetchProjects();
+    fetchProject();
   }, [id]);
 
-  if (!project)
-    return (
-      <div className="bg-gray-900 h-screen flex items-center justify-center">
-        <div className="text-white text-lg">Loading project details...</div>
-      </div>
-    );
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (!files) return;
 
-  const tabs = ["Documentation", "Files", "Database"];
-  const handleTabClick = (tab: string) => setActiveTab(tab);
+    const newFiles = Array.from(files).map((file) => ({
+      name: file.name,
+      type: file.type,
+      size: `${(file.size / 1024).toFixed(2)} KB`,
+    }));
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "Documentation":
-        return <DocumentationTab />;
-      case "Files":
-        return <FilesTab project={project} />;
-      case "Database":
-        return <DatabaseTab />;
-      default:
-        return null;
-    }
+    setProject((prev) => ({
+      ...prev,
+      files: [...prev.files, ...newFiles],
+    }));
+
+    toast.success("Files uploaded successfully!");
+  };
+
+  const handleSaveNotes = () => {
+    toast.success("Notes saved successfully!");
   };
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
+    <div className="flex h-screen bg-gray-900 text-white">
       <Sidebar />
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-auto bg-gray-100">
+      <div className="flex-1 overflow-auto">
         <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
           <nav
-            className="flex justify-start ml-10 bg-gray-900 text-white p-5"
+            className="flex justify-center bg-gray-900 text-white p-5"
             aria-label="Breadcrumb"
           >
             <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -166,106 +167,65 @@ const FilesPage = () => {
           </nav>
         </nav>
         {/* Header */}
-        <div className="bg-white shadow-md p-4 sticky top-0 z-10">
-          <h1 className="text-2xl font-bold text-gray-800">{project.name}</h1>
-        </div>
 
-        {/* Tabs Navigation */}
-        <div className="flex justify-center bg-gray-200 py-4">
-          {tabs.map((tab) => (
+        {/* Main Content */}
+        <main className="p-6 space-y-8">
+          {/* Files Section */}
+          <section className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold">Uploaded Files</h2>
+              <label className="flex items-center px-4 py-2 bg-blue-600 text-white rounded cursor-pointer hover:bg-blue-700">
+                <AiOutlineFileAdd className="mr-2" /> Add Files
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {project.files.map((file, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-700 p-4 rounded-lg shadow hover:shadow-lg transition duration-200"
+                >
+                  <h3 className="text-lg font-medium">{file.name}</h3>
+                  <p className="text-sm text-gray-400">
+                    {file.type || "Unknown type"}
+                  </p>
+                  <p className="text-xs text-gray-500">{file.size}</p>
+                </div>
+              ))}
+            </div>
+            {project.files.length === 0 && (
+              <p className="text-gray-500 mt-4">
+                No files uploaded yet. Use the “Add Files” button above to
+                upload files.
+              </p>
+            )}
+          </section>
+
+          {/* Notes Section */}
+          <section className="bg-gray-800 p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4">Project Notes</h2>
+            <textarea
+              value={project.notes}
+              onChange={(e) =>
+                setProject((prev) => ({ ...prev, notes: e.target.value }))
+              }
+              className="w-full h-40 p-4 bg-gray-700 text-white rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-600"
+              placeholder="Write your project notes here..."
+            />
             <button
-              key={tab}
-              onClick={() => handleTabClick(tab)}
-              className={`px-6 py-2 mx-2 font-medium text-gray-700 rounded ${
-                activeTab === tab ? "bg-white shadow" : "hover:bg-gray-300"
-              }`}
+              onClick={handleSaveNotes}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             >
-              {tab}
+              Save Notes
             </button>
-          ))}
-        </div>
-
-        {/* Tab Content */}
-        <div className="p-6">{renderTabContent()}</div>
+          </section>
+        </main>
       </div>
-    </div>
-  );
-};
-
-const DocumentationTab = () => {
-  return (
-    <div className="text-gray-700">
-      <h2 className="text-xl font-semibold mb-4">Project Documentation</h2>
-      <p>Here you can add, edit, or view the documentation for this project.</p>
-    </div>
-  );
-};
-
-const FilesTab = ({ project }: { project: Project }) => {
-  // Check if files exist before rendering
-  if (!project.files || project.files.length === 0) {
-    return (
-      <div className="text-center text-gray-500">
-        <p>No files available for this project.</p>
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Files</h2>
-        <label className="flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer">
-          <AiOutlineFileAdd className="mr-2" /> Add File
-          <input
-            type="file"
-            multiple
-            className="hidden"
-            onChange={handleFileChange}
-          />
-        </label>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {files.map((file, index) => (
-          <div
-            key={index}
-            className="p-4 bg-white shadow rounded hover:shadow-md transition"
-          >
-            <h3 className="text-gray-800 font-medium">{file.name}</h3>
-            <p className="text-gray-500 text-sm">{file.type || "Unknown"}</p>
-            <p className="text-gray-400 text-xs">{file.size}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* Drag and Drop részt is kiegészítjük */}
-      <div className="mt-6 p-4 border-2 border-dashed border-gray-300 rounded text-center">
-        <BsCloudUpload className="text-3xl text-gray-500 mx-auto mb-2" />
-        <p className="text-gray-500">
-          Drag and drop files here or click to upload
-        </p>
-        <label className="block mt-2">
-          <input
-            type="file"
-            multiple
-            className="hidden"
-            onChange={handleFileChange}
-          />
-          <span className="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer">
-            Upload Files
-          </span>
-        </label>
-      </div>
-    </div>
-  );
-};
-
-const DatabaseTab = () => {
-  return (
-    <div className="text-gray-700">
-      <h2 className="text-xl font-semibold mb-4">Database Overview</h2>
-      <p>Manage and view database tables for this project.</p>
     </div>
   );
 };

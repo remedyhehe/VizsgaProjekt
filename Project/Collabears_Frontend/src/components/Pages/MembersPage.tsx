@@ -261,7 +261,7 @@ const MembersPage = () => {
           {/* Navbar */}
           <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
             <nav
-              className="flex justify-start ml-5 bg-gray-900 text-white p-5"
+              className="flex justify-center bg-gray-900 text-white p-5"
               aria-label="Breadcrumb"
             >
               <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -353,10 +353,6 @@ const MembersPage = () => {
           </nav>
           <div className="bg-gray-900 h-screen">
             <div className="bg-gray-900 justify-between items-center p-5 ">
-              <h1 className="text-2xl font-bold text-white ml-10 pt-5 flex">
-                {project.name}
-              </h1>
-
               <div className="relative flex flex-col w-full h-full text-white p-5 mt-5 bg-gray-800 shadow-md rounded-xl bg-clip-border">
                 <div className="relative mx-4 mt-4 overflow-hidden text-white bg-gray-800 rounded-none bg-clip-border">
                   <div className="flex items-center justify-between gap-8 mb-8">

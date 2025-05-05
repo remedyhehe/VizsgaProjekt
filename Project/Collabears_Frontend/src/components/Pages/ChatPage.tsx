@@ -150,7 +150,7 @@ const ChatPage = () => {
         {/* Modal */}
         <nav className="bg-white border-gray-200 dark:bg-gray-900 w-full">
           <nav
-            className="flex justify-start ml-10 bg-gray-900 text-white p-5"
+            className="flex justify-center bg-gray-900 text-white p-5"
             aria-label="Breadcrumb"
           >
             <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -241,7 +241,6 @@ const ChatPage = () => {
           </nav>
         </nav>
         <div className="flex-1 flex flex-col justify-between p-5 h-screen">
-          <h1 className="text-2xl font-bold">{project.name}</h1>
           <div className="flex-1 overflow-y-auto bg-gray-800 p-2 pr-8 pt-5 rounded-lg mt-4 max-h-[calc(100vh-200px)]">
             {messages.map((msg, index) => (
               <div
