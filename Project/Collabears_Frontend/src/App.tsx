@@ -16,6 +16,8 @@ import ChatPage from "./components/Pages/ChatPage";
 import MembersPage from "./components/Pages/MembersPage";
 import FilesPage from "./components/Pages/FilesPage";
 import YourAccountPage from "./components/Pages/AccountSettings/YourAccountPage";
+import Settings from "./components/Pages/AccountSettings/Settings";
+import PublicSettings from "./components/Pages/AccountSettings/PublicSettings";
 import BrowseProjectMore from "./components/Pages/BrowseProjectMore";
 import LegalPages from "./components/Pages/LegalPages";
 
@@ -30,6 +32,9 @@ function App() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/account" element={<YourAccountPage />} />
+          <Route path="/publicSettings" element={<PublicSettings />} />
+          <Route path="/settings" element={<Settings />} />
+          
           <Route path="/premium" element={<PremiumPage />} />
           <Route path="/projectDetails/:id" element={<ProjectDetails />} />
           <Route path="/projectSettings/:id" element={<SettingsPage />} />
