@@ -69,8 +69,10 @@ const PublicSettings = () => {
           .map((country: any) => ({
             name: country?.name?.common || "",
           }))
-          .filter((country) => country.name);
-        countryNames.sort((a, b) => a.name.localeCompare(b.name));
+          .filter((country: { name: string }) => country.name);
+        countryNames.sort((a: { name: string }, b: { name: string }) =>
+          a.name.localeCompare(b.name)
+        );
         setCountries(countryNames);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -120,7 +122,9 @@ const PublicSettings = () => {
 
   return (
     <div className="bg-gray-800 w-full">
-      <h2 className="text-2xl text-white text-center md:text-left">Your Public Profile</h2>
+      <h2 className="text-2xl text-white text-center md:text-left">
+        Your Public Profile
+      </h2>
       <div className="my-2 text-center mx-auto w-full h-[1px] bg-gray-700"></div>
 
       <div className="px-5 sm:flex">
@@ -174,7 +178,9 @@ const PublicSettings = () => {
                     type="text"
                     className="bg-gray-700 text-white text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
                     value={user.company}
-                    onChange={(e) => setUser({ ...user, company: e.target.value })}
+                    onChange={(e) =>
+                      setUser({ ...user, company: e.target.value })
+                    }
                   />
                   <p className="text-sm pl-1 text-gray-400 mb-4">
                     Mention your company
@@ -185,7 +191,9 @@ const PublicSettings = () => {
                   </label>
                   <select
                     value={user.country}
-                    onChange={(e) => setUser({ ...user, country: e.target.value })}
+                    onChange={(e) =>
+                      setUser({ ...user, country: e.target.value })
+                    }
                     className="bg-gray-700 text-white text-sm rounded-lg block w-full p-2.5 focus:outline-none focus:ring-2 focus:ring-orange-500"
                   >
                     <option value="" disabled>

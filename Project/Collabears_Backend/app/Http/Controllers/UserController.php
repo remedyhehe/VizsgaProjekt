@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -49,24 +50,28 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
-    public function update(Request $request)
-    {
-        $user = auth()->user();
-    
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'bio' => 'nullable|string',
-            'url' => 'nullable|url',
-            'company' => 'nullable|string|max:255',
-            'country' => 'nullable|string|max:255',
-            'profile_picture' => 'nullable|url',
-        ]);
-    
-        $user->update($validated);
-    
-        return response()->json($user);
-    }
+     */public function update(Request $request)
+{
+    $user = Auth::user();
+
+    $validated = $request->validate([
+        'first_name' => 'nullable|string|max:255',
+        'last_name' => 'nullable|string|max:255',
+        'email' => 'nullable|email|max:255',
+        'birth' => 'nullable|date',
+        'phone_number' => 'nullable|string|max:20',
+        'name' => 'nullable|string|max:255',
+        'bio' => 'nullable|string',
+        'url' => 'nullable|url',
+        'company' => 'nullable|string|max:255',
+        'country' => 'nullable|string|max:255',
+        'profile_picture' => 'nullable|url',
+    ]);
+
+    $user->update($validated);
+
+    return response()->json($user);
+}
     
 
     /**

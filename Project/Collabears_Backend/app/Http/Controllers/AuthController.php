@@ -21,6 +21,7 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'birth' => 'required|date',
             'password' => 'required|string|min:6|confirmed',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -35,6 +36,7 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'birth' => $request->birth,
             'password_id' => $passwordRecord->id,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,

@@ -1,11 +1,10 @@
-/** @format */
-
 import React, { useEffect, useState } from "react";
 import Navbar from "../../Layouts/Navbar";
 import Footer from "../../Layouts/Footer";
-import { Pencil } from "lucide-react";
+import { Pencil, Settings } from "lucide-react";
 import { toast } from "react-toastify";
-
+import PublicSettings from "./PublicSettings";
+import AccountSettings from "./Settings";
 
 const YourAccountPage = () => {
   const [countries, setCountries] = useState<{ name: string }[]>([]);
@@ -13,6 +12,9 @@ const YourAccountPage = () => {
   const [hover, setHover] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [newUrl, setNewUrl] = useState("");
+  const [activeSection, setActiveSection] = useState<
+    "public" | "settings" | "plan"
+  >("public");
 
   const [user, setUser] = useState({
     name: "",
@@ -20,11 +22,10 @@ const YourAccountPage = () => {
     url: "",
     company: "",
     country: "",
-    profile_picture: ""
+    profile_picture: "",
   });
 
   useEffect(() => {
-    console.log("useEffect triggered");
     const fetchUser = async () => {
       try {
         const response = await fetch("http://localhost:8000/api/user", {
@@ -38,7 +39,6 @@ const YourAccountPage = () => {
 
         const data = await response.json();
 
-        // Csak akkor állítsd be az állapotot, ha az adatok változtak
         setUser((prevUser) => ({
           ...prevUser,
           name: data.name || prevUser.name,
@@ -64,7 +64,9 @@ const YourAccountPage = () => {
         const countryNames = data.map((country: any) => ({
           name: country.name.common,
         }));
-        countryNames.sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name));
+        countryNames.sort((a: { name: string }, b: { name: string }) =>
+          a.name.localeCompare(b.name)
+        );
         setCountries(countryNames);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -73,7 +75,7 @@ const YourAccountPage = () => {
 
     fetchUser();
     fetchCountries();
-  }, []); // Üres lista biztosítja, hogy csak egyszer fusson le
+  }, []);
 
   const handleAvatarSelect = () => {
     if (newUrl) {
@@ -112,6 +114,19 @@ const YourAccountPage = () => {
     }
   };
 
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case "public":
+        return <PublicSettings />;
+      case "settings":
+        return <AccountSettings />;
+      case "plan":
+        return <div>Plan section (to be implemented)</div>;
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -127,24 +142,43 @@ const YourAccountPage = () => {
             Free subscription
           </h2>
           <div className="mx-10 md:mx-0">
-            <a href="#">
-              <h2 className="p-2 hover:bg-slate-700 font-thin hover:text-orange-500 mb-2 border-b-1 border-orange-500">
+            <a href="#" onClick={() => setActiveSection("public")}>
+              <h2
+                className={`p-2 font-thin mb-2  ${
+                  activeSection === "public"
+                    ? "bg-slate-700 text-orange-500"
+                    : "hover:bg-slate-700 hover:text-orange-500"
+                }`}
+              >
                 <i className="fa-regular fa-user "></i> Public Profile
               </h2>
             </a>
-            <a href="#">
-              <h2 className="p-2 hover:bg-slate-700 font-thin hover:text-orange-500 mb-2">
+            <a href="#" onClick={() => setActiveSection("settings")}>
+              <h2
+                className={`p-2 font-thin mb-2 ${
+                  activeSection === "settings"
+                    ? "bg-slate-700 text-orange-500"
+                    : "hover:bg-slate-700 hover:text-orange-500"
+                }`}
+              >
                 <i className="fa-regular fa-user"></i> Settings
               </h2>
             </a>
-            <a href="#">
-              <h2 className="p-2 hover:bg-slate-700 font-thin hover:text-orange-500 mb-2">
+            <a href="#" onClick={() => setActiveSection("plan")}>
+              <h2
+                className={`p-2 font-thin mb-2 ${
+                  activeSection === "plan"
+                    ? "bg-slate-700 text-orange-500"
+                    : "hover:bg-slate-700 hover:text-orange-500"
+                }`}
+              >
                 <i className="fa-regular fa-user"></i> Plan
               </h2>
             </a>
           </div>
         </div>
 
+        <div className="bg-gray-800 w-full">{renderActiveSection()}</div>
 
         <div className="bg-gray-800 hidden sm:block sm:w-1/6"></div>
       </div>
