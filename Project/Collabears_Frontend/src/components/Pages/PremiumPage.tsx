@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../Layouts/Navbar";
-import Footer from "../Layouts/Footer";
 import { motion } from "framer-motion";
+import { FaCreditCard } from "react-icons/fa";
 
 const PremiumPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+
   const plans = [
     {
       name: "Free",
@@ -45,10 +48,33 @@ const PremiumPage = () => {
     },
   ];
 
+  interface Plan {
+    name: string;
+    price: string;
+    total: string;
+    features: string[];
+    billed: string;
+    popular?: boolean;
+  }
+
+  const openModal = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedPlan(null);
+  };
+
   return (
     <>
       <Navbar />
-      <div className="bg-[#0f172a] min-h-screen text-white">
+      <div
+        className={`bg-[#0f172a] min-h-screen text-white ${
+          isModalOpen ? "backdrop-blur-sm" : ""
+        }`}
+      >
         {/* Breadcrumb */}
         <nav className="flex pt-5 justify-center" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -160,7 +186,10 @@ const PremiumPage = () => {
                   ))}
                 </ul>
 
-                <button className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold py-2 rounded transition">
+                <button
+                  className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold py-2 rounded transition"
+                  onClick={() => openModal(plan)}
+                >
                   {plan.name === "Free" ? "Owned" : `Choose ${plan.name}`}
                 </button>
               </motion.div>
@@ -168,6 +197,103 @@ const PremiumPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Payment Modal */}
+      {isModalOpen && selectedPlan && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+          <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl relative animate-fadeInUp">
+            <button
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl"
+              onClick={closeModal}
+            >
+              &times;
+            </button>
+
+            <h2 className="text-3xl font-bold mb-2 text-center text-gray-800">
+              {selectedPlan.name} Plan
+            </h2>
+
+            <p className="text-center text-gray-600 text-lg mb-2">
+              Price:{" "}
+              <span className="font-bold text-gray-900">
+                {selectedPlan.price} €
+              </span>
+            </p>
+
+            <p className="text-center text-sm text-gray-500 mb-6">
+              Please fill in your payment details or choose a payment method
+              below. Your purchase will be processed securely.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm text-gray-700 font-medium mb-1">
+                  Card Number
+                </label>
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                  placeholder="1234 5678 9012 3456"
+                />
+              </div>
+
+              <div className="flex gap-4">
+                <div className="w-1/2">
+                  <label className="block text-sm text-gray-700 font-medium mb-1">
+                    Expiry Date
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="MM/YY"
+                  />
+                </div>
+                <div className="w-1/2">
+                  <label className="block text-sm text-gray-700 font-medium mb-1">
+                    CVC
+                  </label>
+                  <input
+                    type="text"
+                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+                    placeholder="CVC"
+                  />
+                </div>
+              </div>
+
+              <button
+                className="flex flex-row justify-center gap-2 items-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+                onClick={closeModal}
+              >
+                Pay with Card <FaCreditCard />
+              </button>
+
+              <div className="flex items-center gap-2 my-2">
+                <hr className="flex-grow border-t border-gray-300" />
+                <span className="text-gray-400 text-sm">OR</span>
+                <hr className="flex-grow border-t border-gray-300" />
+              </div>
+
+              <button className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 border border-gray-300 text-black py-3 rounded-lg font-semibold transition">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"
+                  alt="Google Pay"
+                  className="w-10 h-10"
+                />
+                Pay with Google
+              </button>
+
+              <button className="w-full flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-lg font-semibold transition">
+                <img
+                  src="https://www.paypalobjects.com/webstatic/icon/pp258.png"
+                  alt="PayPal"
+                  className="w-6 h-6"
+                />
+                Pay with PayPal
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
