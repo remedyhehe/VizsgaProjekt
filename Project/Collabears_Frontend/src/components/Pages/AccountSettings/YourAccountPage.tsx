@@ -23,6 +23,7 @@ const YourAccountPage = () => {
     company: "",
     country: "",
     profile_picture: "",
+    plan: "",
   });
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const YourAccountPage = () => {
           company: data.company || prevUser.company,
           country: data.country || prevUser.country,
           profile_picture: data.profile_picture || prevUser.profile_picture,
+          plan: data.plan || prevUser.plan,
         }));
 
         if (data.profile_picture && data.profile_picture !== selectedAvatar) {
@@ -121,7 +123,36 @@ const YourAccountPage = () => {
       case "settings":
         return <AccountSettings />;
       case "plan":
-        return <div>Plan section (to be implemented)</div>;
+        return (
+          <div className="flex justify-center items-center h-full">
+            <div className="p-6 rounded-lg shadow-lg text-center sm:w-1/2 mx-2 border-2 border-gray-600 bg-gray-700">
+              <h2 className="text-xl font-semibold mb-4 text-white">
+                Current Plan is
+              </h2>
+              <p className="text-lg font-bold text-orange-500 mb-6">
+                {user.plan || "Free Plan"} 
+              </p>
+              <div className="flex justify-center space-x-4">
+                <button
+                  className="px-4 py-2  bg-blue-500 text-white rounded hover:bg-blue-600 transition cursor-pointer"
+                  onClick={() =>
+                    toast.info("Upgrade functionality coming soon!")
+                  }
+                >
+                  Upgrade Subscription
+                </button>
+                <button
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-800 transition cursor-pointer"
+                  onClick={() =>
+                    toast.info("Cancel subscription functionality coming soon!")
+                  }
+                >
+                  Cancel Subscription
+                </button>
+              </div>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
