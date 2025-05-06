@@ -19,12 +19,7 @@ namespace collabears
         private async void OnCounterClicked(object sender, EventArgs e)
         {
             count++;
-
-            if (count == 1)
-                CounterBtn.Text = $"Logined {count} time";
-            else
-                CounterBtn.Text = $"Logined {count} times";
-
+            CounterBtn.Text = count == 1 ? $"Logined {count} time" : $"Logined {count} times";
             SemanticScreenReader.Announce(CounterBtn.Text);
 
             if (string.IsNullOrEmpty(emailEntry.Text) || string.IsNullOrEmpty(passwordEntry.Text))
@@ -33,17 +28,26 @@ namespace collabears
                 return;
             }
 
+            // Megjeleníti a töltőt
+            LoadingOverlay.IsVisible = true;
+
             var loginResult = await LoginAsync(emailEntry.Text, passwordEntry.Text);
 
             if (loginResult)
             {
+                // Navigáció előtt kis késleltetés, hogy a töltőképernyő megjelenhessen
+                await Task.Delay(200);
                 await Navigation.PushAsync(new DetailPage());
             }
             else
             {
                 await DisplayAlert("Error", "Invalid email or password", "OK");
             }
+
+            // Töltő eltűntetése
+            LoadingOverlay.IsVisible = false;
         }
+
 
         private async Task<bool> LoginAsync(string email, string password)
         {

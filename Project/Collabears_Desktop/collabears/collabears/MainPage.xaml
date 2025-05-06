@@ -3,53 +3,52 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="collabears.MainPage">
 
-    <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-            <Image
-                Source="maci.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+    <Grid>
+        <ScrollView>
             <VerticalStackLayout
-                MaximumWidthRequest="500"
+                Padding="30,0"
                 Spacing="25">
-                
-                <Label
-                    Text="Welcome!"
-                    Style="{StaticResource Headline}"
-                    SemanticProperties.HeadingLevel="Level1" />
+                <!-- ... az eddigi tartalmad változatlanul marad ... -->
+                <Image
+                    Source="maci.png"
+                    HeightRequest="185"
+                    Aspect="AspectFit" />
+                <VerticalStackLayout
+                    MaximumWidthRequest="500"
+                    Spacing="25">
 
-                <Label
-                    Text="Welcome to the admin panel of CollaBears"
-                    Style="{StaticResource SubHeadline}"
-                    SemanticProperties.HeadingLevel="Level2"
-                    SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                    <Label Text="Welcome!" Style="{StaticResource Headline}" />
+                    <Label Text="Welcome to the admin panel of CollaBears" Style="{StaticResource SubHeadline}" />
 
-                <Label Text="Email" />
-                <Entry
-                    x:Name="emailEntry"
-                    Placeholder="Email"
-                   />
-                <Label Text="Password" />
-                <Entry
-                    x:Name="passwordEntry"
-                    Placeholder="******"
-                   />
+                    <Label Text="Email" />
+                    <Entry x:Name="emailEntry" Placeholder="Email" />
+                    <Label Text="Password" />
+                    <Entry x:Name="passwordEntry" Placeholder="******" IsPassword="True" />
 
-
-                <Button
-                    x:Name="CounterBtn"
-                    Text="Login" 
-                    SemanticProperties.Hint="Counts the number of times you click"
-                    Clicked="OnCounterClicked"
-                    HorizontalOptions="Fill" />
-                
+                    <Button
+                        x:Name="CounterBtn"
+                        Text="Login"
+                        Clicked="OnCounterClicked"
+                        HorizontalOptions="Fill" />
+                </VerticalStackLayout>
             </VerticalStackLayout>
-            
-        </VerticalStackLayout>
-        
-    </ScrollView>
+        </ScrollView>
 
+        <!-- Töltőképernyő réteg -->
+        <Grid x:Name="LoadingOverlay"
+              BackgroundColor="#80000000"
+              IsVisible="False"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand"
+              ZIndex="10">
+
+            <ActivityIndicator
+                IsRunning="True"
+                Color="White"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="50"
+                HeightRequest="50" />
+        </Grid>
+    </Grid>
 </ContentPage>
