@@ -115,17 +115,17 @@ namespace collabears.ViewModel
                 return;
             }
 
-            await Application.Current.MainPage.Navigation.PushAsync(new Views.UserDetailPage(user));
+            await Application.Current.MainPage.Navigation.PushAsync(new collabears.Views.UserDetailPage { BindingContext = user });
         }
         private async void OnProjectAction(Project project)
         {
             if (project == null)
             {
-                Debug.WriteLine(">> Project is null, cannot navigate to details page.");
+                Debug.WriteLine(">> Project is null, cannot navigate.");
                 return;
             }
 
-            Debug.WriteLine($">> Action triggered for project: {project.Title}");
+            Debug.WriteLine($">> Navigating to project: {project.Name}");
 
             if (Application.Current?.MainPage == null)
             {
@@ -133,10 +133,7 @@ namespace collabears.ViewModel
                 return;
             }
 
-            // Itt majd legyen egy ProjectDetailPage
-            await Application.Current.MainPage.DisplayAlert("Project Details", $"Project: {project.Title}", "OK");
-            // VAGY ha már van külön oldalad:
-            // await Application.Current.MainPage.Navigation.PushAsync(new Views.ProjectDetailPage(project));
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.ProjectDetailPage(project));
         }
 
     }
