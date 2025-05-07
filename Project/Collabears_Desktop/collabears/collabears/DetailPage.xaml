@@ -87,13 +87,39 @@
                        HasShadow="True"
                        BackgroundColor="#1d293d"
                        MinimumWidthRequest="500">
-                    <VerticalStackLayout Spacing="20">
+                                <VerticalStackLayout Spacing="20">
                         <Label Text="Projects"
                                FontSize="20"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"
                                TextColor="#ff6900" />
-                        <!-- Ide jöhet majd a Project lista -->
+
+                        <CollectionView ItemsSource="{Binding Projects}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="10">
+                                        <Label Text="{Binding Id}"
+                                               VerticalOptions="Center"
+                                               TextColor="#f1f1f1"
+                                               Grid.Column="0"/>
+
+                                        <Label Text="{Binding Name}"
+                                               VerticalOptions="Center"
+                                               TextColor="#f1f1f1"
+                                               Grid.Column="1"
+                                               Margin="10,0"/>
+
+                                        <Button Text="View"
+                                                BackgroundColor="#ff6900"
+                                                TextColor="White"
+                                                CornerRadius="8"
+                                                Command="{Binding BindingContext.ProjectActionCommand, Source={x:Reference Name=Page}}"
+                                                CommandParameter="{Binding .}"
+                                                Grid.Column="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </VerticalStackLayout>
                 </Frame>
 

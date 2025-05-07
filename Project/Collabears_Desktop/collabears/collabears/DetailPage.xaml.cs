@@ -7,7 +7,7 @@ namespace collabears.Views
         public DetailPage()
         {
             InitializeComponent();
-            BindingContext = new UserViewModel();
+            BindingContext = new DashboardViewModel();
         }
     }
 }

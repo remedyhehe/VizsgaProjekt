@@ -2,9 +2,9 @@
 
 namespace collabears.Models
 {
-    public class UserResponse
+    public class ProjectResponse
     {
         public bool Status { get; set; }
-        public List<collabears.Models.User> Data { get; set; }
+        public List<Project> Data { get; set; }
     }
 }

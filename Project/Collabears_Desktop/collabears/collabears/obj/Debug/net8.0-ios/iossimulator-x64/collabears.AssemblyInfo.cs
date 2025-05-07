@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("collabears")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+c5c84dee95744cc5267789282aa9f47ce9d96c96")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+3648d0efb0b0f3fa62aeef2ffffc54ec69e68621")]
 [assembly: System.Reflection.AssemblyProductAttribute("collabears")]
 [assembly: System.Reflection.AssemblyTitleAttribute("collabears")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
