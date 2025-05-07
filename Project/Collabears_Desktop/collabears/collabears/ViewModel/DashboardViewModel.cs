@@ -133,8 +133,9 @@ namespace collabears.ViewModel
                 return;
             }
 
-            await Application.Current.MainPage.Navigation.PushAsync(new Views.ProjectDetailPage(project));
+            await Application.Current.MainPage.Navigation.PushAsync(new Views.ProjectDetailPage { BindingContext = project });
         }
+
 
     }
 }

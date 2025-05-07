@@ -87,7 +87,7 @@
                        HasShadow="True"
                        BackgroundColor="#1d293d"
                        MinimumWidthRequest="500">
-                                <VerticalStackLayout Spacing="20">
+                    <VerticalStackLayout Spacing="20">
                         <Label Text="Projects"
                                FontSize="20"
                                FontAttributes="Bold"

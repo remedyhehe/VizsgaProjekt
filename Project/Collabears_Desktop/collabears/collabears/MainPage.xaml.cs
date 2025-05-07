@@ -3,7 +3,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using collabears.Models;
 using collabears.Views;
+using System.Linq;
 
 namespace collabears
 {
@@ -28,14 +30,12 @@ namespace collabears
                 return;
             }
 
-            // Megjeleníti a töltőt
             LoadingOverlay.IsVisible = true;
 
             var loginResult = await LoginAsync(emailEntry.Text, passwordEntry.Text);
 
             if (loginResult)
             {
-                // Navigáció előtt kis késleltetés, hogy a töltőképernyő megjelenhessen
                 await Task.Delay(200);
                 await Navigation.PushAsync(new DetailPage());
             }
@@ -44,10 +44,8 @@ namespace collabears
                 await DisplayAlert("Error", "Invalid email or password", "OK");
             }
 
-            // Töltő eltűntetése
             LoadingOverlay.IsVisible = false;
         }
-
 
         private async Task<bool> LoginAsync(string email, string password)
         {
@@ -61,7 +59,6 @@ namespace collabears
                         "application/json");
 
                     var response = await client.PostAsync("http://localhost:8000/api/login", requestContent);
-
                     var responseContent = await response.Content.ReadAsStringAsync();
 
                     System.Diagnostics.Debug.WriteLine("Raw Response: " + responseContent);
@@ -85,8 +82,18 @@ namespace collabears
                                 return false;
                             }
 
+                            bool isAdmin = await CheckIfUserIsAdminAsync(data.User.Id, data.Token);
+
+                            if (!isAdmin)
+                            {
+                                await DisplayAlert("Access Denied", "Only admins are allowed to log in.", "OK");
+                                return false;
+                            }
+
                             Preferences.Set("auth_token", data.Token);
                             Preferences.Set("user_name", data.User.Name);
+                            Preferences.Set("user_id", data.User.Id);
+                            Preferences.Set("is_admin", true);
 
                             return true;
                         }
@@ -130,6 +137,38 @@ namespace collabears
                 return false;
             }
         }
+
+
+        private async Task<bool> CheckIfUserIsAdminAsync(int userId, string token)
+        {
+            try
+            {
+                using var client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+                var response = await client.GetAsync("http://localhost:8000/api/admins");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var adminList = JsonSerializer.Deserialize<List<AdminEntry>>(json, options);
+
+                    return adminList.Any(a => a.User_Id == userId);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Admin check failed: " + response.StatusCode);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception during admin check: " + ex.Message);
+                return false;
+            }
+        }
     }
 
     public class LoginResponse
@@ -139,28 +178,15 @@ namespace collabears
         public User User { get; set; }
     }
 
-    public class User
-    {
-        [JsonPropertyName("id")]
-        public int Id { get; set; }
-
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
-
-        [JsonPropertyName("email")]
-        public string Email { get; set; }
-
-        [JsonPropertyName("first_name")]
-        public string FirstName { get; set; }
-
-        [JsonPropertyName("last_name")]
-        public string LastName { get; set; }
-
-        // Add more fields if needed later
-    }
-
     public class ErrorResponse
     {
         public string Message { get; set; }
+    }
+
+    public class AdminEntry
+    {
+        public int Id { get; set; }
+        public int User_Id { get; set; }
+        public int Permission_Id { get; set; }
     }
 }

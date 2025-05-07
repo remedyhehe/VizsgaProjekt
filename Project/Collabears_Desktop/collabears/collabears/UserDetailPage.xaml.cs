@@ -1,11 +1,10 @@
 namespace collabears.Views
 {
-    public partial class ProjectDetailPage : ContentPage
+    public partial class UserDetailPage : ContentPage
     {
-        public ProjectDetailPage(collabears.Models.Project selectedProject)
+        public UserDetailPage()
         {
             InitializeComponent();
-            BindingContext = selectedProject;
         }
     }
 }
