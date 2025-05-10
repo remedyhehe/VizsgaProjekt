@@ -9,13 +9,13 @@ import { toast } from "react-toastify";
 
 interface RegisterForm {
   name: string;
+  birth: Date;
   email: string;
   password: string;
   password_confirmation: string;
   first_name: string;
   last_name: string;
   country: string;
-  birthdate: Date;
 }
 
 const RegisterPage: React.FC = () => {
@@ -30,13 +30,13 @@ const RegisterPage: React.FC = () => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [form, setForm] = useState<RegisterForm>({
     name: "",
+    birth: new Date(),
     email: "",
     password: "",
     password_confirmation: "",
     first_name: "",
     last_name: "",
     country: "",
-    birthdate: new Date(),
   });
 
   const [message, setMessage] = useState<string>("");
@@ -48,11 +48,11 @@ const RegisterPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Frissítjük a form adatokat, hogy a country a selectedCountry legyen
+    // Format 'birth' as a string in 'YYYY-MM-DD' format
     const updatedForm = {
       ...form,
-      country: selectedCountry, // Itt beállítjuk a country-t
-      birthdate: form.birthdate.toISOString(),
+      country: selectedCountry, // Ensure country is properly set
+      birth: form.birth.toISOString().split("T")[0], // Convert to 'YYYY-MM-DD'
     };
 
     try {
@@ -62,7 +62,7 @@ const RegisterPage: React.FC = () => {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify(updatedForm), // Az updatedForm-ot küldjük el
+        body: JSON.stringify(updatedForm),
       });
 
       const data = await res.json();
@@ -70,13 +70,13 @@ const RegisterPage: React.FC = () => {
         setMessage("✅ Sikeres regisztráció!");
         setForm({
           name: "",
+          birth: new Date(),
           email: "",
           password: "",
           password_confirmation: "",
           first_name: "",
           last_name: "",
           country: "",
-          birthdate: new Date(),
         });
         toast.success("Register successfull!", {
           position: "top-right",
@@ -101,7 +101,6 @@ const RegisterPage: React.FC = () => {
       setMessage("❌ Hálózati hiba!");
     }
   };
-
   const nextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Megakadályozzuk az oldal újratöltését
     if (step < 3) {

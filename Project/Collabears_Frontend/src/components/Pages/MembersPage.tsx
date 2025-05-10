@@ -474,41 +474,9 @@ const MembersPage = () => {
                       )}
                     </div>
                   </div>
-                  <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                    <div className="block w-full overflow-hidden md:w-max">
-                      <nav>
-                        <ul
-                          role="tablist"
-                          className="relative flex flex-row p-1 rounded-lg bg-blue-gray-50 bg-opacity-60"
-                        >
-                          <div className="w-full md:w-70">
-                            <div className="p-5 overflow-hidden w-[60px] h-[30px] hover:w-[270px] bg-orange-500 shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300">
-                              <div className="flex items-center justify-center fill-white">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  id="Isolation_Mode"
-                                  data-name="Isolation Mode"
-                                  viewBox="0 0 24 24"
-                                  width="22"
-                                  height="17"
-                                >
-                                  <path d="M18.9,16.776A10.539,10.539,0,1,0,16.776,18.9l5.1,5.1L24,21.88ZM10.5,18A7.5,7.5,0,1,1,18,10.5,7.507,7.507,0,0,1,10.5,18Z"></path>
-                                </svg>
-                              </div>
-                              <input
-                                type="text"
-                                placeholder="Search"
-                                className="outline-none text-md bg-transparent w-full text-white font-normal px-4"
-                              />
-                            </div>
-                          </div>
-                        </ul>
-                      </nav>
-                    </div>
-                  </div>
                 </div>
                 <div className="p-6 px-0">
-                  <table className="w-full mt-4 text-left table-auto min-w-max">
+                  <table className="w-full mt-4 text-cente justify-center table-auto min-w-max">
                     <thead>
                       <tr>
                         <th className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">

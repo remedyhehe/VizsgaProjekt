@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Layouts/Navbar";
 import { motion } from "framer-motion";
 import { FaCreditCard } from "react-icons/fa";
@@ -6,9 +6,13 @@ import { FaCreditCard } from "react-icons/fa";
 const PremiumPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [userSubscriptionId, setUserSubscriptionId] = useState<number | null>(
+    null
+  ); // Store user's current subscription ID
 
   const plans = [
     {
+      id: 1, // Add unique IDs for each plan
       name: "Free",
       price: "0",
       total: "0",
@@ -20,6 +24,7 @@ const PremiumPage = () => {
       billed: "No payment required",
     },
     {
+      id: 2,
       name: "Pro",
       price: "12",
       total: "60",
@@ -34,6 +39,7 @@ const PremiumPage = () => {
       popular: true,
     },
     {
+      id: 3,
       name: "Elite",
       price: "20",
       total: "100",
@@ -49,6 +55,7 @@ const PremiumPage = () => {
   ];
 
   interface Plan {
+    id: number;
     name: string;
     price: string;
     total: string;
@@ -56,6 +63,35 @@ const PremiumPage = () => {
     billed: string;
     popular?: boolean;
   }
+
+  // Fetch current user's subscription ID from backend
+  useEffect(() => {
+    const fetchUserSubscription = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8000/api/users/subscription",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user subscription.");
+        }
+
+        const data = await response.json();
+        setUserSubscriptionId(data.subscription_id); // Assume the backend returns { subscription_id: number }
+      } catch (error) {
+        console.error("Error fetching user subscription:", error);
+      }
+    };
+
+    fetchUserSubscription();
+  }, []);
 
   const openModal = (plan: Plan) => {
     setSelectedPlan(plan);
@@ -65,6 +101,39 @@ const PremiumPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedPlan(null);
+  };
+
+  const handleSubscriptionPurchase = async (planId: number) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/users/subscription",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
+          body: JSON.stringify({ subscription_id: planId }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Server Error: ${response.status} - ${errorText}`);
+      }
+
+      const data = await response.json();
+      alert(
+        `${
+          plans.find((plan) => plan.id === planId)?.name
+        } subscription activated successfully!`
+      );
+      setUserSubscriptionId(planId); // Update user's subscription ID locally
+      closeModal();
+    } catch (error: any) {
+      console.error("Error updating subscription:", error);
+      alert(error.message || "Failed to update subscription.");
+    }
   };
 
   return (
@@ -120,27 +189,6 @@ const PremiumPage = () => {
           </ol>
         </nav>
 
-        {/* Title and Description */}
-        <section className="flex flex-col justify-center items-center text-center mt-10">
-          <motion.h1
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-5xl font-bold mb-4"
-          >
-            Choose the right plan for you
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-xl text-gray-400"
-          >
-            Pick a plan tailored to your team’s needs — from starting small to
-            managing full project workflows.
-          </motion.p>
-        </section>
-
         {/* Plans */}
         <div className="container px-5 py-16 mx-auto">
           <div className="flex flex-wrap justify-center gap-10">
@@ -187,10 +235,19 @@ const PremiumPage = () => {
                 </ul>
 
                 <button
-                  className="w-full bg-blue-400 hover:bg-blue-500 text-gray-900 font-semibold py-2 rounded transition"
-                  onClick={() => openModal(plan)}
+                  className={`w-full ${
+                    userSubscriptionId === plan.id
+                      ? "bg-gray-500 cursor-default text-white"
+                      : "bg-blue-400 hover:bg-blue-500 text-gray-900"
+                  } font-semibold py-2 rounded transition`}
+                  onClick={() =>
+                    userSubscriptionId !== plan.id && openModal(plan)
+                  }
+                  disabled={userSubscriptionId === plan.id}
                 >
-                  {plan.name === "Free" ? "Owned" : `Choose ${plan.name}`}
+                  {userSubscriptionId === plan.id
+                    ? "Owned"
+                    : `Choose ${plan.name}`}
                 </button>
               </motion.div>
             ))}
@@ -226,69 +283,11 @@ const PremiumPage = () => {
             </p>
 
             <div className="space-y-4">
-              <div>
-                <label className="block text-sm text-gray-700 font-medium mb-1">
-                  Card Number
-                </label>
-                <input
-                  type="text"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                  placeholder="1234 5678 9012 3456"
-                />
-              </div>
-
-              <div className="flex gap-4">
-                <div className="w-1/2">
-                  <label className="block text-sm text-gray-700 font-medium mb-1">
-                    Expiry Date
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="MM/YY"
-                  />
-                </div>
-                <div className="w-1/2">
-                  <label className="block text-sm text-gray-700 font-medium mb-1">
-                    CVC
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="CVC"
-                  />
-                </div>
-              </div>
-
               <button
                 className="flex flex-row justify-center gap-2 items-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
-                onClick={closeModal}
+                onClick={() => handleSubscriptionPurchase(selectedPlan.id)}
               >
                 Pay with Card <FaCreditCard />
-              </button>
-
-              <div className="flex items-center gap-2 my-2">
-                <hr className="flex-grow border-t border-gray-300" />
-                <span className="text-gray-400 text-sm">OR</span>
-                <hr className="flex-grow border-t border-gray-300" />
-              </div>
-
-              <button className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 border border-gray-300 text-black py-3 rounded-lg font-semibold transition">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg"
-                  alt="Google Pay"
-                  className="w-10 h-10"
-                />
-                Pay with Google
-              </button>
-
-              <button className="w-full flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black py-3 rounded-lg font-semibold transition">
-                <img
-                  src="https://www.paypalobjects.com/webstatic/icon/pp258.png"
-                  alt="PayPal"
-                  className="w-6 h-6"
-                />
-                Pay with PayPal
               </button>
             </div>
           </div>

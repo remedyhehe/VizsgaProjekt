@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../Layouts/Navbar";
 import Footer from "../../Layouts/Footer";
-import { Pencil, Settings } from "lucide-react";
 import { toast } from "react-toastify";
 import PublicSettings from "./PublicSettings";
 import AccountSettings from "./Settings";
 
 const YourAccountPage = () => {
-  const [countries, setCountries] = useState<{ name: string }[]>([]);
-  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
-  const [hover, setHover] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [newUrl, setNewUrl] = useState("");
   const [activeSection, setActiveSection] = useState<
     "public" | "settings" | "plan"
   >("public");
@@ -39,80 +33,38 @@ const YourAccountPage = () => {
         if (!response.ok) throw new Error("User fetch failed");
 
         const data = await response.json();
-
-        setUser((prevUser) => ({
-          ...prevUser,
-          name: data.name || prevUser.name,
-          bio: data.bio || prevUser.bio,
-          url: data.url || prevUser.url,
-          company: data.company || prevUser.company,
-          country: data.country || prevUser.country,
-          profile_picture: data.profile_picture || prevUser.profile_picture,
-          plan: data.plan || prevUser.plan,
-        }));
-
-        if (data.profile_picture && data.profile_picture !== selectedAvatar) {
-          setSelectedAvatar(data.profile_picture);
-        }
+        setUser(data); // Ensure 'data.plan' is returned as 'Pro', 'Free', etc.
       } catch (error) {
         console.error("Error fetching user:", error);
       }
     };
 
-    const fetchCountries = async () => {
-      try {
-        const response = await fetch("https://restcountries.com/v3.1/all");
-        const data = await response.json();
-        const countryNames = data.map((country: any) => ({
-          name: country.name.common,
-        }));
-        countryNames.sort((a: { name: string }, b: { name: string }) =>
-          a.name.localeCompare(b.name)
-        );
-        setCountries(countryNames);
-      } catch (error) {
-        console.error("Error fetching countries:", error);
-      }
-    };
-
     fetchUser();
-    fetchCountries();
   }, []);
 
-  const handleAvatarSelect = () => {
-    if (newUrl) {
-      setSelectedAvatar(newUrl);
-      setUser((prev) => ({ ...prev, profile_picture: newUrl }));
-      localStorage.setItem("user_avatar", newUrl);
-    }
-    setModalOpen(false);
-  };
-
-  const handleSaveChanges = async () => {
+  const handleCancelSubscription = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/user", {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-        },
-        body: JSON.stringify({
-          ...user,
-          profile_picture: selectedAvatar,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:8000/api/user/cancel-subscription",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
+        }
+      );
 
-      if (!response.ok) throw new Error("Failed to update user");
+      if (!response.ok) throw new Error("Failed to cancel subscription");
 
-      const updatedUser = await response.json();
-      setUser(updatedUser);
-      toast.success("Profile updated successfully!", {
-        className: "bg-red-500 text-white px-4 py-2 rounded shadow-lg",
+      setUser((prev) => ({ ...prev, plan: "Free Plan" }));
+      toast.success("Subscription canceled successfully!", {
+        className: "bg-green-500 text-white px-4 py-2 rounded shadow-lg",
       });
     } catch (error) {
-      console.error("Update error:", error);
-      toast.error("An error occurred while updating the profile.");
+      console.error("Error canceling subscription:", error);
+      toast.error("An error occurred while canceling the subscription.");
     }
   };
 
@@ -124,31 +76,36 @@ const YourAccountPage = () => {
         return <AccountSettings />;
       case "plan":
         return (
-          <div className="flex justify-center items-center h-full">
-            <div className="p-6 rounded-lg shadow-lg text-center sm:w-1/2 mx-2 border-2 border-gray-600 bg-gray-700">
-              <h2 className="text-xl font-semibold mb-4 text-white">
-                Current Plan is
+          <div className="flex justify-center py-16 bg-gray-800 min-h-screen">
+            <div className="bg-gray-900 text-white rounded-xl shadow-lg w-full max-w-md p-8 border border-gray-700">
+              <h2 className="text-2xl font-bold mb-6 text-center text-orange-400">
+                Current Subscription Plan
               </h2>
-              <p className="text-lg font-bold text-orange-500 mb-6">
-                {user.plan || "Free Plan"} 
-              </p>
-              <div className="flex justify-center space-x-4">
-                <button
-                  className="px-4 py-2  bg-blue-500 text-white rounded hover:bg-blue-600 transition cursor-pointer"
-                  onClick={() =>
-                    toast.info("Upgrade functionality coming soon!")
-                  }
+
+              <div className="bg-gray-700 rounded-lg py-4 px-6 mb-6">
+                <p className="text-sm text-gray-400 mb-1">
+                  You are currently on:
+                </p>
+                <p className="text-xl font-semibold text-orange-300">
+                  {user.plan || "Free Plan"}
+                </p>
+              </div>
+
+              <div className="flex flex-col space-y-4">
+                <a
+                  href="/premium"
+                  className="w-full text-center bg-gradient-to-r from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white font-semibold py-2 rounded-lg transition"
                 >
-                  Upgrade Subscription
-                </button>
-                <button
-                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-800 transition cursor-pointer"
-                  onClick={() =>
-                    toast.info("Cancel subscription functionality coming soon!")
-                  }
-                >
-                  Cancel Subscription
-                </button>
+                  Upgrade to Premium
+                </a>
+                {user.plan !== "Free Plan" && (
+                  <button
+                    className="w-full bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white font-semibold py-2 rounded-lg transition"
+                    onClick={handleCancelSubscription}
+                  >
+                    Cancel Subscription
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -170,7 +127,7 @@ const YourAccountPage = () => {
             {user.name || "username"}
           </h2>
           <h2 className="text-lg text-gray-500 text-center sm:text-left mb-3">
-            Free subscription
+            {user.plan || "Free subscription"}
           </h2>
           <div className="mx-10 md:mx-0">
             <a href="#" onClick={() => setActiveSection("public")}>
@@ -215,37 +172,6 @@ const YourAccountPage = () => {
       </div>
 
       <Footer />
-
-      {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-transparent z-50">
-          <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-semibold text-white mb-4">
-              Change Profile Picture
-            </h2>
-            <input
-              type="text"
-              placeholder="Enter image URL (e.g., Imgur link)"
-              value={newUrl}
-              onChange={(e) => setNewUrl(e.target.value)}
-              className="w-full p-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-            <div className="flex justify-end space-x-3 mt-4">
-              <button
-                onClick={() => setModalOpen(false)}
-                className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-500 transition"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleAvatarSelect}
-                className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

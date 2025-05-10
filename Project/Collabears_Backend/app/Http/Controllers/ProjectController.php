@@ -101,7 +101,7 @@ public function getNotifications()
    
     public function index()
     {
-        $projects = Project::all(); // `get()` helyett `all()`, így biztosan tömböt kapunk
+        $projects = Project::all(); 
 
         return response()->json([
             'status' => true,

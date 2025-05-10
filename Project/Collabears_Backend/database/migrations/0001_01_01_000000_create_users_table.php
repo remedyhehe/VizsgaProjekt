@@ -25,7 +25,7 @@ return new class extends Migration {
             $table->string('company')->nullable();
             $table->string('country')->nullable();
             $table->string('profile_picture')->nullable();
-            $table->unsignedBigInteger('subscription_id')->nullable();
+            $table->unsignedBigInteger('subscription_id') ->nullable();
             $table->foreign('subscription_id')->references('id')->on('subscriptions');
             $table->string('password')->nullable();
             $table->rememberToken();

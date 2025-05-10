@@ -43,5 +43,10 @@ class User extends Authenticatable
 {
     return $this->belongsToMany(Project::class, 'workers', 'user_id', 'project_id', );
 }
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class);
+    }
+
 
 }

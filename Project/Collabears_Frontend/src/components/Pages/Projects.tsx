@@ -35,15 +35,13 @@ const Projects = () => {
     try {
       const res = await fetch("http://localhost:8000/api/projects");
       const result = await res.json();
-
-      // Feltételezve, hogy van bejelentkezett user ID-d
-      const loggedInUserId = localStorage.getItem("user_id"); // vagy máshonnan
+      const loggedInUserId = localStorage.getItem("auth_token");
 
       const filteredProjects = result.data.filter((project: Project) => {
         const isCreatedByUser = project.user_id === Number(loggedInUserId);
         const categoryMatch =
           category === "All" || project.category === category;
-        return !isCreatedByUser && categoryMatch; // csak nem saját + kategória alapján
+        return !isCreatedByUser && categoryMatch;
       });
 
       setProjects(filteredProjects || []);

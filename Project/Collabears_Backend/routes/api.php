@@ -49,4 +49,4 @@ Route::post('/projects/{id}/add-member', [ProjectController::class, 'addMember']
 Route::get('/projects/{id}/members', [ProjectController::class, 'getMembers']);
 Route::post('/projects/{id}/update-role', [ProjectController::class, 'updateRole']);
 Route::delete('/projects/{id}/remove-member', [ProjectController::class, 'removeMember']);
-Route::get('/notifications', [ProjectController::class, 'getNotifications']);
+Route::middleware('auth:sanctum')->post('/users/subscription', [UserController::class, 'updateSubscription']);

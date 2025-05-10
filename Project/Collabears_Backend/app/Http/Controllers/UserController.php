@@ -2,15 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function getUser(Request $request)
+{
+    $user = Auth::user();
+
+    if (!$user) {
+        return response()->json(['error' => 'User not authenticated.'], 401);
+    }
+
+    $subscription = $user->subscription_id
+    ? Subscription::find($user->subscription_id)
+    : null;
+
+    Log::info('User subscription fetched:', [
+        'user_id' => $user->id,
+        'subscription_id' => $user->subscription_id,
+        'subscription_name' => $subscription ? $subscription->name : 'Free Plan',
+    ]);
+
+    return response()->json([
+        'subcription' => $subscription ? $subscription->name : 'Free Plan',
+    ]);
+}
+
+     public function updateSubscription(Request $request)
+{
+    $user = User::find(Auth::id());
+
+    // Ellenőrizd, hogy a felhasználó autentikált-e
+    if (!$user) {
+        return response()->json(['error' => 'User not authenticated.'], 401);
+    }
+
+    // Validáció
+    $validated = $request->validate([
+        'subscription_id' => 'required|exists:subscriptions,id',
+    ]);
+
+    // Frissítsd a felhasználó előfizetését
+    try {
+        $user->subscription_id = $validated['subscription_id'];
+        $user->save();
+
+        return response()->json([
+            'message' => 'Subscription updated successfully.',
+            'user' => $user
+        ]);
+    } catch (\Exception $e) {
+        // Logold a hibát és küldj vissza egy megfelelő válasz
+        Log::error('Error updating subscription: ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to update subscription.'], 500);
+    }
+}
     public function index()
     {
         //

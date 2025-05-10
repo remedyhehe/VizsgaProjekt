@@ -18,6 +18,7 @@ const ChatPage = () => {
     user: string;
     text: string;
     timestamp: string;
+    gifUrl?: string; // Optional property for GIF URL
   }
 
   const [project, setProject] = useState<Project | null>(null);
@@ -61,12 +62,13 @@ const ChatPage = () => {
     fetchProjects();
   }, [id]);
 
-  const sendMessage = (content: string) => {
+  const sendMessage = (content: string, isGif: boolean = false) => {
     if (content.trim() === "") return;
     const timestamp = new Date().toLocaleTimeString();
     const newMessageData = {
       user: userName || "You",
-      text: content,
+      text: isGif ? "" : content, // Text will be empty if it's a GIF
+      gifUrl: isGif ? content : "", // GIF URL if it's a GIF
       timestamp,
     };
 
@@ -75,6 +77,12 @@ const ChatPage = () => {
     localStorage.setItem(`messages_${id}`, JSON.stringify(updatedMessages)); // Update localStorage
 
     setNewMessage(""); // Clear the input field
+  };
+
+  // Handle GIF selection
+  const handleGifSelect = (gif: any) => {
+    const gifUrl = gif.media_formats.gif.url; // Assuming this is the correct path to the GIF URL
+    sendMessage(gifUrl, true);
   };
   const handleEmojiClick = (emojiData: EmojiClickData) => {
     const emoji = emojiData.emoji;
@@ -245,7 +253,7 @@ const ChatPage = () => {
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className="relative flex items-start gap-3 mb-2 p-2 rounded-lg hover:bg-gray-700 text-gray-200"
+                className=" message relative flex items-start gap-3 mb-2 p-2 rounded-lg hover:bg-gray-700 text-gray-200"
                 onMouseEnter={() => setHoveredMessage(index)}
                 onMouseLeave={() => setHoveredMessage(null)}
               >
@@ -255,11 +263,12 @@ const ChatPage = () => {
                   className="w-10 h-10 rounded-full"
                 />
                 <div>
-                  <strong>{userName}</strong>
+                  <strong>{msg.user}</strong>
                   <span className="text-sm text-gray-400 ml-2">
                     {msg.timestamp}
                   </span>
-                  <p>{msg.text}</p>
+                  {msg.text && <p>{msg.text}</p>}
+                  {msg.gifUrl && <img src={msg.gifUrl} alt="GIF" />}
                 </div>
                 {hoveredMessage === index && (
                   <div className="absolute right-2 top-4 flex space-x-4 bg-gray-700 p-1 rounded-lg">
@@ -395,6 +404,14 @@ const ChatPage = () => {
                   <EmojiPicker onEmojiClick={handleEmojiClick} />
                 </div>
               )}
+              {showGifPicker && (
+                <div className="fixed bottom-25 right-6">
+                  <GifPicker
+                    tenorApiKey="YOUR_API_KEY"
+                    onGifClick={handleGifSelect} // Handle GIF selection
+                  />
+                </div>
+              )}
             </div>
             <MdOutlineGifBox
               onClick={() => setShowGifPicker((prev) => !prev)}
@@ -408,7 +425,6 @@ const ChatPage = () => {
                 <GifPicker tenorApiKey="AIzaSyBqQJobmLXxQJfbHmLfsWJzpqPZ4Ia86CI" />
               </div>
             )}
-            <FaGift className="hover:text-purple-300 text-2xl" />
             <button
               className="bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700"
               onClick={() => sendMessage(newMsg)}
