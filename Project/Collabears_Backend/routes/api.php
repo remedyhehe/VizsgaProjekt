@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::resource('projects', ProjectController::class);
+Route::resource('/admins', AdminController::class);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -47,6 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/projects/{id}/add-member', [ProjectController::class, 'addMember']);
 Route::get('/projects/{id}/members', [ProjectController::class, 'getMembers']);
-Route::post('/projects/{id}/update-role', [ProjectController::class, 'updateRole']);
 Route::delete('/projects/{id}/remove-member', [ProjectController::class, 'removeMember']);
+
+Route::post('/projects/{id}/update-role', [ProjectController::class, 'updateRole']);
 Route::middleware('auth:sanctum')->post('/users/subscription', [UserController::class, 'updateSubscription']);

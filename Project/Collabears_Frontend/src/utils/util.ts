@@ -3,7 +3,7 @@ export interface Project {
   name: string;
   user_id: number;
   description: string;
-  category?: string; // Ha van ilyen mező az API-ban
+  category?: string;
   member_number?: number;
   start_date?: string;
   end_date?: string;
@@ -40,5 +40,5 @@ export interface ITask {
   assigned_user?: string;
   due_date?: string; 
   status?: string;
-  comments?: string[];  // Ha van ilyen mező az API-ban
+  comments?: string[]; 
 }
