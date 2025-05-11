@@ -242,11 +242,6 @@ const Navbar = () => {
                       <i className="fa-regular fa-circle-up"></i> Upgrade Plan
                     </h2>
                   </a>
-                  <a href="/settings">
-                    <h2 className="p-2 hover:bg-slate-300 rounded-lg">
-                      <i className="fa-solid fa-gear"></i> Settings
-                    </h2>
-                  </a>
                   <div className="my-2 text-center mx-auto w-2/3 h-[2px] bg-gray-200"></div>
                   <LogoutButton />
                 </div>
@@ -345,11 +340,6 @@ const Navbar = () => {
                   <a href="/premium">
                     <h2 className="p-2 hover:bg-slate-300 rounded-lg">
                       <i className="fa-regular fa-circle-up"></i> Upgrade Plan
-                    </h2>
-                  </a>
-                  <a href="/settings">
-                    <h2 className="p-2 hover:bg-slate-300 rounded-lg">
-                      <i className="fa-solid fa-gear"></i> Settings
                     </h2>
                   </a>
                   <div className="my-2 text-center mx-auto w-2/3 h-[2px] bg-gray-200"></div>

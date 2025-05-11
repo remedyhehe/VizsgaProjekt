@@ -53,3 +53,4 @@ Route::delete('/projects/{id}/remove-member', [ProjectController::class, 'remove
 
 Route::post('/projects/{id}/update-role', [ProjectController::class, 'updateRole']);
 Route::middleware('auth:sanctum')->post('/users/subscription', [UserController::class, 'updateSubscription']);
+Route::middleware('auth:sanctum')->get('/users/subscription', [UserController::class, 'getSubscription']);

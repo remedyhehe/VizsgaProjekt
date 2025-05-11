@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Layouts/Navbar";
 import { motion } from "framer-motion";
 import { FaCreditCard } from "react-icons/fa";
+import { toast } from "react-toastify"; // Importáljuk a toast-ot
 
 const PremiumPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
-  const [userSubscriptionId, setUserSubscriptionId] = useState<number | null>(
-    null
-  ); // Store user's current subscription ID
+  const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
+  const [userSubscriptionId, setUserSubscriptionId] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   const plans = [
     {
@@ -66,41 +66,46 @@ const PremiumPage = () => {
 
   // Fetch current user's subscription ID from backend
   useEffect(() => {
-    const fetchUserSubscription = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8000/api/users/subscription",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch user subscription.");
+  const fetchUserSubscription = async () => {
+    setIsLoading(true); // Start loading
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/users/subscription",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+          },
         }
+      );
 
-        const data = await response.json();
-        setUserSubscriptionId(data.subscription_id); // Assume the backend returns { subscription_id: number }
-      } catch (error) {
-        console.error("Error fetching user subscription:", error);
+      if (!response.ok) {
+        console.error(`HTTP Error: ${response.status} - ${response.statusText}`);
+        throw new Error("Failed to fetch user subscription.");
       }
-    };
 
-    fetchUserSubscription();
-  }, []);
+      const data = await response.json();
+      setUserSubscriptionId(data.subscription_id);
+    } catch (error) {
+      console.error("Error fetching user subscription:", error);
+      // Optionally show error to user
+    } finally {
+      setIsLoading(false); // End loading regardless of success/failure
+    }
+  };
 
-  const openModal = (plan: Plan) => {
-    setSelectedPlan(plan);
+  fetchUserSubscription();
+}, []);
+
+  const openModal = (planId: number) => {
+    setSelectedPlanId(planId);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedPlan(null);
+    setSelectedPlanId(null);
   };
 
   const handleSubscriptionPurchase = async (planId: number) => {
@@ -123,16 +128,22 @@ const PremiumPage = () => {
       }
 
       const data = await response.json();
-      alert(
-        `${
-          plans.find((plan) => plan.id === planId)?.name
-        } subscription activated successfully!`
-      );
-      setUserSubscriptionId(planId); // Update user's subscription ID locally
+      const planName = plans.find((plan) => plan.id === planId)?.name;
+
+      // Toast értesítés sikeres előfizetés esetén
+      toast.success(`${planName} subscription activated successfully!`, {
+        className: "bg-green-500 text-white px-4 py-2 rounded shadow-lg",
+      });
+
+      setUserSubscriptionId(planId); // Frissítjük a felhasználó előfizetését
       closeModal();
     } catch (error: any) {
       console.error("Error updating subscription:", error);
-      alert(error.message || "Failed to update subscription.");
+
+      // Toast értesítés hiba esetén
+      toast.error("Failed to update subscription. Please try again.", {
+        className: "bg-red-500 text-white px-4 py-2 rounded shadow-lg",
+      });
     }
   };
 
@@ -140,9 +151,8 @@ const PremiumPage = () => {
     <>
       <Navbar />
       <div
-        className={`bg-[#0f172a] min-h-screen text-white ${
-          isModalOpen ? "backdrop-blur-sm" : ""
-        }`}
+        className={`bg-[#0f172a] min-h-screen text-white ${isModalOpen ? "backdrop-blur-sm" : ""
+          }`}
       >
         {/* Breadcrumb */}
         <nav className="flex pt-5 justify-center" aria-label="Breadcrumb">
@@ -192,56 +202,56 @@ const PremiumPage = () => {
         {/* Plans */}
         <div className="container px-5 py-16 mx-auto">
           <div className="flex flex-wrap justify-center gap-10">
-            {plans.map((plan, idx) => (
+            {plans.map((plan) => (
               <motion.div
-                key={idx}
+                key={plan.id}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: idx * 0.3 }}
-                className={`w-full md:w-80 rounded-2xl shadow-lg p-8 border-2 relative  hover:bg-gray-900 ${
-                  plan.popular
+                transition={{ duration: 0.8, delay: plan.id * 0.3 }}
+                className={`w-full md:w-80 rounded-2xl shadow-lg p-8 border-2 relative hover:bg-gray-900 ${plan.popular
                     ? "border-blue-400"
                     : "border-gray-600 hover:bg-blue-400"
-                } bg-[#1e293b]`}
+                  } bg-[#1e293b] flex flex-col justify-between`} // Flexbox hozzáadása
               >
-                {plan.popular && (
-                  <div className="absolute top-0 left-0 bg-blue-400 text-white text-xs font-bold px-3 py-1 rounded-br-xl rounded-tl-xl">
-                    Most Popular
-                  </div>
-                )}
-                <h3 className="text-lg font-bold mb-2">{plan.name}</h3>
-                <div className="flex items-baseline mb-4">
-                  <span className="text-4xl font-extrabold">
-                    {plan.price === "0" ? "Free" : `${plan.price} €`}
-                  </span>
-                  {plan.price !== "0" && (
-                    <span className="ml-1 text-gray-400">/ seat / month</span>
+                <div>
+                  {plan.popular && (
+                    <div className="absolute top-0 left-0 bg-blue-400 text-white text-xs font-bold px-3 py-1 rounded-br-xl rounded-tl-xl">
+                      Most Popular
+                    </div>
                   )}
-                </div>
-                <div className="text-sm text-gray-400 mb-4">
-                  {plan.total !== "0"
-                    ? `Total ${plan.total} € / month`
-                    : "No monthly cost"}
-                </div>
-                <div className="text-xs text-gray-500 mb-6">{plan.billed}</div>
+                  <h3 className="text-lg font-bold mb-2">{plan.name}</h3>
+                  <div className="flex items-baseline mb-4">
+                    <span className="text-4xl font-extrabold">
+                      {plan.price === "0" ? "Free" : `${plan.price} €`}
+                    </span>
+                    {plan.price !== "0" && (
+                      <span className="ml-1 text-gray-400">/ seat / month</span>
+                    )}
+                  </div>
+                  <div className="text-sm text-gray-400 mb-4">
+                    {plan.total !== "0"
+                      ? `Total ${plan.total} € / month`
+                      : "No monthly cost"}
+                  </div>
+                  <div className="text-xs text-gray-500 mb-6">{plan.billed}</div>
 
-                <ul className="text-sm space-y-3 mb-8 text-white">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-2">
-                      <i className="fa-solid fa-check text-blue-400"></i>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                  <ul className="text-sm space-y-3 mb-8 text-white">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-center gap-2">
+                        <i className="fa-solid fa-check text-blue-400"></i>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <button
-                  className={`w-full ${
-                    userSubscriptionId === plan.id
+                  className={`w-full ${userSubscriptionId === plan.id
                       ? "bg-gray-500 cursor-default text-white"
                       : "bg-blue-400 hover:bg-blue-500 text-gray-900"
-                  } font-semibold py-2 rounded transition`}
+                    } font-semibold py-2 rounded transition`}
                   onClick={() =>
-                    userSubscriptionId !== plan.id && openModal(plan)
+                    userSubscriptionId !== plan.id && openModal(plan.id)
                   }
                   disabled={userSubscriptionId === plan.id}
                 >
@@ -256,7 +266,7 @@ const PremiumPage = () => {
       </div>
 
       {/* Payment Modal */}
-      {isModalOpen && selectedPlan && (
+      {isModalOpen && selectedPlanId && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
           <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl relative animate-fadeInUp">
             <button
@@ -267,13 +277,13 @@ const PremiumPage = () => {
             </button>
 
             <h2 className="text-3xl font-bold mb-2 text-center text-gray-800">
-              {selectedPlan.name} Plan
+              {plans.find((plan) => plan.id === selectedPlanId)?.name} Plan
             </h2>
 
             <p className="text-center text-gray-600 text-lg mb-2">
               Price:{" "}
               <span className="font-bold text-gray-900">
-                {selectedPlan.price} €
+                {plans.find((plan) => plan.id === selectedPlanId)?.price} €
               </span>
             </p>
 
@@ -285,7 +295,7 @@ const PremiumPage = () => {
             <div className="space-y-4">
               <button
                 className="flex flex-row justify-center gap-2 items-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
-                onClick={() => handleSubscriptionPurchase(selectedPlan.id)}
+                onClick={() => handleSubscriptionPurchase(selectedPlanId)}
               >
                 Pay with Card <FaCreditCard />
               </button>

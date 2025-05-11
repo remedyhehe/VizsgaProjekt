@@ -85,11 +85,11 @@ const PublicSettings = () => {
 
   const handleAvatarSelect = () => {
     if (newUrl) {
-      setSelectedAvatar(newUrl);
-      setUser((prev) => ({ ...prev, profile_picture: newUrl }));
-      localStorage.setItem("user_avatar", newUrl);
+      setSelectedAvatar(newUrl); // Frissítjük a kiválasztott avatart
+      setUser((prev) => ({ ...prev, profile_picture: newUrl })); // Frissítjük a felhasználói adatokat
+      localStorage.setItem("user_avatar", newUrl); // Elmentjük az avatart a localStorage-ba
     }
-    setModalOpen(false);
+    setModalOpen(false); // Bezárjuk a modalt
   };
 
   const handleSaveChanges = async () => {
@@ -103,7 +103,7 @@ const PublicSettings = () => {
         },
         body: JSON.stringify({
           ...user,
-          profile_picture: selectedAvatar,
+          profile_picture: selectedAvatar, // Profilkép URL-je
         }),
       });
 
@@ -112,7 +112,7 @@ const PublicSettings = () => {
       const updatedUser = await response.json();
       setUser(updatedUser);
       toast.success("Profile updated successfully!", {
-        className: "bg-red-500 text-white px-4 py-2 rounded shadow-lg",
+        className: "bg-green-500 text-white px-4 py-2 rounded shadow-lg",
       });
     } catch (error) {
       console.error("Update error:", error);
@@ -220,7 +220,7 @@ const PublicSettings = () => {
               className="relative w-40 h-40 mx-auto rounded-full transition-all duration-300 cursor-pointer"
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}
-              onClick={() => setModalOpen(true)}
+              onClick={() => setModalOpen(true)} // Modal megnyitása
             >
               <img
                 className={`w-full h-full rounded-full object-cover transition-opacity duration-300 ${
@@ -246,6 +246,37 @@ const PublicSettings = () => {
           </div>
         </div>
       </div>
+
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-gray-700 w-full max-w-sm p-6 rounded-lg shadow-lg relative">
+            <button
+              className="absolute top-2 right-2 text-white cursor-pointer"
+              onClick={() => setModalOpen(false)}
+            >
+              &times;
+            </button>
+            <h2 className="text-xl font-bold mb-4 text-white text-center">
+              Update Profile Picture
+            </h2>
+            <input
+              type="text"
+              placeholder="Enter image URL"
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-white"
+              value={newUrl}
+              onChange={(e) => setNewUrl(e.target.value)}
+            />
+            <div className="flex justify-end mt-4">
+              <button
+                className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded cursor-pointer"
+                onClick={handleAvatarSelect}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
