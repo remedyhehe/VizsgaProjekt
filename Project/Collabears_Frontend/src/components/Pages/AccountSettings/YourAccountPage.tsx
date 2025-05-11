@@ -94,9 +94,7 @@ const YourAccountPage = () => {
               </h2>
 
               <div className="bg-gray-700 rounded-lg py-4 px-6 mb-6">
-                <p className="text-sm text-gray-400 mb-1">
-                  You are currently on:
-                </p>
+                <p className="text-sm text-gray-400 mb-1">You are currently on:</p>
                 <p className="text-xl font-semibold text-orange-300">
                   {user.plan || "Loading.."}
                 </p>
@@ -109,6 +107,16 @@ const YourAccountPage = () => {
                 >
                   Change Plan
                 </a>
+
+                {/* Cancel Subscription gomb feltételes megjelenítése */}
+                {user.plan !== "Free Plan" && (
+                  <button
+                    onClick={handleCancelSubscription}
+                    className="w-full text-center bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg transition cursor-pointer"
+                  >
+                    Cancel Subscription
+                  </button>
+                )}
               </div>
             </div>
           </div>
