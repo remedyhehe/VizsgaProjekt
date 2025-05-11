@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Layouts/Navbar";
 import { motion } from "framer-motion";
-import { FaCreditCard } from "react-icons/fa";
-import { toast } from "react-toastify"; // Importáljuk a toast-ot
+import { FaCreditCard, FaLock } from "react-icons/fa";
 
 const PremiumPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlanId, setSelectedPlanId] = useState<number | null>(null);
-  const [userSubscriptionId, setUserSubscriptionId] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [userSubscriptionId, setUserSubscriptionId] = useState<number | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+  const [notification, setNotification] = useState<string | null>(null); // Custom notification state
 
   const plans = [
     {
-      id: 1, // Add unique IDs for each plan
+      id: 1,
       name: "Free",
       price: "0",
       total: "0",
@@ -64,39 +67,44 @@ const PremiumPage = () => {
     popular?: boolean;
   }
 
-  // Fetch current user's subscription ID from backend
   useEffect(() => {
-  const fetchUserSubscription = async () => {
-    setIsLoading(true); // Start loading
-    try {
-      const response = await fetch(
-        "http://localhost:8000/api/users/subscription",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
-          },
+    const authToken = localStorage.getItem("auth_token");
+    setIsLoggedIn(!!authToken); // Check if user is logged in
+
+    if (authToken) {
+      const fetchUserSubscription = async () => {
+        setIsLoading(true);
+        try {
+          const response = await fetch(
+            "http://localhost:8000/api/users/subscription",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            console.error(
+              `HTTP Error: ${response.status} - ${response.statusText}`
+            );
+            throw new Error("Failed to fetch user subscription.");
+          }
+
+          const data = await response.json();
+          setUserSubscriptionId(data.subscription_id);
+        } catch (error) {
+          console.error("Error fetching user subscription:", error);
+        } finally {
+          setIsLoading(false);
         }
-      );
+      };
 
-      if (!response.ok) {
-        console.error(`HTTP Error: ${response.status} - ${response.statusText}`);
-        throw new Error("Failed to fetch user subscription.");
-      }
-
-      const data = await response.json();
-      setUserSubscriptionId(data.subscription_id);
-    } catch (error) {
-      console.error("Error fetching user subscription:", error);
-      // Optionally show error to user
-    } finally {
-      setIsLoading(false); // End loading regardless of success/failure
+      fetchUserSubscription();
     }
-  };
-
-  fetchUserSubscription();
-}, []);
+  }, []);
 
   const openModal = (planId: number) => {
     setSelectedPlanId(planId);
@@ -130,20 +138,18 @@ const PremiumPage = () => {
       const data = await response.json();
       const planName = plans.find((plan) => plan.id === planId)?.name;
 
-      // Toast értesítés sikeres előfizetés esetén
-      toast.success(`${planName} subscription activated successfully!`, {
-        className: "bg-green-500 text-white px-4 py-2 rounded shadow-lg",
-      });
+      // Success notification
+      setNotification(`${planName} subscription activated successfully!`);
+      setTimeout(() => setNotification(null), 3000); // Auto-hide notification after 3 seconds
 
-      setUserSubscriptionId(planId); // Frissítjük a felhasználó előfizetését
+      setUserSubscriptionId(planId);
       closeModal();
     } catch (error: any) {
       console.error("Error updating subscription:", error);
 
-      // Toast értesítés hiba esetén
-      toast.error("Failed to update subscription. Please try again.", {
-        className: "bg-red-500 text-white px-4 py-2 rounded shadow-lg",
-      });
+      // Error notification
+      setNotification("Failed to update subscription. Please try again.");
+      setTimeout(() => setNotification(null), 3000); // Auto-hide notification after 3 seconds
     }
   };
 
@@ -151,10 +157,17 @@ const PremiumPage = () => {
     <>
       <Navbar />
       <div
-        className={`bg-[#0f172a] min-h-screen text-white ${isModalOpen ? "backdrop-blur-sm" : ""
-          }`}
+        className={`bg-[#0f172a] min-h-screen text-white ${
+          isModalOpen ? "backdrop-blur-sm" : ""
+        }`}
       >
-        {/* Breadcrumb */}
+        {/* Notification */}
+        {notification && (
+          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-white px-4 py-2 rounded shadow-lg z-50">
+            {notification}
+          </div>
+        )}
+
         <nav className="flex pt-5 justify-center" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
             <li className="inline-flex items-center">
@@ -198,8 +211,26 @@ const PremiumPage = () => {
             </li>
           </ol>
         </nav>
+        <section className="flex flex-col justify-center items-center text-center mt-10">
+          <motion.h1
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-5xl font-bold mb-4"
+          >
+            Choose the right plan for you
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="text-xl text-gray-400"
+          >
+            Pick a plan tailored to your team’s needs — from starting small to
+            managing full project workflows.
+          </motion.p>
+        </section>
 
-        {/* Plans */}
         <div className="container px-5 py-16 mx-auto">
           <div className="flex flex-wrap justify-center gap-10">
             {plans.map((plan) => (
@@ -208,10 +239,11 @@ const PremiumPage = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: plan.id * 0.3 }}
-                className={`w-full md:w-80 rounded-2xl shadow-lg p-8 border-2 relative hover:bg-gray-900 ${plan.popular
+                className={`w-full md:w-80 rounded-2xl shadow-lg p-8 border-2 relative hover:bg-gray-900 ${
+                  plan.popular
                     ? "border-blue-400"
                     : "border-gray-600 hover:bg-blue-400"
-                  } bg-[#1e293b] flex flex-col justify-between`} // Flexbox hozzáadása
+                } bg-[#1e293b] flex flex-col justify-between`}
               >
                 <div>
                   {plan.popular && (
@@ -233,7 +265,9 @@ const PremiumPage = () => {
                       ? `Total ${plan.total} € / month`
                       : "No monthly cost"}
                   </div>
-                  <div className="text-xs text-gray-500 mb-6">{plan.billed}</div>
+                  <div className="text-xs text-gray-500 mb-6">
+                    {plan.billed}
+                  </div>
 
                   <ul className="text-sm space-y-3 mb-8 text-white">
                     {plan.features.map((feature, i) => (
@@ -246,63 +280,39 @@ const PremiumPage = () => {
                 </div>
 
                 <button
-                  className={`w-full ${userSubscriptionId === plan.id
+                  className={`w-full ${
+                    !isLoggedIn
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : userSubscriptionId === plan.id
                       ? "bg-gray-500 cursor-default text-white"
                       : "bg-blue-400 hover:bg-blue-500 text-gray-900"
-                    } font-semibold py-2 rounded transition`}
-                  onClick={() =>
-                    userSubscriptionId !== plan.id && openModal(plan.id)
-                  }
-                  disabled={userSubscriptionId === plan.id}
+                  } font-semibold py-2 rounded transition flex items-center justify-center gap-2`}
+                  onClick={() => {
+                    if (!isLoggedIn) {
+                      setNotification("Please log in to select a plan.");
+                      setTimeout(() => setNotification(null), 3000); // Auto-hide notification
+                    } else if (userSubscriptionId !== plan.id) {
+                      openModal(plan.id);
+                    }
+                  }}
+                  disabled={!isLoggedIn || userSubscriptionId === plan.id}
                 >
-                  {userSubscriptionId === plan.id
-                    ? "Owned"
-                    : `Choose ${plan.name}`}
+                  {!isLoggedIn ? (
+                    <>
+                      <FaLock />
+                      Locked
+                    </>
+                  ) : userSubscriptionId === plan.id ? (
+                    "Owned"
+                  ) : (
+                    `Choose ${plan.name}`
+                  )}
                 </button>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Payment Modal */}
-      {isModalOpen && selectedPlanId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-2xl relative animate-fadeInUp">
-            <button
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl"
-              onClick={closeModal}
-            >
-              &times;
-            </button>
-
-            <h2 className="text-3xl font-bold mb-2 text-center text-gray-800">
-              {plans.find((plan) => plan.id === selectedPlanId)?.name} Plan
-            </h2>
-
-            <p className="text-center text-gray-600 text-lg mb-2">
-              Price:{" "}
-              <span className="font-bold text-gray-900">
-                {plans.find((plan) => plan.id === selectedPlanId)?.price} €
-              </span>
-            </p>
-
-            <p className="text-center text-sm text-gray-500 mb-6">
-              Please fill in your payment details or choose a payment method
-              below. Your purchase will be processed securely.
-            </p>
-
-            <div className="space-y-4">
-              <button
-                className="flex flex-row justify-center gap-2 items-center w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
-                onClick={() => handleSubscriptionPurchase(selectedPlanId)}
-              >
-                Pay with Card <FaCreditCard />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };

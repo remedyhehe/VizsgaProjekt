@@ -24,18 +24,23 @@ const FilesPage = () => {
     notes: "",
   });
 
+  // Load project data from localStorage on page load
   useEffect(() => {
-    // Fetch project information from the database
+    const storedProject = localStorage.getItem(`project_${id}`);
+    const initialProject = storedProject ? JSON.parse(storedProject) : null;
+
     const fetchProject = async () => {
       try {
         const res = await fetch(`http://localhost:8000/api/projects/${id}`);
         const result = await res.json();
 
         if (result.status && result.data) {
-          setProject((prev) => ({
-            ...prev,
-            name: result.data.name, // Set the project name from the database
-          }));
+          // Merge fetched data with localStorage data
+          const mergedProject = {
+            ...initialProject, // Existing data from localStorage
+            name: result.data.name, // Update name with fetched data
+          };
+          setProject(mergedProject);
         } else {
           console.error("Error fetching project:", result.message);
         }
@@ -44,8 +49,17 @@ const FilesPage = () => {
       }
     };
 
-    fetchProject();
+    if (initialProject) {
+      setProject(initialProject); // Use localStorage data if available
+    } else {
+      fetchProject(); // Fetch from API if nothing in localStorage
+    }
   }, [id]);
+
+  // Save project data to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(`project_${id}`, JSON.stringify(project));
+  }, [project, id]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -166,9 +180,7 @@ const FilesPage = () => {
             </ol>
           </nav>
         </nav>
-        {/* Header */}
 
-        {/* Main Content */}
         <main className="p-6 space-y-8">
           {/* Files Section */}
           <section className="bg-gray-800 p-6 rounded-lg shadow-md">
