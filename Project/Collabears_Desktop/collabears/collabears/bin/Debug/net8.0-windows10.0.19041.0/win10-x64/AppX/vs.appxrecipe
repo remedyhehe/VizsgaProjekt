@@ -29,7 +29,7 @@
     <AppXManifest Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2025-05-07T18:47:28.701</Modified>
+      <Modified>2025-05-11T10:29:38.224</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\collabears.dll">
       <PackagePath>collabears.dll</PackagePath>
-      <Modified>2025-05-07T18:47:28.463</Modified>
+      <Modified>2025-05-11T10:29:37.990</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>collabears.exe</PackagePath>
-      <Modified>2025-05-07T18:47:28.466</Modified>
+      <Modified>2025-05-11T10:29:37.993</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Programs\Xampp\program\htdocs\VizsgaProjekt\Project\Collabears_Desktop\collabears\collabears\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>

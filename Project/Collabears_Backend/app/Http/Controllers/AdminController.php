@@ -12,7 +12,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $admins = Admin::all();
+        return response()->json(['status' => true, 'data' => $admins]);
     }
 
     /**

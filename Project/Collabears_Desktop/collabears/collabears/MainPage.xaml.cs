@@ -152,10 +152,12 @@ namespace collabears
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                    var adminList = JsonSerializer.Deserialize<List<AdminEntry>>(json, options);
+                    System.Diagnostics.Debug.WriteLine("Admin response: " + json);
 
-                    return adminList.Any(a => a.User_Id == userId);
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var adminResponse = JsonSerializer.Deserialize<AdminResponse>(json, options);
+
+                    return adminResponse?.Data?.Any(a => a.User_Id == userId) == true;
                 }
                 else
                 {
@@ -188,5 +190,11 @@ namespace collabears
         public int Id { get; set; }
         public int User_Id { get; set; }
         public int Permission_Id { get; set; }
+    }
+
+    public class AdminResponse
+    {
+        public bool Status { get; set; }
+        public List<AdminEntry> Data { get; set; }
     }
 }
