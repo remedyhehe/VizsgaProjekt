@@ -284,18 +284,21 @@ const PremiumPage = () => {
                     !isLoggedIn
                       ? "bg-gray-500 cursor-not-allowed"
                       : userSubscriptionId === plan.id
-                      ? "bg-gray-500 cursor-default text-white"
-                      : "bg-blue-400 hover:bg-blue-500 text-gray-900"
+                      ? "bg-gray-500 cursor-not-allowed"
+                      : "bg-blue-400 hover:bg-blue-500 text-gray-900 cursor-pointer"
                   } font-semibold py-2 rounded transition flex items-center justify-center gap-2`}
                   onClick={() => {
                     if (!isLoggedIn) {
                       setNotification("Please log in to select a plan.");
                       setTimeout(() => setNotification(null), 3000); // Auto-hide notification
-                    } else if (userSubscriptionId !== plan.id) {
-                      openModal(plan.id);
+                    } else if (userSubscriptionId === plan.id) {
+                      setNotification("You already have this subscription.");
+                      setTimeout(() => setNotification(null), 3000); // Auto-hide notification
+                    } else {
+                      openModal(plan.id); // Open the modal for payment
                     }
                   }}
-                  disabled={!isLoggedIn || userSubscriptionId === plan.id}
+                  disabled={!isLoggedIn || userSubscriptionId === plan.id} // Disable if not logged in or already subscribed to this plan
                 >
                   {!isLoggedIn ? (
                     <>
@@ -312,6 +315,39 @@ const PremiumPage = () => {
             ))}
           </div>
         </div>
+
+        {/* Payment Modal */}
+        {isModalOpen && selectedPlanId && (
+          <div
+            className="fixed inset-0 bg-[#0f172a]/80 flex justify-center items-center z-50"
+            // A háttér színe a normál háttér halványabb változata
+          >
+            <div className="bg-white p-6 rounded-lg shadow-lg text-black w-96">
+              <h2 className="text-xl font-bold mb-4">Payment for Plan</h2>
+              <p className="mb-4">
+                You are about to subscribe to the{" "}
+                <strong>
+                  {plans.find((plan) => plan.id === selectedPlanId)?.name}
+                </strong>{" "}
+                plan.
+              </p>
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded cursor-pointer"
+                onClick={() => {
+                  handleSubscriptionPurchase(selectedPlanId);
+                }}
+              >
+                Confirm Payment
+              </button>
+              <button
+                className="bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded ml-4 cursor-pointer"
+                onClick={closeModal}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
